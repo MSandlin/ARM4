@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root version="3.0" release="42" logo="logo.png">
+	<!-- Attributes -->
+	<description>
+		<text>Ars Magica 2</text>
+		<author>Oberoten</author>
+		
+	</description>
+
+	<importruleset source="CoreRPG" />
+	<!-- Tabletop settings -->
+	<includefile source="gameelements.xml" />
+
+	<!-- Graphics -->
+	<includefile source="graphics/graphics_fonts.xml" />
+	<includefile source="graphics/graphics_frames.xml" />
+	<includefile source="graphics/graphics_icons.xml" />
+	<includefile source="graphics/graphics_portraits.xml" />
+	<includefile source="graphics/graphics_radial.xml" />
+
+	<!-- Common templates 	!-->
+	<includefile source="common/template_filter.xml" />
+    
+	<!-- Ars Magica Specific Stuff !-->
+	
+	<script name="GameSystem" file="scripts/manager_gamesystem.lua" />
+	<script name="WildDieHandler" file="scripts/handler_wilddie.lua" />
+	
+	
+	<script name="ActorManager" file="scripts/manager_actor.lua" />
+	<!--<script name="SpellHandler" file="scripts/handler_spells.lua" /> !-->
+	<script name="ActionsManager" file="scripts/manager_actions.lua" />
+	<script name="TokenManager" file="scripts/manager_token.lua" />
+	<script name="VersionManager" file="scripts/manager_version.lua" />
+	<!-- <script name="VersionManager2" file="scripts/manager_version2.lua" /> -->
+	<script name="ActionEffect" file="scripts/manager_action_effect.lua" />
+	
+	
+		<script name="ExportManager" file="scripts/mod_export.lua" />
+
+	<!-- Desktop -->
+	
+	<!-- <includefile source="desktop/template_desktop.xml" /> 
+	<includefile source="desktop/desktop_classes.xml" />
+	
+	<script name="ChatManager" file="desktop/scripts/manager_chat.lua" />
+	<script name="ModifierStack" file="desktop/scripts/modifierstack.lua" />
+	<script name="GmIdentityManager" file="desktop/scripts/manager_gmidentity.lua" />
+	<script name="DiceTowerManager" file="desktop/scripts/manager_dicetower.lua" />
+	!-->
+	<script name="ArmSlash" file="desktop/scripts/arm_slash.lua" />
+	<includefile source="desktop/desktop_panels.xml" />
+	<script name="DesktopManager" file="desktop/scripts/manager_desktop.lua" />
+	
+	
+	<script name="Desktop" file="desktop/scripts/desktop.lua" />
+	
+	
+	<!-- Utilities -->
+	
+	<!-- Campaign Records -->
+	
+	<includefile source="campaign/campaign_npcs.xml" />
+	<includefile source="campaign/record_char.xml" />
+	
+	<includefile source="campaign/record_char_inventory.xml" />
+	<script name="CharManager" file="campaign/scripts/manager_char.lua" />
+	<includefile source="campaign/record_npc.xml" />
+	
+	<script name="OptionsCore2" file="scripts/Armdata_options_core.lua" />
+	
+	
+	<!-- REFERENCE -->
+	<includefile source="ref/ref_virtuesandflaws.xml" />
+	
+	
+	
+	
+	<!-- Combat tracker -->
+	<includefile source="armct/utility_combat.xml" /> 
+	<includefile source="armct/utility_combattracker.xml" /> 
+	<includefile source="ct/template_ct.xml" />
+	<includefile source="utility/strings2.xml" />
+	<!--<includefile source="ct/ct_host.xml" />
+	<includefile source="ct/ct_client.xml" /> -->
+	
+
+	<!-- Party sheet -->
+	<includefile source="ps/template_ps.xml" />
+	<includefile source="ps/ps.xml" />
+	<includefile source="ps/ps_inventory.xml" />
+	<includefile source="ps/ps_order.xml" />
+	<script name="PartyManager" file="ps/scripts/manager_ps.lua" />
+	<script name="PartyLootManager" file="ps/scripts/manager_ps_loot.lua" />
+	
+	<!-- SKILLS! !-->
+	<script name="ActionSkill" file="scripts/manager_action_skill.lua" />
+	
+	<!-- Accepting Modules et all from !-->
+	<importinfo>
+		<acceptfrom ruleset="d20" />
+		<acceptfrom ruleset="Arm" />		
+		<acceptfrom ruleset="d20_JPG" />
+		<acceptfrom ruleset="d20" />
+		<acceptfrom ruleset="foundation" />
+		<acceptfrom ruleset="3.5E" />
+		<acceptfrom ruleset="4E" />
+		<acceptfrom ruleset="GURPS" />	
+	</importinfo>
+
+	
+	
+</root>

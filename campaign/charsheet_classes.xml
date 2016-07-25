@@ -1,0 +1,2344 @@
+
+<root>
+
+
+
+
+	<windowclass name="charsheet_skilllistitem">
+			<sizelimits>
+				<minimum>
+					<height>21</height>
+				</minimum>
+			</sizelimits>
+		
+		
+		<sheetdata>
+			
+			<stringfield name="skillname">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>5</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>2</offset>
+					</top>
+					<size>
+						<width>150</width>
+					</size>
+				</anchored>
+				
+				
+				<frame>
+					<name>textline</name>
+					<offset>0,3,1,1</offset>
+				</frame>
+				<stateframe>
+				<keyedit name="fieldfocus" offset="3,3,3,3" />
+				</stateframe>
+				
+				<script name="pcskillfield"  file="campaign/scripts/pcskillfield.lua" />
+				
+			</stringfield>
+			
+			<numberfield name="skilllevel" source="skill.level">
+			
+			<limits minimum="0"  /> 
+			
+			<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>165</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>2</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>0,3,1,1</offset>
+				</frame>
+				
+				<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+				
+				
+				
+				
+				<script>
+						function onWheel(notches)
+							
+							if not Input.isAltPressed()  then
+								return true;
+							end
+						end
+																			
+						function onValueChanged()
+							
+							local a, b, c;
+							a = window.getDatabaseNode().getChild("skillcost").getValue() 
+							b = window.getDatabaseNode().getChild("skill.level").getValue() 
+							c = window.getDatabaseNode().getChild("skillXP").getValue() 
+							
+														
+							local test;
+							local cost;
+							
+							
+							
+							cost = window.getDatabaseNode().getChild("skillcost").getValue() 
+							test = window.getDatabaseNode().getChild("skill.level").getValue() 
+						
+							
+								window.getDatabaseNode().getChild("skillXP").setValue( cost*((test^2)/2 +(test/2)) );
+								
+						    local points = 0;
+					
+								for k, v in pairs(window.windowlist.getDatabaseNode().getChildren()) do
+									if v.getChild("skillXP") then
+										points = points + v.getChild("skillXP").getValue();
+								    end
+							    end
+							window.windowlist.window.getDatabaseNode().getChild("xpskills").setValue(points);		
+							return true
+						end
+					
+					function onEnter()
+						window.windowlist.addNewInstance(window.skillname.getValue());
+						return true;
+					end
+					
+					function onDoubleClick()
+					local a, b, c, d,e, f , g, sb
+				
+						a = window.getDatabaseNode().getChild("skill.level").getValue() 
+						c = window.windowlist.window.getDatabaseNode().getChild("wfpen").getValue()		
+																	  
+						
+						b = window.getDatabaseNode().getChild("skillname").getValue()
+						sb = window.getDatabaseNode().getChild("skill.bonus").getValue()
+						e = window.getDatabaseNode().getChild("dicetypenumber").getValue()
+						d = a + sb + c;
+						f = ModifierStack.getSum()
+						g = ModifierStack.getDescription()
+						
+						
+						
+						local rActor;
+						if User.isHost() then
+							rActor = GmIdentityManager.getCurrent();
+						else
+							rActor = User.getIdentityLabel();
+						end
+						
+						d = a + sb + c;
+						if c == 0 then
+							b = b .. " " .. a .."+ " .. sb .. " bonus" ;
+							
+								if f == 0 and g == "" then
+								
+								
+								end
+						else
+							
+							if f == 0 and g == "" then
+								b =  b .. " "  .. a .. "+" .. sb .. " bonus and Wounds/Fatigue " .. c .. " =  " .. d   ;
+							
+							else
+								b =  b .. " "  .. a .. "+" .. sb .. " bonus and Wounds/Fatigue " .. c .. " +  ";
+							
+							end
+						end
+						
+						
+						
+            
+						local rRoll = {};
+						rRoll.sType = "dice";
+						rRoll.sDesc = b;
+						rRoll.aDice = {"d10"};
+						rRoll.nMod = d; 
+            
+						ActionsManager.performAction(draginfo, rActor, rRoll);
+						
+						
+					
+						
+						return true;
+					end
+					
+
+					
+					
+					
+					
+					function onDragStart(button, x, y, draginfo)
+						local a = window.skillbonus.getValue()
+						local b = getValue();
+						local c = a + b
+						local e = window.skillname.getValue():gsub("^%l", string.upper)
+						local d = e .. " " ..  b .. " + " .. a .. " Bonus";
+						draginfo.setType("dice");
+						
+						draginfo.setDescription(d );
+						draginfo.setNumberData(c);
+						draginfo.setStringData(d );
+						local dice = {};
+						if not Input.isAltPressed() then
+						table.insert(dice, "d10");
+						else 
+						table.insert(dice, "dF");
+						end
+						
+          
+						draginfo.setDieList(dice);
+						return true;
+					end
+					
+					
+					
+				</script>
+		
+			</numberfield>
+			
+			<genericcontrol name="bnussign">
+			    <anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>178</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>1</offset>
+					</top>
+					<size>
+						<width>20</width>
+						<height>22</height>
+					</size>
+				</anchored>
+				
+				<icon>tempmodnil</icon>
+				<iconcolor >#99000000 </iconcolor> 
+				
+				<sizelimits>
+				<minimum>
+					<height>18</height>
+				</minimum>
+				
+					</sizelimits>
+					
+				<script>
+				function onInit()
+					local a = window.skillbonus.getValue()
+					if a >= 1 then
+						setIcon("tempmod")
+					elseif a== 0 then
+						setIcon("tempmodnil")
+						
+					
+					else
+						setIcon("tempmodneg")
+					end
+				end
+
+				</script>
+					
+					
+				</genericcontrol>
+			
+			
+			
+			<numberfield name="skillbonus" source="skill.bonus">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>190</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>0</offset>
+					</top>
+					<size>
+						<width>20</width>
+						<height>22</height>
+					</size>
+				</anchored>
+				
+				
+				
+				
+				<frame>
+					<name>fieldbonus</name>
+					<offset>5,1,5,1</offset>
+				</frame>
+				<displaysign/>
+				<hideonvalue value="0" />
+				<script>
+				function onWheel(notches)
+							
+							if not Input.isAltPressed()  then
+								return true;
+							end
+				end
+				
+				function onValueChanged()
+					local a = getValue()
+					if a >= 1 then
+						window.bnussign.setIcon("tempmod")
+					elseif a== 0 then
+						window.bnussign.setIcon("tempmodnil")
+						
+					
+					else
+						window.bnussign.setIcon("tempmodneg")
+					end
+				end
+				
+				
+				
+				</script>
+				
+				<description>
+					<text>Skill Bonus</text>
+				</description>
+			</numberfield>
+			
+			<numberfield name="skillcost">
+			<limits minimum="0"  /> 
+			<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>230</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>2</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<frame>
+					<name>textline</name>
+					<offset>0,3,1,1</offset>
+				</frame>
+				<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+				<script>
+					
+					function onInit()
+						local a, b
+						a =	window.getDatabaseNode().getChild("skill.flagged").getValue() 
+						if a ~= -1 then
+							window.getDatabaseNode().getChild("skill.flagged").setValue(-1) 
+							window.getDatabaseNode().getChild("skillcost").setValue(5) 
+						end
+					end
+
+					function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+				
+				
+					function onValueChanged()
+					
+							local a, b, c;
+							a = window.getDatabaseNode().getChild("skillcost").getValue() 
+							b = window.getDatabaseNode().getChild("skill.level").getValue() 
+							c = window.getDatabaseNode().getChild("skillXP").getValue() 
+							
+											
+					
+							local test;
+							local cost;
+											
+							
+							cost = window.getDatabaseNode().getChild("skillcost").getValue() 
+							test = window.getDatabaseNode().getChild("skill.level").getValue() 
+																		
+							
+							
+								window.getDatabaseNode().getChild("skillXP").setValue( cost*((test^2)/2 +(test/2)) );
+								
+						    local points = 0;
+					
+								for k, v in pairs(window.windowlist.getDatabaseNode().getChildren()) do
+									if v.getChild("skillXP") then
+										points = points + v.getChild("skillXP").getValue();
+								    end
+							    end
+							window.windowlist.window.getDatabaseNode().getChild("xpskills").setValue(points);	
+							
+							
+							
+							
+				
+					
+										
+							
+							
+					return true
+				end	
+						
+					function onEnter()
+						window.windowlist.addNewInstance(window.skillname.getValue());
+					end
+						
+				</script>
+				
+			</numberfield>
+			
+			
+			<numberfield name="skill.flagged">
+			<limits minimum="0"  /> 
+			<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>1</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>1</offset>
+					</top>
+					<size>
+						<width>1</width>
+					</size>
+				</anchored>
+				<invisible />
+			</numberfield>
+						
+			<numberfield name="skillXP" >
+			<limits minimum="0"  /> 
+			<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>260</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>2</offset>
+					</top>
+					<size>
+						<width>20</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>0,3,1,1</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+				
+				<readonly />
+				
+			</numberfield>
+			
+			<numberfield name="skillgainedXPold" >
+			<default>0</default>
+			<readonly />
+			<invisible />
+			<anchored>
+		
+					<left>
+						<anchor>left</anchor>
+						<offset>290</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>2</offset>
+					</top>
+					<size>
+						<width>30</width>
+					</size>
+				</anchored>
+			
+			<script>
+			function onInit()
+			
+			local oldvalue = 1;
+			
+			setValue(oldValue)  ;
+			
+			
+			end
+			
+			</script>
+			
+			
+			</numberfield>
+			
+			<numberfield name="skillGainedXP" >
+			<limits minimum="0"  /> 
+			
+			
+			<anchored>
+					
+					<left>
+						<anchor>left</anchor>
+						<offset>290</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>2</offset>
+					</top>
+					<size>
+						<width>30</width>
+					</size>
+				</anchored>
+				<frame>
+					<name>textline</name>
+					<offset>0,3,1,1</offset>
+				</frame>
+				<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+			<script>
+			
+			
+			
+			
+			function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+			
+			
+			function onValueChanged()
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("skill.level").getValue() ;
+				cCost = window.getDatabaseNode().getChild("skillcost").getValue() ;
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				
+				
+				cXpGained = getValue();
+				cXpLeft = window.windowlist.window.getDatabaseNode().getChild("xpleft").getValue();				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+				if cXpGained >= cost then
+					
+					setColor("FF00FF00")
+				else
+				if cXpAvailable >= cost then
+					
+					setColor("FFEECC22")
+					else
+					setColor("FF000000")
+				end
+				
+				end
+				cXpLeft = 0
+				
+			
+			end
+			
+			
+			function onInit()
+			
+			
+					
+			
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("skill.level").getValue() ;
+				cCost = window.getDatabaseNode().getChild("skillcost").getValue() ;
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				
+				
+				cXpGained = getValue();
+				cXpLeft = window.windowlist.window.getDatabaseNode().getChild("xpleft").getValue();				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+				if cXpGained >= cost then
+					
+					setColor("FF00FF00")
+				else
+				if cXpAvailable >= cost then
+					
+					setColor("FFEECC22")
+					else
+					setColor("FF000000")
+				end
+				
+				end
+				cXpLeft = 0
+				
+			
+			end
+			
+		
+		
+		
+		
+
+		
+			
+			
+			
+			
+			function onDoubleClick()
+				if not Input.isAltPressed() then
+			
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill, eXp
+					cSkill = window.getDatabaseNode().getChild("skill.level").getValue() ;
+					cCost = window.getDatabaseNode().getChild("skillcost").getValue() ;
+				
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = window.windowlist.window.getDatabaseNode().getChild("xpleft").getValue();				
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+						window.getDatabaseNode().getChild("skill.level").setValue(nSkill);
+					
+						eXp = window.windowlist.window.getDatabaseNode().getChild("bonusxp").getValue();
+						window.windowlist.window.getDatabaseNode().getChild("bonusxp").setValue(eXp+cost);
+						setValue(cXpGained-cost);
+					else
+						if cXpAvailable >= cost then
+					
+						setColor("FFEECC22")
+						window.getDatabaseNode().getChild("skill.level").setValue(nSkill);
+					
+						eXp = window.windowlist.window.getDatabaseNode().getChild("bonusxp").getValue();
+						window.windowlist.window.getDatabaseNode().getChild("bonusxp").setValue(eXp+getValue());
+						setValue(0);
+					
+					else
+						setColor("FF000000")
+					end
+				
+				end
+				cXpLeft = 0
+					
+					
+			
+				else
+					setValue(getValue()+3);
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("skill.level").getValue() ;
+				cCost = window.getDatabaseNode().getChild("skillcost").getValue() ;
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				
+				
+				cXpGained = getValue();
+				cXpLeft = window.windowlist.window.getDatabaseNode().getChild("xpleft").getValue();				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+				if cXpGained >= cost then
+					
+					setColor("FF00FF00")
+				else
+				if cXpAvailable >= cost then
+					
+					setColor("FFEECC22")
+					else
+					setColor("FF000000")
+				end
+				
+				end
+				cXpLeft = 0
+				
+				end
+					
+			end
+					
+			
+			
+			
+			</script>
+				
+				
+			</numberfield>
+
+			<numberfield name="skillGainedXPold" >
+			<default>0</default>
+			<readonly />
+			<invisible />
+			<anchored>
+		
+					<left>
+						<anchor>left</anchor>
+						<offset>290</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>2</offset>
+					</top>
+					<size>
+						<width>30</width>
+					</size>
+				</anchored>
+			
+			<script>
+			function onInit()
+			
+			local skillGainedXP = window.getDatabaseNode().getChild("skillGainedXP").getValue();
+						
+			setValue(skillGainedXP)  ;
+			
+			
+			end
+			
+			</script>
+			
+			
+			</numberfield>
+
+
+			<numberfield name="rXPLeft" >
+				<readonly />
+				<invisible />
+				<anchored>
+		
+					<left>
+						<anchor>left</anchor>
+						<offset>290</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>2</offset>
+					</top>
+					<size>
+						<width>30</width>
+					</size>
+				</anchored>
+				
+				<script>
+				function onValueChanged()
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("skill.level").getValue() ;
+				cCost = window.getDatabaseNode().getChild("skillcost").getValue() ;
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				
+				
+				cXpGained = window.getDatabaseNode().getChild("skillGainedXP").getValue();
+				cXpLeft = window.windowlist.window.getDatabaseNode().getChild("xpleft").getValue();				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+				if cXpGained >= cost then
+					
+					
+				else
+				if cXpAvailable >= cost then
+					
+					
+					else
+					
+				end
+				
+				end
+				cXpLeft = 0
+				
+			
+			end
+			</script>
+		
+		</numberfield>
+
+			
+		<numberfield name="dicetypenumber">
+			<limits minimum="0"  /> 
+			<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>1</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>1</offset>
+					</top>
+					<size>
+						<width>1</width>
+					</size>
+				</anchored>
+				<invisible />
+			</numberfield>
+			
+			
+			
+		<genericcontrol name="dicetype">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>325</offset>
+					</left>
+					<top>
+						<anchor>top</anchor>
+						<offset>5</offset>
+					</top>
+					<size>
+						<width>15</width>
+						<height>15</height>
+					</size>
+				</anchored>
+				<icon>icon_wild</icon>
+				
+				<script>
+					datanode = nil;
+				
+					function update()
+					
+					    local a, b
+						a = window.getDatabaseNode().getChild("dicetypenumber").getValue();
+						a = datanode.getValue() 
+						if a == 0 then
+							setIcon("icon_wild");
+							
+						end
+						if a == 1 then
+							setIcon("icon_normal");
+						end
+						if a == 2 then
+							setIcon("icon_master");
+						end
+							
+						if a == 3 then
+							setIcon("icon_botch");
+						end
+					end
+				
+					function onClickDown(button, x, y)
+						local a, b
+						a = window.getDatabaseNode().getChild("dicetypenumber").getValue();
+						a = datanode.getValue()
+						b = a + 1
+						
+						if b &gt; 3 then
+						 b = 0
+						end
+						
+						datanode.setValue(b);
+						window.getDatabaseNode().getChild("dicetypenumber").setValue(b);
+						
+						
+					end
+					
+					function onInit()
+						datanode = window.getDatabaseNode().createChild(getName(), "number");
+						datanode.onUpdate = update;
+						update();
+					end
+				</script>
+				
+				
+			</genericcontrol>
+		
+		
+		
+		</sheetdata>
+		<script>
+		local XPnode = nil;
+		
+		
+		function onInit()
+			XPnode = windowlist.window.getDatabaseNode().getChild("xpleft");		
+			
+			
+			if XPnode then
+				XPnode.onUpdate = recalc;
+			end
+						
+			recalc();
+		end
+
+		function recalc()
+			if XPnode then
+				local a = XPnode.getValue();
+				local b = rXPLeft.getValue() ;
+				
+				skillGainedXP.setColor("FFFFFFFF");
+				
+				rXPLeft.setValue(a);
+				
+				
+			end
+			
+			local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = skilllevel.getValue() ;
+				cCost = skillcost.getValue() ;
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				
+				
+				cXpGained = skillGainedXP.getValue();
+				cXpLeft = rXPLeft.getValue();				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+				if cXpGained >= cost then
+					
+						skillGainedXP.setColor("FF00FF00");
+				else
+				if cXpAvailable >= cost then
+					
+						skillGainedXP.setColor("FFEECC22");
+					else
+						skillGainedXP.setColor("FF000000");
+				end
+				
+				end
+				cXpLeft = 0
+			
+			
+			
+		end
+		</script>
+	
+	
+		
+	</windowclass>
+		
+	<!-- Spells -->
+		<windowclass name="charsheet_spelllistitem">
+			<sizelimits>
+			    <width>
+				700
+				</width>
+				<minimum>
+					<height>18</height>
+				</minimum>
+			</sizelimits>
+			<script file="campaign/scripts/spell_list_entry.lua" />
+			<script>
+			
+			</script>
+		<sheetdata>
+		
+		
+		
+		
+		
+			<genericcontrol name="spellframe">
+			    <bounds>0,0,-1,109</bounds>
+				<frame>
+					<name>spellentry</name>
+				</frame>
+				<sizelimits>
+				<minimum>
+					<height>18</height>
+				</minimum>
+				
+			</sizelimits>
+			<invisible />
+			</genericcontrol>
+			
+			<genericcontrol name="spellframesmall">
+			    <bounds>0,0,-1,37</bounds>
+				<frame>
+					<name>spellentry_small</name>
+				</frame>
+				<sizelimits>
+				<minimum>
+					<height>36</height>
+				</minimum>
+			</sizelimits>
+			
+			</genericcontrol>
+			
+			
+			<stringfield name="name">
+				<bounds rect="6,9,200,20" />
+				
+				<script>
+					function onValueChanged()
+						
+					end
+				</script>
+				<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+
+			</stringfield>
+			
+			
+			
+			
+			
+			
+			
+			<numberfield name="level">
+				<bounds rect="297,6,36,23" />
+				<script>
+					function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+				
+					function onValueChanged()
+							local test;
+							local cost;
+							local points = 0;
+							cost = window.getDatabaseNode().getChild("level").getValue() 
+							 if cost>=0 then
+								if cost >5 then
+									window.getDatabaseNode().getChild("spellxp").setValue( math.ceil(cost/5) );
+									else
+									window.getDatabaseNode().getChild("spellxp").setValue( (1/5) );
+									end
+													
+								for k, v in pairs(window.windowlist.getDatabaseNode().getChildren()) do
+									if v.getChild("spellxp") then
+										points = points + v.getChild("spellxp").getValue();
+								    end
+							    end
+								window.windowlist.window.getDatabaseNode().getChild("spellsxp").setValue(points);		
+								
+							end
+							
+							
+							local Qui = window.getDatabaseNode().getChild("qsstat").getValue() ;
+							local level = window.getDatabaseNode().getChild("level").getValue(); 
+							local Finesse = window.getDatabaseNode().getChild("Skill").getValue();
+							local Ibonus = window.getDatabaseNode().getChild("spellIbonus").getValue() 
+							
+							local out = Finesse + Qui + Ibonus - level;
+							window.getDatabaseNode().getChild("init").setValue( out );
+							
+							
+							
+					return true;		
+					end
+				</script>
+				
+				<noreset />
+				<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+				
+				
+				
+			</numberfield>
+			<stringfield name="forms">
+				<bounds rect="337,9,50,23" />
+				<hideonvalue value="0" />
+				<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+			</stringfield>
+			<numberfield name="castingtotal">
+				<bounds rect="391,6,34,23" />
+				<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+				<tooltip>
+					<text>Doubleclick to Cast</text>
+				</tooltip>
+				<hideonvalue value="0" />
+				<script>
+				
+				function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+				
+				
+				function onDoubleClick()
+					local a, b,c,d,e,f,g,h
+				
+						
+						a = window.windowlist.window.getDatabaseNode().getChild("intelligence").getValue()		 
+						b = window.getDatabaseNode().getChild("castingtotal").getValue() 
+						c = window.getDatabaseNode().getChild("forms").getValue() 
+						d = window.getDatabaseNode().getChild("level").getValue() 
+						e = window.getDatabaseNode().getChild("name").getValue() 
+						g = window.windowlist.window.getDatabaseNode().getChild("wfpen").getValue()	
+						h = g
+						
+						if g ~= 0 then
+						   f = "Casting " .. e .. " with " .. c .. " totalling a CT (" ..b ..")+Int (" ..a .. ")  which gives us " .. b+a .. " with a penalty of " ..g .. " due to wounds and fatigue"  .. " vs a Difficulty of " ..d ;
+						   
+						else
+							f = "Casting " .. e .. " with " .. c .. " totalling a CT (" ..b ..")+Int (" ..a .. ")  which gives us " .. b+a .. "+1d10 vs Spell Level " ..d ;
+						   
+						end
+						h = tonumber(a) + tonumber(b) + tonumber(g)
+						
+						
+						local rRoll = {};
+						rRoll.sType = "dice";
+						rRoll.sDesc = f;
+						rRoll.aDice = {"d10"};
+						rRoll.nMod = b+a; 
+						rRoll.nTarget = d;
+						rRoll.sSubType ="spell";
+						
+            
+						ActionsManager.performAction(draginfo, rActor, rRoll);
+						
+						
+						a = window.windowlist.window.getDatabaseNode().getChild("quickness").getValue()		 
+						window.getDatabaseNode().getChild("qsstat").setValue(a);
+						return true;
+					end
+				</script>
+			</numberfield>
+			<stringfield name="spellrange">
+				<bounds rect="473,11,60,23" />
+				<hideonvalue value="0" />
+				<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+			</stringfield>
+			<stringfield name="spellduration">
+				<bounds rect="587,11,85,23" />
+				<hideonvalue value="0" />
+				<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+			</stringfield>
+			<buttoncontrol name="activateactive">
+				<bounds rect="-30,6,25,25" />
+				<icon>
+					<normal>indicator_expand</normal>
+					<pressed>indicator_expand_down</pressed>
+				</icon>
+				<script>
+					function onButtonPress()
+						window.toggleForceActive();
+						local a = window.windowlist.window.getDatabaseNode().getChild("quickness").getValue()		 
+						
+				
+					end
+					
+					function onInit()
+						setColor("7fffffff");
+						
+					
+						a = window.windowlist.window.getDatabaseNode().getChild("quickness").getValue()		 
+						
+				
+					end
+				</script>
+			</buttoncontrol>
+			
+			<stringfield name="shortdescription">
+				<bounds rect="6,34,680,48" />
+				<multiline spacing="24" />
+				<invisible />
+				<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+			</stringfield>
+			
+			
+			
+			<stringfield name="FinesseTag">
+			<bounds rect="15,80,60,23" />
+			<static>Finesse</static>
+			<readonly />
+			<invisible />
+			</stringfield>
+			<numberfield name="Skill">
+			<invisible />
+				<bounds rect="75,80,34,23" />
+				<description text="Initiative" />
+				
+				<script>
+				function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+				
+					function onValueChanged()
+							local Qui = window.getDatabaseNode().getChild("qsstat").getValue() ;
+							local level = window.getDatabaseNode().getChild("level").getValue(); 
+							local Finesse = window.getDatabaseNode().getChild("Skill").getValue();
+							local Ibonus = window.getDatabaseNode().getChild("spellIbonus").getValue() 
+							
+							local out = Finesse + Qui + Ibonus - level;
+							window.getDatabaseNode().getChild("init").setValue( out );
+					return;
+					end
+				</script>
+				<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+			</numberfield>
+			
+			<stringfield name="QuiTag">
+			<invisible />
+			<bounds rect="115,80,30,23" />
+			<static>Qui</static>
+			<readonly />
+			</stringfield>
+			<numberfield name="qsstat">
+				<bounds rect="145,80,34,23" />
+				<description text="Initiative" />
+				<readonly />
+				<invisible />
+				<script>
+				
+				
+				
+				function onValueChanged()
+					local Qui = getValue() ;
+					local level = window.getDatabaseNode().getChild("level").getValue(); 
+					local Finesse = window.getDatabaseNode().getChild("Skill").getValue();
+					local Ibonus = window.getDatabaseNode().getChild("spellIbonus").getValue() 
+						
+							local out = Finesse + Qui + Ibonus - level;
+							window.getDatabaseNode().getChild("init").setValue( out );
+					return true
+				end
+				
+				
+				
+				</script>
+			</numberfield>
+			
+			<stringfield name="spellIbonusTag">
+			<bounds rect="185,80,15,23" />
+			<static>I+</static>
+			<invisible />
+			<readonly />
+			
+			
+			</stringfield>
+			<numberfield name="spellIbonus">
+				<bounds rect="200,80,25,23" />
+				<description text="Initiative" />
+				<displaysign />
+				<invisible />
+				<script>
+				function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+				
+				
+					function onValueChanged()
+							local Qui = window.getDatabaseNode().getChild("qsstat").getValue() ;
+							local level = window.getDatabaseNode().getChild("level").getValue(); 
+							local Finesse = window.getDatabaseNode().getChild("Skill").getValue();
+							local Ibonus = window.getDatabaseNode().getChild("spellIbonus").getValue() 
+							
+							local out = Finesse + Qui + Ibonus - level;
+							window.getDatabaseNode().getChild("init").setValue( out );
+					return;
+					end
+				</script>
+			</numberfield>
+			
+			<stringfield name="initTag">
+			<bounds rect="230,80,35,23" />
+			<static>Init</static>
+			<readonly />
+			<invisible />
+			</stringfield>
+			
+			<numberfield name="init">
+				<bounds rect="270,80,34,23" />
+				<description text="Initiative" />
+				<readonly />
+				<invisible />
+				<script>
+				function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+				
+				
+				function onValueChanged()
+				
+				
+				
+				
+				
+				
+					local a, b, c 
+					b = 0;
+					a = window.getDatabaseNode().getChild("init").getValue() 
+					
+				
+					
+
+					c = 0.5* (math.sqrt((a*4)+1)-1 )
+					b = 10-math.floor(c)
+					
+				window.getDatabaseNode().getChild("CastAct").setValue(b);
+					
+				end
+				</script>
+			</numberfield>
+			
+			
+			<stringfield name="ActTag">
+			<bounds rect="425,80,34,23" />
+			<invisible />
+			<static>Act</static>
+			
+			</stringfield>
+			<numberfield name="CastAct">
+			<readonly />
+			<bounds rect="450,80,34,23" />
+			<invisible />
+			</numberfield>
+			
+			<numberfield name="spellxp">
+			<bounds rect="650,80,34,23" />
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<readonly />
+				<hideonvalue value="0" />
+				<invisible />
+			</numberfield>
+		
+		
+		</sheetdata>
+		
+		<script>
+		
+
+		
+			quinode = window.windowlist.window.getDatabaseNode().getChild("spellsxp")
+			
+			
+		function onInit()
+			
+			
+			
+			if quinode then
+				quinode.onUpdate = recalc;	
+			end
+			
+			recalc();
+		end
+
+		function recalc()
+		
+			
+			if quinode then
+				local a= quinode.getValue();
+				print("Quickness is " .. a);
+				
+			end
+			
+		
+		end
+
+		</script>
+	</windowclass>
+	
+	
+	<!-- Weapons and Shields -->
+	
+		
+		<windowclass name="charsheet_ranged_weapons">
+			<sizelimits>
+				<minimum>
+					<height>48</height>
+				</minimum>
+			</sizelimits>
+		<sheetdata>
+		
+		<genericcontrol name="rangedframe">
+			    <bounds>0,0,-1,48</bounds>
+				<frame>
+					<name>rangedframe</name>
+				</frame>
+		</genericcontrol>
+			
+			<stringfield name="name">
+				<bounds rect="6,9,110,20" />
+			</stringfield>
+			
+			<numberfield name="abonus">
+				<bounds rect="125,9,35,20" />
+				<description text="Attack Bonus weapon + Specializations" />
+				
+
+				<script>
+				function onValueChanged()
+							local a,b,c,d,e;
+							
+							a = window.getDatabaseNode().getChild("abonus").getValue() 
+							b = window.getDatabaseNode().getChild("skill").getValue() 
+							c = window.getDatabaseNode().getChild("pstat").getValue() 
+							d = a+b+c;
+							window.getDatabaseNode().getChild("Attack").setValue(d) 
+							
+					return true;		
+					end
+					</script>
+			</numberfield>
+						
+			
+			<numberfield name="ibonus">
+				<bounds rect="155,9,35,20" />
+				<description text="Initiative Bonus" />
+				<script>
+				function onValueChanged()
+							local a,b,c,d,e;
+							
+							a = window.getDatabaseNode().getChild("ibonus").getValue() 
+							b = window.getDatabaseNode().getChild("skill").getValue() 
+							c = window.getDatabaseNode().getChild("qstat").getValue() 
+							d = a+b+c;
+							window.getDatabaseNode().getChild("init").setValue(d) 
+							
+					return true;		
+					end
+				</script>
+			</numberfield>
+			
+			<numberfield name="skill">
+				<bounds rect="192,9,35,20" />
+				<description text="Skill" />
+				<script>
+				
+				function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+				end
+				
+				
+				function onValueChanged()
+							local a,b,c,d,e,f,g,h;
+							
+							a = window.getDatabaseNode().getChild("abonus").getValue() 
+							b = window.getDatabaseNode().getChild("skill").getValue() 
+							c = window.getDatabaseNode().getChild("pstat").getValue() 
+							d = window.getDatabaseNode().getChild("ibonus").getValue()
+							e = window.getDatabaseNode().getChild("qstat").getValue() 
+							f = window.getDatabaseNode().getChild("wstat").getValue();
+												
+							g = a+b+c;
+							window.getDatabaseNode().getChild("Attack").setValue(g) 
+							
+							
+							g = b + d + e + f;
+							window.getDatabaseNode().getChild("init").setValue(g) 
+							
+							
+					return true;		
+					end
+					</script>
+			</numberfield>
+						
+			<numberfield name="pstat">
+			
+				<bounds rect="226,9,35,20" />
+				<description text="Perception" />
+				<readonly />
+				<script>
+			         function onValueChanged()
+						local a,b,c;
+						a = window.getDatabaseNode().getChild("abonus").getValue();
+						b = window.getDatabaseNode().getChild("skill").getValue();
+						c = window.getDatabaseNode().getChild("pstat").getValue();
+						window.getDatabaseNode().getChild("Attack").setValue(a+b+c);
+						return true;  
+					end
+					</script>
+					<invisible />
+			</numberfield>
+			
+			<numberfield name="qstat">
+			
+				<bounds rect="266,9,35,20" />
+				<readonly />
+				<script>
+			         function onValueChanged()
+						local a,b,c,d,e;
+						a = window.getDatabaseNode().getChild("wstat").getValue();
+						b = window.getDatabaseNode().getChild("skill").getValue();
+						c = window.getDatabaseNode().getChild("qstat").getValue();
+						d = window.getDatabaseNode().getChild("ibonus").getValue();
+						
+						e = a+b+c+d;
+						window.getDatabaseNode().getChild("init").setValue(e);
+						return true;  
+					end
+					</script>
+					<invisible />
+			</numberfield>
+			
+			
+			
+			<numberfield name="Attack">
+				<bounds rect="235,9,35,20" />
+				<description text="Attack" />
+				<readonly />
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					
+				</stateframe>
+				<script>
+				
+				
+				function onDoubleClick()
+					local a, b,c,d,e,f,g
+					   
+					   
+					    g = window.windowlist.window.getDatabaseNode().getChild("wfpen").getValue();		
+				
+						
+						a = window.getDatabaseNode().getChild("pstat").getValue() 
+						b = window.getDatabaseNode().getChild("abonus").getValue() 
+						c = window.getDatabaseNode().getChild("skill").getValue() 
+						d = window.getDatabaseNode().getChild("name").getValue()
+						f = "Attacking with " .. d .. " (Perception " ..a.. " +Ranged Skill " .. c .. " + Weapon Bonus " .. b .. " + Wounds/Fatigue ".. g ..")";
+						
+						
+							
+							
+						
+						local rRoll = {};
+						rRoll.sType = "dice";
+						if not Input.isAltPressed() then
+							rRoll.nMod = b+a+c; 
+							f = "Attacking with " .. d .. " (Perception " ..a.. " +Ranged Skill " .. c .. " + Weapon Bonus " .. b .. " + Wounds/Fatigue ".. g ..")";
+						else
+							rRoll.nMod = a+c; 
+							f = "Fast-Attacking with " .. d .. " (Perception " ..a.. " +Ranged Skill " .. c .. " + Wounds/Fatigue ".. g ..")";
+						end
+						rRoll.sDesc = f;
+						rRoll.aDice = {"d10"};
+						
+						rRoll.sTarget = d;
+						local rTarget = d;
+            
+						ActionsManager.performAction(draginfo, rActor, rRoll, rTarget);
+						
+						
+						return true;
+					end
+				</script>
+				<tooltip>
+					<text>Double Click Here for Regular Attack (Skill + Per + Weapon + Specializations)</text>
+				</tooltip>
+			</numberfield>
+
+			<numberfield name="wstat">
+				<invisible />
+				<bounds rect="226,9,1,1" />
+				<readonly />
+				<script>
+			        function onValueChanged()
+						local a,b,c,d,e;
+						a = window.getDatabaseNode().getChild("wstat").getValue();
+						b = window.getDatabaseNode().getChild("skill").getValue();
+						c = window.getDatabaseNode().getChild("qstat").getValue();
+						d = window.getDatabaseNode().getChild("ibonus").getValue();
+						
+						e = a+b+c+d;
+						window.getDatabaseNode().getChild("init").setValue(e);
+						return true;  
+					end
+					</script>
+			</numberfield>			
+						
+			<numberfield name="init">
+				<bounds rect="280,9,40,20" />
+				<description text="Initiative" />
+				<center />
+				<readonly />
+				
+				<script>
+				function onValueChanged()
+					local a, b, c 
+					b = 0;
+					a = window.getDatabaseNode().getChild("init").getValue() 
+					
+				
+					
+
+					c = 0.5* (math.sqrt((a*4)+1)-1 )
+					b = 10-math.floor(c)
+					
+				window.getDatabaseNode().getChild("speed").setValue(b);
+					
+				end
+				</script>
+			</numberfield>
+			
+			<numberfield name="speed">
+				<bounds rect="323,9,35,20" />
+				<description text="Segment-Speed" />
+				<nodrop />
+				<readonly />
+			</numberfield>
+							
+			<numberfield name="RoF">
+				<bounds rect="357,9,35,20" />
+				<description text="Rate of Fire per half second" />
+				<nodrop />
+				<script>
+				function onDrag(button, x, y, draginfo)		
+				 local rof = getValue();
+				 local dielist = {}; 
+					for i=1,rof do  
+						dielist[i]="d10";
+					end			
+				draginfo.setDieList(dielist);
+				draginfo.setType("dice");
+				draginfo.setDescription(window.getDatabaseNode().getChild("name").getValue());
+				return true;
+				end
+				</script>
+			</numberfield>
+			
+			<numberfield name="Cyckle">
+				<bounds rect="357,32,35,20" />
+				<description text="Rearming time for singleshot weapons" />
+				<nodrop />
+			</numberfield>
+							
+			<numberfield name="Clip">
+				<bounds rect="401,9,21,20" />
+				<description text="Clip-Magazine Size" />
+				<nodrop />
+			</numberfield>
+			
+			<numberfield name="Ammo">
+				<bounds rect="426,9,35,20" />
+				<description text="Ammo Left" />
+				<nodrop />
+			</numberfield>			
+							
+			<numberfield name="Dam">
+				<bounds rect="475,9,35,20" />
+				<description text="Damage" />
+				<nodrop />
+				
+			</numberfield>
+			
+			<numberfield name="Pen">
+				<bounds rect="510,9,180,20" />
+				<description text="Pen" />
+				<center />
+				
+				<nodrop />
+				<script>
+				function onValueChanged()
+							local a,b,c,d,e;
+							
+							a = window.getDatabaseNode().getChild("Pen").getValue() 
+							b = a * 0.5;
+							c = a * 0.75;
+							d = a * 1.25
+							
+							window.getDatabaseNode().getChild("Pen1").setValue(b);
+							window.getDatabaseNode().getChild("Pen2").setValue(c);
+							window.getDatabaseNode().getChild("Pen3").setValue(a);
+							window.getDatabaseNode().getChild("Pen4").setValue(d);
+							
+					return true;		
+					end
+				</script>
+				
+			</numberfield>
+			
+			<numberfield name="Pen1">
+				<bounds rect="510,35,15,20" />
+				
+				<readonly />
+				<description text="Half Dam" />
+				<nodrop />
+			</numberfield>
+			
+			<numberfield name="Pen2">
+				<bounds rect="555,35,15,20" />
+				
+				<readonly />
+				<description text="Half Dam" />
+				<nodrop />
+			</numberfield>
+			
+			<numberfield name="Pen3">
+			    <readonly />
+				<bounds rect="600,35,15,20" />
+				
+				<description text="Immune" />
+				<nodrop />
+			</numberfield>
+			
+			<numberfield name="Pen4">
+			    <readonly />
+				<bounds rect="645,35,15,20" />
+				
+				<description text="Immune" />
+				<nodrop />
+			</numberfield>
+			
+			
+			<numberfield name="Range">
+				<bounds rect="670,9,35,20" />
+				<description text="Reach" />
+				<nodrop />
+				
+			</numberfield>
+			
+			
+			
+		</sheetdata>
+		<script>
+		local pernode = nil;
+		local quinode = nil;
+		local Wnode = nil;
+		
+		function onInit()
+			pernode = windowlist.window.getDatabaseNode().getChild("perception");
+			quinode = windowlist.window.getDatabaseNode().getChild("quickness");
+			Wnode = windowlist.window.getDatabaseNode().getChild("wfpen");
+			
+			
+			if pernode then
+				pernode.onUpdate = recalc;
+			end
+			
+			if Wnode then
+				Wnode.onUpdate = recalc;
+			end
+			
+			if quinode then
+				quinode.onUpdate = recalc;	
+			end
+			
+			recalc();
+		end
+
+		function recalc()
+			if pernode then
+				pstat.setValue(pernode.getValue());
+			end
+			
+			if quinode then
+				qstat.setValue(quinode.getValue());
+			end
+			
+			if Wnode then
+				wstat.setValue(Wnode.getValue());
+			end
+		end
+		</script>
+		
+	</windowclass>
+	
+	<!-- Melee Weapons -->
+	
+		<windowclass name="charsheet_weapons">
+			<sizelimits>
+				<minimum>
+					<height>60</height>
+				</minimum>
+			</sizelimits>
+		<sheetdata>
+		
+		<genericcontrol name="meleeframe">
+			    <bounds>0,0,-1,75</bounds>
+				<frame>
+					<name>meleeframe</name>
+				</frame>
+		</genericcontrol>
+			
+			<stringfield name="name">
+				<bounds rect="6,9,110,20" />
+			</stringfield>
+			
+			<numberfield name="abonus">
+				<bounds rect="125,9,35,20" />
+				<description text="Attack Bonus weapon + Specializations" />
+				<script>
+				function onValueChanged()
+							local a,b,c,d,e;
+							
+							a = window.getDatabaseNode().getChild("abonus").getValue() 
+							b = window.getDatabaseNode().getChild("skill").getValue() 
+							c = window.getDatabaseNode().getChild("mstat").getValue() 
+							d = a+b+c;
+							window.getDatabaseNode().getChild("Attack").setValue(d) 
+							
+					return true;		
+					end
+					</script>
+			</numberfield>
+			
+			<numberfield name="dbonus">
+				<bounds rect="160,9,35,20" />
+				<description text="Defence Bonus weapon + Specializations" />
+				<script>
+				function onValueChanged()
+							local a,b,c,d,e;
+							
+							a = window.getDatabaseNode().getChild("dbonus").getValue() 
+							b = window.getDatabaseNode().getChild("skill").getValue() 
+							c = window.getDatabaseNode().getChild("qstat").getValue() 
+							d = a+b+c;
+							window.getDatabaseNode().getChild("Defence").setValue(d) 
+							
+					return true;		
+					end
+				</script>
+			</numberfield>
+			
+			<numberfield name="ibonus">
+				<bounds rect="185,9,35,20" />
+				<description text="Initiative Bonus" />
+				<script>
+				function onValueChanged()
+							local a,b,c,d,e;
+							
+							a = window.getDatabaseNode().getChild("ibonus").getValue() 
+							b = window.getDatabaseNode().getChild("skill").getValue() 
+							c = window.getDatabaseNode().getChild("qstat").getValue() 
+							d = a+b+c;
+							window.getDatabaseNode().getChild("init").setValue(d) 
+							
+					return true;		
+					end
+				</script>
+			</numberfield>
+			
+			<numberfield name="skill">
+				<bounds rect="230,9,35,20" />
+				<description text="Skill" />
+				<script>
+				function onValueChanged()
+							local a,b,c,d,e,f,g,h;
+							
+							a = window.getDatabaseNode().getChild("abonus").getValue() 
+							b = window.getDatabaseNode().getChild("skill").getValue() 
+							c = window.getDatabaseNode().getChild("dbonus").getValue() 
+							d = window.getDatabaseNode().getChild("mstat").getValue() 
+							e = window.getDatabaseNode().getChild("qstat").getValue() 
+							f = window.getDatabaseNode().getChild("ibonus").getValue() 
+							h = window.getDatabaseNode().getChild("qstat").getValue() 							
+							g = a+b+d;
+							window.getDatabaseNode().getChild("Attack").setValue(g) 
+							
+							g = b+c+e;
+							window.getDatabaseNode().getChild("Defence").setValue(g) 
+							g = b + e + f;
+							window.getDatabaseNode().getChild("init").setValue(g) 
+							
+							
+					return true;		
+					end
+					</script>
+			</numberfield>
+						
+			<numberfield name="mstat">
+			
+				<bounds rect="270,9,35,20" />
+				<description text="Dexterity" />
+				<readonly />
+				<script>
+			         function onValueChanged()
+						local a,b,c;
+						a = window.getDatabaseNode().getChild("abonus").getValue();
+						b = window.getDatabaseNode().getChild("skill").getValue();
+						c = window.getDatabaseNode().getChild("mstat").getValue();
+						window.getDatabaseNode().getChild("Attack").setValue(a+b+c);
+						return true;  
+					end
+					</script>
+			</numberfield>
+			
+			<numberfield name="wstat">
+			
+				<bounds rect="270,9,1,1" />
+				<description text="Dexterity" />
+				<readonly />
+				<invisible />
+				<script>
+			         function onValueChanged()
+						local a,b,c,d,e;
+						a = window.getDatabaseNode().getChild("wstat").getValue();
+						b = window.getDatabaseNode().getChild("skill").getValue();
+						c = window.getDatabaseNode().getChild("qstat").getValue();
+						d = window.getDatabaseNode().getChild("ibonus").getValue();
+						
+						e = a+b+c+d;
+						window.getDatabaseNode().getChild("init").setValue(e);
+						return true;  
+					end
+					</script>
+			</numberfield>
+			
+			
+			<numberfield name="qstat">
+			
+				<bounds rect="310,9,35,20" />
+				<readonly />
+				<script>
+			         function onValueChanged()
+						local a,b,c,d,e,f;
+						a = window.getDatabaseNode().getChild("dbonus").getValue();
+						b = window.getDatabaseNode().getChild("skill").getValue();
+						c = window.getDatabaseNode().getChild("qstat").getValue();
+						d = window.getDatabaseNode().getChild("ibonus").getValue();
+						f = window.getDatabaseNode().getChild("wstat").getValue();
+						e = a + b + c;
+						window.getDatabaseNode().getChild("Defence").setValue(e);
+						e = b+c+d+f;
+						window.getDatabaseNode().getChild("init").setValue(e);
+						return true;  
+					end
+					</script>
+			</numberfield>
+			
+			
+			
+			<numberfield name="Attack">
+				<bounds rect="350,9,35,20" />
+				<description text="Attack" />
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					
+				</stateframe>
+				<readonly />
+				<tooltip>
+					<text>Double Click Here for Regular Attack (Skill + Dex + Weapon + Specializations)</text>
+				</tooltip>
+				<script>
+				function onDoubleClick()
+					local a, b,c,d,e,f, g
+				
+						g = window.windowlist.window.getDatabaseNode().getChild("wfpen").getValue();	
+						a = window.getDatabaseNode().getChild("mstat").getValue() 
+						b = window.getDatabaseNode().getChild("abonus").getValue() 
+						c = window.getDatabaseNode().getChild("skill").getValue() 
+						d = window.getDatabaseNode().getChild("name").getValue()
+						f = "Attacking with " .. d .. " (Dexterity " ..a.. " +Melee Skill " .. c .. " + Weapon Bonus " .. b .. " + Wounds/Fatigue ".. g ..")";
+						
+						
+						local rRoll = {};
+						rRoll.sType = "dice";
+						rRoll.nMod = b+a+c+g; 
+						rRoll.sDesc = f;
+						rRoll.aDice = {"d10"};
+						
+						rRoll.sTarget = d;
+						local rTarget = d;
+            
+						ActionsManager.performAction(draginfo, rActor, rRoll, rTarget);
+						
+						
+						
+						return true;
+					end
+					
+				function onValueChanged()
+				local a,b,c,d,e;
+						a = window.getDatabaseNode().getChild("mstat").getValue() 
+						b = window.getDatabaseNode().getChild("abonus").getValue() 
+						c = window.getDatabaseNode().getChild("skill").getValue()
+						c = math.floor(c * 1.5);
+						d = a + b +c;
+						window.getDatabaseNode().getChild("AoAttack").setValue(d);
+					
+				
+				return true;
+				end
+				</script>
+			</numberfield>
+			
+			<numberfield name="AoAttack">
+				<bounds rect="350,29,35,20" />
+				<description text="Attack" />
+				<readonly />
+				<tooltip>
+					<text>Double Click Here for All Out Attack (Skill*1.5 + Dex + Weapon + Specializations)</text>
+				</tooltip>
+				
+				<script>
+				function onDoubleClick()
+					local a, b,c,d,e,f, g
+				
+						g = window.windowlist.window.getDatabaseNode().getChild("wfpen").getValue();	
+						a = window.getDatabaseNode().getChild("mstat").getValue() 
+						b = window.getDatabaseNode().getChild("abonus").getValue() 
+						c = window.getDatabaseNode().getChild("skill").getValue() 
+						c = math.floor(c * 1.5)
+						d = window.getDatabaseNode().getChild("name").getValue()
+						f = "All out Attacking with " .. d .. " (Dexterity " ..a.. " + Melee Skill " .. c  .. " + Weapon Bonus " .. b .. " + Wounds/Fatigue ".. g ..")";
+						
+						
+						local rRoll = {};
+						rRoll.sType = "dice";
+						rRoll.nMod = b+a+c+g; 
+						rRoll.sDesc = f;
+						rRoll.aDice = {"d10"};
+						
+						rRoll.sTarget = d;
+						local rTarget = d;
+            
+						ActionsManager.performAction(draginfo, rActor, rRoll, rTarget);
+						
+						
+						
+						return true;
+					end
+				</script>
+			</numberfield>
+			
+			
+			<numberfield name="Defence">
+				<bounds rect="390,9,35,20" />
+				<description text="Defence" />
+				<readonly />
+				<script>
+								
+				
+				function onDoubleClick()
+					local a, b,c,d,e,f, g
+				
+						g = window.windowlist.window.getDatabaseNode().getChild("wfpen").getValue();	
+						a = window.getDatabaseNode().getChild("qstat").getValue() 
+						b = window.getDatabaseNode().getChild("dbonus").getValue() 
+						c = window.getDatabaseNode().getChild("skill").getValue() 
+						d = window.getDatabaseNode().getChild("name").getValue()
+						f = "Defending with " .. d .. " (Quickness " ..a.. " +Melee Skill " .. c .. " + Weapon Bonus " .. b .. " + Wounds/Fatigue ".. g ..")";
+						
+						
+						local rRoll = {};
+						rRoll.sType = "dice";
+						rRoll.nMod = b+a+c+g; 
+						rRoll.sDesc = f;
+						rRoll.aDice = {"d10"};
+						
+						rRoll.sTarget = d;
+						local rTarget = d;
+            
+						ActionsManager.performAction(draginfo, rActor, rRoll, rTarget);
+						
+						
+						
+						return true;
+					end
+				
+				
+				
+				
+				
+				
+				
+				
+				function onValueChanged()
+				local a,b,c,d,e;
+						a = window.getDatabaseNode().getChild("qstat").getValue() 
+						b = window.getDatabaseNode().getChild("dbonus").getValue() 
+						c = window.getDatabaseNode().getChild("skill").getValue()
+						c = math.floor(c * 1.5);
+						d = a + b +c;
+						window.getDatabaseNode().getChild("AoDefence").setValue(d);
+				return true;
+				end
+				</script>				
+			</numberfield>
+
+			<numberfield name="AoDefence">
+				<bounds rect="390,29,35,20" />
+				<description text="Defence" />
+				<readonly />
+				<script>
+				function onDoubleClick()
+					local a, b,c,d,e,f,g
+				
+						g = window.windowlist.window.getDatabaseNode().getChild("wfpen").getValue();	
+						a = window.getDatabaseNode().getChild("qstat").getValue() 
+						b = window.getDatabaseNode().getChild("dbonus").getValue() 
+						c = window.getDatabaseNode().getChild("skill").getValue()
+						c = math.floor(c * 1.5);
+						d = window.getDatabaseNode().getChild("name").getValue()
+						f = "All Out Defending with " .. d .. " (Quickness " ..a.. " + Skill " .. c .. " + Weapon Bonus " .. b .. " + Wounds/Fatigue ".. g ..")";
+						
+
+						local rRoll = {};
+						rRoll.sType = "dice";
+						rRoll.nMod = b+a+c+g; 
+						rRoll.sDesc = f;
+						rRoll.aDice = {"d10"};
+						
+						rRoll.sTarget = d;
+						local rTarget = d;
+            
+						ActionsManager.performAction(draginfo, rActor, rRoll, rTarget);
+
+						
+						return true;
+					end			
+				</script>				
+			</numberfield>
+						
+			<numberfield name="init">
+				<bounds rect="430,9,35,20" />
+				<description text="Initiative" />
+				<readonly />
+				<script>
+				function onValueChanged()
+					local a, b, c 
+					b = 0;
+					a = window.getDatabaseNode().getChild("init").getValue() 
+					
+				
+					
+
+					c = 0.5* (math.sqrt((a*4)+1)-1 )
+					b = 10-math.floor(c)
+					
+					
+				window.getDatabaseNode().getChild("speed").setValue(b);
+					
+				end
+				</script>
+			</numberfield>
+			
+			<numberfield name="speed">
+				<bounds rect="460,9,35,20" />
+				<description text="Segment-Speed" />
+				<nodrop />
+				<readonly />
+			</numberfield>
+			
+			<numberfield name="strstat">
+				<bounds rect="490,9,35,20" />
+				<description text="Strength" />
+				<nodrop />
+				<readonly />
+				<script>
+					function onValueChanged()
+							local a,b,c;
+							
+							a = window.getDatabaseNode().getChild("strstat").getValue() 
+							b = window.getDatabaseNode().getChild("dambonus").getValue() 
+							
+							c = a+a+b;
+							window.getDatabaseNode().getChild("Dam").setValue(c) 
+							
+					return true;		
+					end
+				</script>
+			</numberfield>
+			
+			<numberfield name="dambonus">
+				<bounds rect="125,35,35,20" />
+				<description text="Weapon Damage" />
+				<nodrop />
+				<script>
+					function onValueChanged()
+							local a,b,c;
+							
+							a = window.getDatabaseNode().getChild("strstat").getValue() 
+							b = window.getDatabaseNode().getChild("dambonus").getValue() 
+							
+							c = a+a+b;
+							window.getDatabaseNode().getChild("Dam").setValue(c) 
+							
+					return true;		
+					end
+				</script>
+			</numberfield>
+			
+			<numberfield name="Dam">
+				<bounds rect="210,35,35,20" />
+				<description text="Damage" />
+				<nodrop />
+				<readonly />
+			</numberfield>
+			
+						
+				<numberfield name="Pen">
+				<bounds rect="510,9,180,20" />
+				<description text="Pen" />
+				<center />
+				
+				<nodrop />
+				<script>
+				function onValueChanged()
+							local a,b,c,d,e;
+							
+							a = window.getDatabaseNode().getChild("Pen").getValue() 
+							b = a * 0.5;
+							c = a * 0.75;
+							d = a * 1.25
+							
+							window.getDatabaseNode().getChild("Pen1").setValue(b);
+							window.getDatabaseNode().getChild("Pen2").setValue(c);
+							window.getDatabaseNode().getChild("Pen3").setValue(a);
+							window.getDatabaseNode().getChild("Pen4").setValue(d);
+							
+					return true;		
+					end
+				</script>
+				
+			</numberfield>
+			
+			<numberfield name="Pen1">
+				<bounds rect="510,35,15,20" />
+				
+				<readonly />
+				<description text="Half Dam" />
+				<nodrop />
+			</numberfield>
+			
+			<numberfield name="Pen2">
+				<bounds rect="555,35,15,20" />
+				
+				<readonly />
+				<description text="Half Dam" />
+				<nodrop />
+			</numberfield>
+			
+			<numberfield name="Pen3">
+			    <readonly />
+				<bounds rect="600,35,15,20" />
+				
+				<description text="Immune" />
+				<nodrop />
+			</numberfield>
+			
+			<numberfield name="Pen4">
+			    <readonly />
+				<bounds rect="645,35,15,20" />
+				
+				<description text="Immune" />
+				<nodrop />
+			</numberfield>
+			
+			<numberfield name="Range">
+				<bounds rect="670,9,35,20" />
+				<description text="Reach" />
+				<nodrop />
+				
+			</numberfield>
+			
+						
+			
+			
+			
+		</sheetdata>
+		<script>
+		local dexnode = nil;
+		local quinode = nil;
+		local strnode = nil;
+		local wnode = nil;
+		
+		function onInit()
+			dexnode = windowlist.window.getDatabaseNode().getChild("dexterity");
+			quinode = windowlist.window.getDatabaseNode().getChild("quickness");
+			strnode = windowlist.window.getDatabaseNode().getChild("strength");
+			wnode = windowlist.window.getDatabaseNode().getChild("wfpen");
+			
+			if dexnode then
+				dexnode.onUpdate = recalc;
+			end
+			
+			if quinode then
+				quinode.onUpdate = recalc;	
+			end
+			
+			if strnode then
+				strnode.onUpdate = recalc;	
+			end			
+
+			if wnode then
+				wnode.onUpdate = recalc;	
+			end
+
+			recalc();
+		end
+
+		function recalc()
+			if dexnode then
+				mstat.setValue(dexnode.getValue());
+			end
+			
+			if quinode then
+				qstat.setValue(quinode.getValue());
+			end
+			
+			if strnode then
+				strstat.setValue(strnode.getValue());
+			end
+			
+			if wnode then
+				wstat.setValue(wnode.getValue());
+			end
+			
+		end
+		</script>
+		
+	</windowclass>
+
+	
+</root>

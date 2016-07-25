@@ -1,0 +1,1757 @@
+<!-- This file is provided under the Open Game License version 1.0a
+  -- For more information on OGL and related issues, see 
+  --   http://www.wizards.com/d20
+  --
+  -- For information on the Fantasy Grounds d20 Ruleset licensing and
+  -- the OGL license text, see the d20 ruleset license in the program
+  -- options.
+  --
+  -- All producers of work derived from this definition are adviced to
+  -- familiarize themselves with the above licenses, and to take special
+  -- care in providing the definition of Product Identity (as specified
+  -- by the OGL) in their products.
+  --
+  -- Copyright 2007 SmiteWorks Ltd.
+  -- Modified by Zambol
+  -->
+
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="2.0">
+
+<windowclass name="combattracker_effect">
+		<sizelimits>
+			<minimum>
+				<height>28</height>
+			</minimum>
+		</sizelimits>
+		<sheetdata>
+			<stringcontrol name="label">
+				<bounds>0,4,75,17</bounds>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>textline</name>
+					<offset>0,1,0,0</offset>
+				</frame>
+				<tabtarget>
+					<next>duration</next>
+					<prev>adjustment</prev>
+				</tabtarget>
+				<script>
+					function onDeleteUp()
+						if #(window.windowlist.getWindows()) &gt; 1 then
+							window.close();
+						end
+					end
+					
+					function onDeleteDown()
+						if #(window.windowlist.getWindows()) &gt; 1 then
+							window.close();
+						end
+					end
+
+
+					function onGainFocus()
+						if getValue() == "" then
+							wasempty = true;
+						else
+							wasempty = false;
+						end
+					end
+					
+					function onValueChanged()
+						window.windowlist.checkForEmpty();
+
+						if wasempty then
+							casterentry = window.windowlist.window.windowlist.getActiveEntry();
+							if casterentry then
+								window.caster.setSource(casterentry);
+							end
+							
+							wasempty = false;
+						end
+					end
+				</script>
+			</stringcontrol>
+			
+			<numbercontrol name="duration">
+				<anchored>
+					<left>
+						<parent>label</parent>
+						<anchor>right</anchor>
+					</left>
+					<top>
+						<anchor>top</anchor>
+					</top>
+					<size>
+						<width>30</width>
+						<height>22</height>
+					</size>
+				</anchored>
+				<font>sheetnumbersmall</font>
+				<frame>
+					<name>bonus</name>
+					<offset>2,2,2,1</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<tabtarget>
+					<next>adjustment</next>
+					<prev>label</prev>
+				</tabtarget>
+			</numbercontrol>
+			<numbercontrol name="adjustment">
+				<anchored>
+					<left>
+						<parent>duration</parent>
+						<anchor>right</anchor>
+					</left>
+					<top>
+						<anchor>top</anchor>
+					</top>
+					<size>
+						<width>30</width>
+						<height>22</height>
+					</size>
+				</anchored>
+				<font>sheetnumbersmall</font>
+				<hideonvalue>0</hideonvalue>
+				<displaysign />
+				<frame>
+					<name>durationadjustment</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<droptypes>
+					<type>combattrackerentry</type>
+				</droptypes>
+				<stateframe>
+					<drophilight>
+						<name>sheetfocus</name>
+						<offset>2,2,2,2</offset>
+					</drophilight>
+				</stateframe>
+				<tabtarget>
+					<next>label</next>
+					<prev>duration</prev>
+				</tabtarget>
+				<script>
+					function onValueChanged()
+						window.caster.updateVisibility();
+					end
+					
+					function onDrop(x, y, draginfo)
+						if draginfo.isType("combattrackerentry") then
+							window.caster.setSource(draginfo.getCustomData());
+							return true;
+						end
+					end
+				</script>
+			</numbercontrol>
+
+			<stringcontrol name="caster">
+				<anchored>
+					<right>
+						<parent>adjustment</parent>
+						<anchor>right</anchor>
+						<offset>-5</offset>
+					</right>
+					<top>
+						<parent>duration</parent>
+						<anchor>bottom</anchor>
+					</top>
+					<size>
+						<height>12</height>
+					</size>
+				</anchored>
+				<center />
+				<static />
+				<font>sheetlabelsmall</font>
+				<color>#7f000000</color>
+				<empty>&#171; unnamed &#187;</empty>
+				<invisible />
+				<script>
+					function updateVisibility()
+						if sourceentry and window.adjustment.getValue() ~= 0 then
+							setVisible(true);
+						else
+							setVisible(false);
+						end
+					end
+				
+					function getSource()
+						return sourceentry;
+					end
+				
+					function setSource(entry)
+						if sourceentry then
+							sourceentry.removeObserver(self);
+						end
+					
+						sourceentry = entry;
+						
+						if sourceentry then
+							sourceentry.addObserver(self);
+							setValue("Update on: " .. sourceentry.name.getValue());
+							updateVisibility();
+						else
+							updateVisibility();
+						end
+					end
+					
+					function observedNameChanged(source)
+						setValue("Update on: " .. sourceentry.name.getValue());
+					end
+					
+					function observedClosed(source)
+						if source == sourceentry then
+							sourceentry = nil;
+							setValue(nil);
+							updateVisibility();
+						end
+					end
+					
+					function onClickDown(button, x, y)
+						if button == 2 then
+							setSource(nil);
+						end
+					end
+					
+					function onDrop(x, y, draginfo)
+						if draginfo.isType("combattrackerentry") then
+							setSource(draginfo.getCustomData());
+							return true;
+						end
+					end
+				</script>
+			</stringcontrol>
+		</sheetdata>
+	</windowclass>
+
+	<template name="combattrackerffsource">
+		<genericcontrol>
+			<script>
+				function onInit()
+					setHoverCursor("hand");
+				end
+			
+				function onDragStart(button, x, y, draginfo)
+					draginfo.setType("combattrackerff");
+
+					draginfo.setIcon(icon[1]);
+					draginfo.setStringData(value[1]);
+
+					return true;
+				end
+			</script>
+		</genericcontrol>
+	</template>
+
+	<windowclass name="combattracker_entry">
+		<frame>ctentrybox</frame>
+		<sizelimits>
+			<minimum>
+				<height>40</height>
+			</minimum>
+		</sizelimits>
+		<script file="armct/scripts/combattracker_entry.lua" />
+		<sheetdata>
+			<!-- Basics -->
+			<tokencontrol name="token">
+				<bounds>33,6,23,23</bounds>
+				<empty>indicator_emptytoken</empty>
+				<script file="armct/scripts/combattracker_token.lua" />
+			</tokencontrol>
+			
+			<stringcontrol name="name">
+				<anchored>
+					<to>token</to>
+					<position>righthigh</position>
+					<offset>1,5</offset>
+					<size>
+						<width>90</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>textline</name>
+					<offset>0,1,0,0</offset>
+				</frame>
+				<script>
+					function onValueChanged()
+					
+						local a = window.name.getValue()
+                        local b = window.troops.getValue()
+                        local c
+                        if b &gt; 0 then
+                         c = a .. " # " .. b
+						else
+						 c = a
+						end
+						
+						window.token.setName(c);
+						window.nameChanged();
+					end
+					
+					function onDragStart(button, x, y, draginfo)
+						draginfo.setType("combattrackerentry");
+						draginfo.setStringData(getValue());
+						draginfo.setCustomData(window);
+						return true;
+					end
+					
+					function onInit()
+						setHoverCursor("hand");
+						local a = window.name.getValue()
+                        local b = window.troops.getValue()
+                        local c
+                        if b &gt; 0 then
+                         c = a .. " # " .. b
+						else
+						 c = a
+						end
+						
+						window.token.setName(c);
+						window.nameChanged();
+					end
+
+					function onLinkUpdated(source)
+						setValue(source.getValue());
+					end
+					
+					function setLink(dbnode)
+						if dbnode then
+							linknode = dbnode;
+							linknode.onUpdate = onLinkUpdated;
+							onLinkUpdated(linknode);
+							
+							addBitmapWidget("indicator_linked").setPosition("bottomright", -5, -7);
+						end
+					end
+				</script>
+			</stringcontrol>
+			
+			<numbercontrol name="initresult">
+				<anchored>
+					<to>name</to>
+					<position>righthigh</position>
+					<offset>4,-5</offset>
+					<size>
+						<width>34</width>
+						<height>23</height>
+					</size>
+				</anchored>
+				<hideonvalue>0</hideonvalue>
+				<font>sheetnumbersmall</font>
+				<frame>
+					<name>bonus</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<script>
+					function onDrop(x, y, draginfo)
+						if draginfo.getType() == "number" then
+							setValue(getValue() + draginfo.getNumberData());
+						end
+						
+						return true;
+					end
+					
+					function onInit()
+						setValue(6);
+					end
+				</script>
+			</numbercontrol>
+			
+			<numbercontrol name="ActValue">
+				<anchored>
+					<to>initresult</to>
+					<position>righthigh</position>
+					<offset>4,0</offset>
+					<size>
+						<width>34</width>
+						<height>23</height>
+					</size>
+				</anchored>
+				<hideonvalue>0</hideonvalue>
+				<font>sheetnumbersmall</font>
+				<frame>
+					<name>bonus</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>2,2,2,2</offset>
+				</keyeditframe>
+				<script>
+					function onDrop(x, y, draginfo)
+						if draginfo.getType() == "number" then
+							setValue(getValue() + draginfo.getNumberData());
+						end
+						
+						return true;
+					end
+					
+					function onInit()
+						setValue(6);
+					end
+					
+				</script>
+			</numbercontrol>
+			
+			<numbercontrol name="space">
+				<anchored>
+					<to>name</to>
+					<position>right</position>
+					<offset>100,0</offset>
+					<size>
+						<width>34</width>
+					</size>
+				</anchored>
+				<hideonvalue value="0" />
+				<font>sheetnumbersmall</font>
+				<frame>
+					<name>modifier</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<script>
+					function onInit()
+						setValue(1);
+					end
+					
+					function onValueChanged()
+						window.token.updateUnderlay();
+					end
+				</script>
+			</numbercontrol>
+			<numbercontrol name="reach">
+				<anchored>
+					<to>space</to>
+					<position>right</position>
+					<offset>25,0</offset>
+					<size>
+						<width>34</width>
+					</size>
+				</anchored>
+				<hideonvalue value="0" />
+				<font>sheetnumbersmall</font>
+				<frame>
+					<name>modifier</name>
+					<offset>2,2,2,2</offset>
+				</frame>
+				<script>
+					function onInit()
+						setValue(1);
+					end
+					
+					function onValueChanged()
+						window.token.updateUnderlay();
+					end
+				</script>
+			</numbercontrol>
+			<genericcontrol>
+				<anchored>
+					<to>space</to>
+					<position>left</position>
+					<offset>2,0</offset>
+					<size>
+						<width>18</width>
+					</size>
+				</anchored>
+				<icon>indicator_space</icon>
+			</genericcontrol>
+			<genericcontrol>
+				<anchored>
+					<to>reach</to>
+					<position>left</position>
+					<offset>2,0</offset>
+					<size>
+						<width>18</width>
+					</size>
+				</anchored>
+				<icon>indicator_reach</icon>
+			</genericcontrol>
+
+			<genericcontrol name="friendfoe">
+				<anchored>
+					<to>reach</to>
+					<position>righthigh</position>
+					<offset>5,0</offset>
+					<size>
+						<width>20</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<icon>indicator_ctffempty</icon>
+				<stateicons>
+					<friend>indicator_ctfffriend</friend>
+					<neutral>indicator_ctffneutral</neutral>
+					<foe>indicator_ctfffoe</foe>
+				</stateicons>
+				<script>
+					function onDrop(x, y, draginfo)
+						if draginfo.isType("combattrackerff") then
+							state = draginfo.getStringData();
+							window.setFoF(state);
+							setIcon(stateicons[1][state][1]);
+						end
+					end
+					
+					function setState(s)
+						state = s;
+						window.setFoF(state);
+						if stateicons[1][state] then
+							setIcon(stateicons[1][state][1]);
+						else
+							setIcon(icon[1]);
+						end
+					end
+				</script>
+			</genericcontrol>
+			
+			<windowreferencecontrol name="link">
+				<anchored>
+					<right>
+						<anchor>right</anchor>
+						<offset>-6</offset>
+					</right>
+					<top>
+						<anchor>top</anchor>
+						<offset>7</offset>
+					</top>
+					<size>
+						<width>20</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>button_dragtarget</normal>
+				</icon>
+				<class>npc</class>
+				<invisible />
+			</windowreferencecontrol>
+			
+			<buttoncontrol name="activateeffects">
+				<anchored>
+					<right>
+						<anchor>right</anchor>
+						<offset>-59</offset>
+					</right>
+					<top>
+						<parent>link</parent>
+						<anchor>top</anchor>
+					</top>
+					<size>
+						<width>20</width>
+						<height>21</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>indicator_effect</normal>
+					<pressed>indicator_effect</pressed>
+				</icon>
+				<script>
+					function onButtonPress()
+						window.toggleForceEffects();
+					end
+
+					function onHover(oncontrol)
+						window.setEffectsVisible(oncontrol);
+					end
+					
+					function onInit()
+						setColor("7fffffff");
+					end
+				</script>
+			</buttoncontrol>
+			<buttoncontrol name="activateactive">
+				<anchored>
+					<right>
+						<parent>activateeffects</parent>
+						<anchor>left</anchor>
+					</right>
+					<top>
+						<parent>link</parent>
+						<anchor>top</anchor>
+					</top>
+					<size>
+						<width>20</width>
+						<height>21</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>indicator_sword</normal>
+					<pressed>indicator_sworddown</pressed>
+				</icon>
+				<script>
+					function onButtonPress()
+						window.toggleForceActive();
+					end
+
+					function onHover(oncontrol)
+						window.setActiveVisible(oncontrol);
+					end
+					
+					function onInit()
+						setColor("7fffffff");
+					end
+				</script>
+			</buttoncontrol>
+
+			
+			
+			
+			
+			<genericcontrol name="targeting">
+				<anchored>
+					<right>
+						<anchor>right</anchor>
+						<offset>-6</offset>
+					</right>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>current</relation>
+					</top>
+					<size>
+						<width>100</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<iconspacing>21</iconspacing>
+				<script file="armct/scripts/combattracker_targeting.lua" />
+			</genericcontrol>
+			
+			<buttoncontrol name="activatedefensive">
+				<anchored>
+					<right>
+						<parent>link</parent>
+						<anchor>left</anchor>
+					</right>
+					<top>
+						<parent>link</parent>
+						<anchor>top</anchor>
+					</top>
+					<size>
+						<width>20</width>
+						<height>21</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>indicator_shield</normal>
+					<pressed>indicator_shielddown</pressed>
+				</icon>
+				<script>
+										
+					<script>
+					function onButtonPress()
+						window.toggleForceDefensive();
+					end
+
+					function onHover(oncontrol)
+						window.setDefensiveVisible(oncontrol);
+					end
+					
+					function onInit()
+						setColor("7fffffff");
+					end
+				</script>
+				</script>
+			</buttoncontrol>
+
+			<!-- Wounds --->
+			
+			<genericcontrol name="wound_icon">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>150</offset>
+					</left>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>current</relation>
+						
+					</top>
+					<size>
+						<width>20</width>
+						<height>30</height>
+					</size>
+				</anchored>
+				<icon>wound_icon</icon>
+			</genericcontrol>
+			
+			<numbercontrol name="lwound">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>181</offset>
+					</left>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>current</relation>
+					</top>
+					<size>
+						<width>30</width>
+						<height>26</height>
+					</size>
+					
+				</anchored>
+				<font>sheettextsmall</font>
+				
+				<frame>
+					<name>textlinesmall</name>
+					<offset>0,-6,0,0</offset>
+				</frame>
+				<script>
+					function onValueChanged()
+						if linknode then
+							linknode.setValue(getValue());
+						end
+						
+						local a,b,c,d,e,f
+						
+							a = window.lwound.getValue() * -1;
+							b = window.mwound.getValue() * -3;
+							c = window.hwound.getValue() * -5;
+							d = window.ctfatigue.getValue() * -1;
+							e = window.ctfatigue2.getValue() * -1;
+							f = a + b + c + d +e;
+						window.wfpen.setValue(f)
+					end
+					
+					function onLinkUpdated(source)
+						setValue(source.getValue());
+					end
+					
+					function setLink(dbnode)
+						if dbnode then
+							linknode = dbnode;
+							linknode.onUpdate = onLinkUpdated;
+							onLinkUpdated(linknode);
+							
+							addBitmapWidget("indicator_linked").setPosition("bottomright", -5, -5);
+						end
+					end	
+									
+				</script>
+			</numbercontrol>
+			
+			<numbercontrol name="mwound">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>212</offset>
+					</left>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>current</relation>
+					</top>
+					<size>
+						<width>30</width>
+						<height>26</height>
+					</size>
+					
+				</anchored>
+				<font>sheettextsmall</font>
+				
+				<frame>
+					<name>textlinesmall</name>
+					<offset>0,-6,0,0</offset>
+				</frame>
+				<script>
+					function onValueChanged()
+						if linknode then
+							linknode.setValue(getValue());
+						end
+						
+						local a,b,c,d,e,f
+						
+							a = window.lwound.getValue() * -1;
+							b = window.mwound.getValue() * -3;
+							c = window.hwound.getValue() * -5;
+							d = window.ctfatigue.getValue() * -1;
+							e = window.ctfatigue2.getValue() * -1;
+							f = a + b + c + d +e;
+						window.wfpen.setValue(f)
+						
+					end
+					
+					function onLinkUpdated(source)
+						setValue(source.getValue());
+					end
+					
+					function setLink(dbnode)
+						if dbnode then
+							linknode = dbnode;
+							linknode.onUpdate = onLinkUpdated;
+							onLinkUpdated(linknode);
+							
+							addBitmapWidget("indicator_linked").setPosition("bottomright", -5, -5);
+						end
+					end	
+						
+									
+				</script>
+			</numbercontrol>
+			
+			<numbercontrol name="hwound">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>243</offset>
+					</left>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>current</relation>
+					</top>
+					<size>
+						<width>30</width>
+						<height>26</height>
+					</size>
+					
+				</anchored>
+				<font>sheettextsmall</font>
+				
+				<frame>
+					<name>textlinesmall</name>
+					<offset>0,-6,0,0</offset>
+				</frame>
+				<script>
+					function onValueChanged()
+						if linknode then
+							linknode.setValue(getValue());
+						end
+						
+						local a,b,c,d,e,f
+						
+							a = window.lwound.getValue() * -1;
+							b = window.mwound.getValue() * -3;
+							c = window.hwound.getValue() * -5;
+							d = window.ctfatigue.getValue() * -1;
+							e = window.ctfatigue2.getValue() * -1;
+							f = a + b + c + d +e;
+						window.wfpen.setValue(f)
+						
+					end
+					
+					function onLinkUpdated(source)
+						setValue(source.getValue());
+					end
+					
+					function setLink(dbnode)
+						if dbnode then
+							linknode = dbnode;
+							linknode.onUpdate = onLinkUpdated;
+							onLinkUpdated(linknode);
+							
+							addBitmapWidget("indicator_linked").setPosition("bottomright", -5, -5);
+						end
+					end	
+											
+				</script>
+			</numbercontrol>
+			
+			<genericcontrol name="fatigue_icon">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>283</offset>
+					</left>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>current</relation>
+						
+					</top>
+					<size>
+						<width>20</width>
+						<height>30</height>
+					</size>
+				</anchored>
+				<icon>indicator_fatigue</icon>
+			</genericcontrol>
+			
+			<numbercontrol name="ctfatigue">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>305</offset>
+					</left>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>current</relation>
+					</top>
+					<size>
+						<width>20</width>
+						<height>26</height>
+					</size>
+					
+				</anchored>
+				<font>sheettextsmall</font>
+				
+				<frame>
+					<name>textlinesmall</name>
+					<offset>0,-6,0,0</offset>
+				</frame>
+				<script>
+					function onValueChanged()
+						if linknode then
+							linknode.setValue(getValue());
+						end
+						
+						local a,b,c,d,e,f
+						
+							a = window.lwound.getValue() * -1;
+							b = window.mwound.getValue() * -3;
+							c = window.hwound.getValue() * -5;
+							d = window.ctfatigue.getValue() * -1;
+							e = window.ctfatigue2.getValue() * -1;
+							f = a + b + c + d +e;
+						window.wfpen.setValue(f)
+						
+					end
+					
+					function onLinkUpdated(source)
+						setValue(source.getValue());
+					end
+					
+					function setLink(dbnode)
+						if dbnode then
+							linknode = dbnode;
+							linknode.onUpdate = onLinkUpdated;
+							onLinkUpdated(linknode);
+							
+							addBitmapWidget("indicator_linked").setPosition("bottomright", -5, -5);
+						end
+					end	
+											
+				</script>
+			</numbercontrol>
+			
+			<stringcontrol name="add">
+			    <anchored>
+				<left>
+						<anchor>left</anchor>
+						<offset>327</offset>
+					</left>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>current</relation>
+						<offset>8</offset>
+					</top>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>+</static>
+			</stringcontrol>
+			
+			
+			<numbercontrol name="ctfatigue2">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>336</offset>
+					</left>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>current</relation>
+					</top>
+					<size>
+						<width>20</width>
+						<height>26</height>
+					</size>
+					
+				</anchored>
+				<font>sheettextsmall</font>
+				
+				<frame>
+					<name>textlinesmall</name>
+					<offset>0,-6,0,0</offset>
+				</frame>
+				<script>
+					function onValueChanged()
+						if linknode then
+							linknode.setValue(getValue());
+						end
+						
+						local a,b,c,d,e,f
+						
+							a = window.lwound.getValue() * -1;
+							b = window.mwound.getValue() * -3;
+							c = window.hwound.getValue() * -5;
+							d = window.ctfatigue.getValue() * -1;
+							e = window.ctfatigue2.getValue() * -1;
+							f = a + b + c + d +e;
+						window.wfpen.setValue(f)
+						
+					end
+					
+					function onLinkUpdated(source)
+						setValue(source.getValue());
+					end
+					
+					function setLink(dbnode)
+						if dbnode then
+							linknode = dbnode;
+							linknode.onUpdate = onLinkUpdated;
+							onLinkUpdated(linknode);
+							
+							addBitmapWidget("indicator_linked").setPosition("bottomright", -5, -5);
+						end
+					end	
+											
+				</script>
+			</numbercontrol>
+			
+			
+			<genericcontrol name="fatigue_icon">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>357</offset>
+					</left>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>current</relation>
+						
+					</top>
+					<size>
+						<width>20</width>
+						<height>30</height>
+					</size>
+				</anchored>
+				<icon>icon_wfpen</icon>
+			</genericcontrol>
+			
+			
+			<numbercontrol name="wfpen">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>373</offset>
+					</left>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>current</relation>
+					</top>
+					<size>
+						<width>20</width>
+						<height>26</height>
+					</size>
+					
+				</anchored>
+				<readonly />
+				<font>sheettextsmall</font>
+				
+				<frame>
+					<name>textlinesmall</name>
+					<offset>0,-6,0,0</offset>
+				</frame>
+				<script>
+																
+				</script>
+			</numbercontrol>
+			
+			<genericcontrol name="icon_troops">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>400</offset>
+					</left>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>current</relation>
+						
+					</top>
+					<size>
+						<width>30</width>
+						<height>30</height>
+					</size>
+				</anchored>
+				<icon>icon_troops</icon>
+			</genericcontrol>
+			
+			<numbercontrol name="troops">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>433</offset>
+					</left>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>current</relation>
+					</top>
+					<size>
+						<width>20</width>
+						<height>26</height>
+					</size>
+					
+				</anchored>
+				
+				<font>sheettextsmall</font>
+				
+				<frame>
+					<name>textlinesmall</name>
+					<offset>0,-6,0,0</offset>
+				</frame>
+				<script>
+					function onValueChanged()
+					
+						local a = window.name.getValue()
+                        local b = window.troops.getValue()
+                        local c
+                        if b &gt; 0 then
+                         c = a .. " # " .. b
+						else
+						 c = a
+						end
+						
+						window.token.setName(c);
+						window.nameChanged();
+					end	
+
+                    function onInit()
+					local a = window.name.getValue()
+                        local b = window.troops.getValue()
+                        local c
+                        if b &gt; 0 then
+                         c = a .. " # " .. b
+						else
+						 c = a
+						end
+						
+						window.token.setName(c);
+						window.nameChanged();
+					end
+					
+				</script>
+			</numbercontrol>
+			
+			
+			
+			
+			<!-- Defensive -->
+			<genericcontrol name="defensiveicon">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>30</offset>
+					</left>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>current</relation>
+						<offset>-3</offset>
+					</top>
+					<size>
+						<width>20</width>
+						<height>30</height>
+					</size>
+				</anchored>
+				<icon>indicator_shield</icon>
+			</genericcontrol>
+
+			<genericcontrol name="targeting">
+				<anchored>
+					<right>
+						<anchor>right</anchor>
+						<offset>-6</offset>
+					</right>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>current</relation>
+					</top>
+					<size>
+						<width>100</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<iconspacing>21</iconspacing>
+				<script file="armct/scripts/combattracker_targeting.lua" />
+			</genericcontrol>
+						
+			<numbercontrol name="dbonus">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>51</offset>
+					</left>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>current</relation>
+					</top>
+					<size>
+						<width>30</width>
+						<height>26</height>
+					</size>
+					
+				</anchored>
+				<font>sheettextsmall</font>
+				
+				<frame>
+					<name>textlinesmall</name>
+					<offset>0,-6,0,0</offset>
+				</frame>
+				<script>
+					function onValueChanged()
+						if linknode then
+							linknode.setValue(getValue());
+						end
+					end
+						
+			
+				function onDoubleClick()
+					local a, b, c, d,e, f , g, sb
+				
+						a = getValue();
+						c = window.wfpen.getValue();
+																	  
+						
+						b = "Defence Score";
+						
+						
+						d = a + c;
+						f = ModifierStack.getSum()
+						g = ModifierStack.getDescription()
+						
+						
+						
+						local rActor;
+						if User.isHost() then
+							rActor = GmIdentityManager.getCurrent();
+						else
+							rActor = User.getIdentityLabel();
+						end
+						
+						d = a + c;
+						if c == 0 then
+							b = b .. " " .. a  ;
+							
+						if f == 0 and g == "" then
+								
+								
+								end
+						else
+							
+							if f == 0 and g == "" then
+								b =  b .. " "  .. a .. " Wounds/Fatigue " .. c .. " =  " .. d  ;
+							
+							else
+								b =  b .. " "  .. a  .. " Wounds/Fatigue " .. c;
+							
+							end
+						end
+						
+						
+						
+            
+						local rRoll = {};
+						rRoll.sType = "dice";
+						rRoll.sDesc = b;
+						rRoll.aDice = {"d10"};
+						rRoll.nMod = d; 
+            
+						ActionsManager.performAction(draginfo, rActor, rRoll);
+						
+						
+					
+						
+						return true;
+					end
+					
+
+					
+					
+					
+					
+					function onDragStart(button, x, y, draginfo)
+						
+						local b = getValue();
+						local c = b;
+						local e = "Defence Score";
+						local d = e .. " " ..  b;
+						draginfo.setType("dice");
+						
+						draginfo.setDescription(d );
+						draginfo.setNumberData(c);
+						draginfo.setStringData(d );
+						local dice = {};
+						if not Input.isAltPressed() then
+						table.insert(dice, "d10");
+						else 
+						table.insert(dice, "dF");
+						end
+						
+          
+						draginfo.setDieList(dice);
+						return true;
+					end
+					
+					
+						
+				</script>
+			</numbercontrol>
+			<stringcontrol name="deflabel">
+			    <anchored>
+				<left>
+						<anchor>left</anchor>
+						<offset>48</offset>
+					</left>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>current</relation>
+						<offset>-3</offset>
+					</top>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Defence</static>
+			</stringcontrol>
+			
+			<!--Active-->
+			<genericcontrol name="activeicon">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>80</offset>
+					</left>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>current</relation>
+					</top>
+					<size>
+						<width>20</width>
+						<height>21</height>
+					</size>
+				</anchored>
+				<icon>indicator_sword</icon>
+			</genericcontrol>
+			
+			<numbercontrol name="abonus">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>101</offset>
+					</left>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>current</relation>
+					</top>
+					<size>
+						<width>30</width>
+						<height>26</height>
+					</size>
+					
+				</anchored>
+				<font>sheettextsmall</font>
+				
+				<frame>
+					<name>textlinesmall</name>
+					<offset>0,-6,0,0</offset>
+				</frame>
+				<script>
+					function onValueChanged()
+						if linknode then
+							linknode.setValue(getValue());
+						end
+					end
+					
+					function onDoubleClick()
+					local a, b, c, d,e, f , g, sb
+				
+						a = getValue();
+						c = window.wfpen.getValue();
+																	  
+						
+						b = "Attack Score";
+						
+						
+						d = a + c;
+						f = ModifierStack.getSum()
+						g = ModifierStack.getDescription()
+						
+						
+						
+						local rActor;
+						if User.isHost() then
+							rActor = GmIdentityManager.getCurrent();
+						else
+							rActor = User.getIdentityLabel();
+						end
+						
+						d = a + c;
+						if c == 0 then
+							b = b .. " " .. a  ;
+							
+						if f == 0 and g == "" then
+								
+								
+								end
+						else
+							
+							if f == 0 and g == "" then
+								b =  b .. " "  .. a .. " Wounds/Fatigue " .. c .. " =  " .. d  ;
+							
+							else
+								b =  b .. " "  .. a  .. " Wounds/Fatigue " .. c;
+							
+							end
+						end
+						
+						
+						
+            
+						local rRoll = {};
+						rRoll.sType = "dice";
+						rRoll.sDesc = b;
+						rRoll.aDice = {"d10"};
+						rRoll.nMod = d; 
+            
+						ActionsManager.performAction(draginfo, rActor, rRoll);
+						
+						
+					
+						
+						return true;
+					end
+					
+
+					
+					
+					
+					
+					function onDragStart(button, x, y, draginfo)
+						
+						local b = getValue();
+						local c = b;
+						local e = "Attack Score";
+						local d = e .. " " ..  b;
+						draginfo.setType("dice");
+						
+						draginfo.setDescription(d );
+						draginfo.setNumberData(c);
+						draginfo.setStringData(d );
+						local dice = {};
+						if not Input.isAltPressed() then
+						table.insert(dice, "d10");
+						else 
+						table.insert(dice, "dF");
+						end
+						
+          
+						draginfo.setDieList(dice);
+						return true;
+					end
+
+								
+				</script>
+			</numbercontrol>
+			<stringcontrol name="attlabel">
+			    <anchored>
+				<left>
+						<anchor>left</anchor>
+						<offset>100</offset>
+					</left>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>current</relation>
+						<offset>-4</offset>
+					</top>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Attack</static>
+			</stringcontrol>
+			
+			
+			
+			<!-- Effects -->
+			<genericcontrol name="effecticon">
+				<anchored>
+					<left>
+						<anchor>left</anchor>
+						<offset>48</offset>
+					</left>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>current</relation>
+						<offset>48</offset>
+					</top>
+					<size>
+						<width>20</width>
+						<height>21</height>
+					</size>
+				</anchored>
+				<icon>indicator_effect</icon>
+			</genericcontrol>
+			<windowlist name="effects">
+				<anchored>
+					<left>
+						<parent>effecticon</parent>
+						<anchor>right</anchor>
+					</left>
+					<right>
+						<anchor>right</anchor>
+						<offset>-7</offset>
+					</right>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>relative</relation>
+						<offset>48</offset>
+					</top>
+				</anchored>
+				<class>combattracker_effect</class>
+				<columns>
+					<width>144</width>
+					<fillwidth />
+				</columns>
+				<script file="armct/scripts/combattracker_effects.lua" />
+				<script> 
+				
+				</script>
+				
+			</windowlist>
+			
+			
+			<!-- Spacer -->
+			<genericcontrol name="spacer">
+				<anchored>
+					<top>
+						<parent>name</parent>
+						<anchor>bottom</anchor>
+						<relation>current</relation>
+					</top>
+					<left>
+						<anchor>left</anchor>
+					</left>
+					<right>
+						<anchor>right</anchor>
+					</right>
+					<size>
+						<height>10</height>
+					</size>
+				</anchored>
+				<invisible />
+				<disabled />
+			</genericcontrol>
+
+			<genericcontrol name="active">
+				<anchored>
+					<top>
+						<anchor>top</anchor>
+					</top>
+					<bottom>
+						<anchor>bottom</anchor>
+					</bottom>
+					<left>
+						<anchor>left</anchor>
+					</left>
+					<size>
+						<width>33</width>
+					</size>
+				</anchored>
+				<icon>indicator_ctpassive</icon>
+				<activeicon>indicator_ctactive</activeicon>
+				<script file="armct/scripts/combattracker_active.lua" />
+				
+			</genericcontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="combattracker">
+		<frame>ctbox</frame>
+		<placement>
+			<size>
+				<width>500</width>
+				<height>512</height>
+			</size>
+		</placement>
+		<sizelimits>
+			<minimum>
+				<height>210</height>
+			</minimum>
+			<dynamic>
+				<resize>vertical</resize>
+			</dynamic>
+		</sizelimits>
+		<sheetdata>
+			<stringcontrol>
+				<bounds>60,15,30,10</bounds>
+				<font>sheetlabelsmall</font>
+				<color>#ffffffff</color>
+				<static>Name</static>
+			</stringcontrol>
+			<stringcontrol>
+				<bounds>158,15,20,10</bounds>
+				<font>sheetlabelsmall</font>
+				<color>#ffffffff</color>
+				<static>Init</static>
+			</stringcontrol>
+			<stringcontrol>
+				<bounds>190,15,30,10</bounds>
+				<font>sheetlabelsmall</font>
+				<color>#ffffffff</color>
+				<static>Action</static>
+			</stringcontrol>
+			
+			
+			<windowlist name="list">
+				<class>combattracker_entry</class>
+				<allowcreate />
+				<allowdelete />
+				<bounds>0,30,-20,-50</bounds>
+				
+				<acceptdrop class="charsheet" fields="name, wfpen,#age,#lwound,#WLlw,#WLmw,#WLhw,#Ftotales,#fpfatigue" />
+				<acceptdrop class="npc" fields="name,dbonus,abonus,initresult" />
+				<acceptdrop class="monster" fields="name,dbonus,initresult" />
+				
+				<script file="armct/scripts/combattracker.lua" />
+			</windowlist>
+
+			
+			
+			
+			<scrollercontrol>
+				<anchored to="list" position="insidebottomright" offset="15,-5" width="27" height="45" />
+				<target>list</target>
+				<button normal="button_scrollerpan" pressed="button_scrollerpan_down" zoom="button_zoomer" zoompressed="button_zoomer_down" />
+			</scrollercontrol>
+			
+			
+			
+			<genericcontrol>
+				<bounds>28,-53,33,40</bounds>
+				<activeicon>indicator_ctactive</activeicon>
+				<script>
+					function onInit()
+						widget = addBitmapWidget(activeicon[1]);
+						setHoverCursor("hand");
+					end
+					
+					function onDragStart(button, x, y, draginfo)
+						draginfo.setType("combattrackeractivation");
+						draginfo.setIcon(activeicon[1]);
+						widget.setVisible(false);
+						
+						return true;
+					end
+					
+					function onDragEnd(draginfo)
+						widget.setVisible(true);
+					end
+				</script>
+			</genericcontrol>
+
+			<combattrackerffsource>
+				<bounds>70,-43,20,20</bounds>
+				<icon>indicator_ctfffriend</icon>
+				<value>friend</value>
+				<tooltip>
+					<text>Friendly</text>
+				</tooltip>
+			</combattrackerffsource>
+			<combattrackerffsource>
+				<bounds>97,-43,20,20</bounds>
+				<icon>indicator_ctffneutral</icon>
+				<value>neutral</value>
+				<tooltip>
+					<text>Neutral</text>
+				</tooltip>
+			</combattrackerffsource>
+			<combattrackerffsource>
+				<bounds>124,-43,20,20</bounds>
+				<icon>indicator_ctfffoe</icon>
+				<value>foe</value>
+				<tooltip>
+					<text>Hostile</text>
+				</tooltip>
+			</combattrackerffsource>
+
+			<stringcontrol name="tickcounterlabel">
+				<bounds>-190,-39,70,15</bounds>
+				<font>sheetlabel</font>
+				<color>#ffffffff</color>
+				<static>Segment</static>
+			</stringcontrol>
+			<numbercontrol name="tickcounter">
+				<anchored>
+					<to>tickcounterlabel</to>
+					<position>righthigh</position>
+					<offset>0,-6</offset>
+					<size>
+						<width>40</width>
+						<height>25</height>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>3,3,3,3</offset>
+				</frame>
+				<font>sheetnumber</font>
+				<script>
+					function onValueChanged()
+						if getValue()==0 then
+							setValue(-1);
+							window.list.nextTick();
+						end
+					end
+				</script>
+			</numbercontrol>
+			<buttoncontrol>
+				<anchored>
+					<to>tickcounter</to>
+					<position>righthigh</position>
+					<offset>5,0</offset>
+					<size>
+						<width>33</width>
+						<height>26</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>button_ctnextround</normal>
+					<pressed>button_ctnextround_down</pressed>
+				</icon>
+				<tooltip>
+					<text>Next Segment</text>
+				</tooltip>
+				<script>
+					function onButtonPress()
+						
+						window.list.nextTick();
+						
+					end
+					
+					function onDragStart(button, x, y, draginfo)
+						draginfo.setType("combattrackernexttick");
+						draginfo.setIcon(icon[1].normal[1]);
+						return true;
+					end
+				</script>
+			</buttoncontrol>
+		</sheetdata>
+	</windowclass>
+</root>

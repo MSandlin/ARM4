@@ -1,0 +1,612 @@
+<!-- This file is provided under the Open Game License version 1.0a
+  -- For more information on OGL and related issues, see 
+  --   http://www.wizards.com/d20
+  --
+  -- For information on the Fantasy Grounds d20 Ruleset licensing and
+  -- the OGL license text, see the d20 ruleset license in the program
+  -- options.
+  --
+  -- All producers of work derived from this definition are adviced to
+  -- familiarize themselves with the above licenses, and to takef special
+  -- care in providing the definition of Product Identity (as specified
+  -- by the OGL) in their products.
+  --
+  -- Copyright 2007 SmiteWorks Ltd.
+  -->
+
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="2.8">
+<!--
+<windowclass name="charsheet_itemsitem">
+			<sizelimits>
+				<minimum>
+					<height>18</height>
+				</minimum>
+			</sizelimits>
+			
+			<script> 
+			
+			</script>
+		<sheetdata>
+			
+			<stringfield name="itemname">
+				<bounds rect="6,9,250,20" />
+				
+				 <frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+
+			</stringfield>
+						
+			<numberfield name="itemweight">
+			 <bounds rect="262,9,30,20" />
+			    <frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</numberfield>
+			
+			<numberfield name="amount">
+				<bounds rect="296,9,30,20" />
+			    <frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			
+			</numberfield>
+			
+			
+						
+			<genericcontrol name="worn">
+				<bounds>330,10,15,15</bounds>
+				<icon>indicator_noencumbrance</icon>
+				
+				<script>
+					datanode = nil;
+				
+					function update()
+						if datanode.getValue() == 1 then
+							setIcon("indicator_encumbrance");
+						else
+							setIcon("indicator_noencumbrance");
+						end
+					end
+				
+					function onClickDown(button, x, y)
+						if datanode.getValue() == 1 then
+							datanode.setValue(0);
+						else
+							datanode.setValue(1);
+						end
+					end
+					
+					function onInit()
+						datanode = window.getDatabaseNode().createChild(getName(), "number");
+						datanode.onUpdate = update;
+						update();
+					end
+				</script>
+				
+				
+			</genericcontrol>
+			
+						
+			
+		</sheetdata>
+		<script>
+		
+			
+		</script>
+		
+		
+	</windowclass>
+
+<!-- Defunct
+<windowclass name="charsheet_inventory">
+		
+		<placement>
+			<size>
+				<width>739</width>
+				<height>762</height>
+			</size>
+		</placement>
+		<sheetdata>
+		
+		<windowlist name="itemlist">
+				<bounds rect="16,060,704,410" />
+				<datasource>.itemlist</datasource>
+				<class>charsheet_itemsitem</class>
+				<allowcreate />
+				<allowdelete /> 
+				
+				<columns>
+					<fillwidth />
+					<width>704</width>
+				</columns>
+				
+				<script file="scripts/charsheet_itemlist.lua" />
+				<script>
+					function onLoseFocus()
+						
+						
+					end
+				</script>
+			</windowlist>
+
+		<stringcontrol name="itemweights" > 
+		<bounds rect="180,510,110,20" />
+		<static>Total Weight :</static>
+		</stringcontrol>
+		
+		<numberfield name="ItemWeight">
+		<bounds rect="296,510,30,20" />
+		<readonly />
+		
+		</numberfield>
+
+		
+		
+		
+		
+			<genericcontrol name="coinframe">
+				<bounds>15,-220,240,200</bounds>
+				<frame>
+					<name>sheetgroup</name>
+				</frame>
+			</genericcontrol>
+
+			<stringcontrol>
+				<anchored>
+					<to>coinframe</to>
+					<position>insidetopleft</position>
+					<offset>15,12</offset>
+				</anchored>
+				<font>sheetlabel</font>
+				<static>Coins</static>
+			</stringcontrol>
+			<windowreferencecontrol>
+				<anchored>
+					<to>coinframe</to>
+					<position>insidetopleft</position>
+					<offset>91,12</offset>
+					<size>
+						<width>40</width>
+						<height>15</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>button_minisheet</normal>
+					<pressed>button_minisheet_down</pressed>
+				</icon>
+				<class>charsheetmini_coins</class>
+				<tooltip>
+					<text>Coin minisheet</text>
+				</tooltip>
+				<nodrag />
+				<closetoggle />
+			</windowreferencecontrol>
+
+			<stringfield name="coinname1" source="coins.slot1.name">
+				<anchored>
+					<to>coinframe</to>
+					<position>insidetopleft</position>
+					<offset>64,33</offset>
+					<size>
+						<width>65</width>
+						<height>18</height>
+					</size>
+				</anchored>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>textline</name>
+					<offset>1,1,0,0</offset>
+				</frame>
+				<tabtarget>
+					<next>coinamount2</next>
+					<prev>coinamount1</prev>
+				</tabtarget>
+			</stringfield>
+			<numberfield name="coinamount1" source="coins.slot1.amount">
+				<anchored>
+					<to>coinframe</to>
+					<position>insidetopleft</position>
+					<offset>15,33</offset>
+					<size>
+						<width>45</width>
+						<height>16</height>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>5,5,5,6</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,6</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<noreset />
+				<stateframe>
+					<drophilight>
+						<name>sheetfocusplus</name>
+						<offset>5,5,5,5</offset>
+					</drophilight>
+				</stateframe>
+				<droptypes>
+					<type>number</type>
+				</droptypes>
+				<script>
+					function onDrop(x, y, draginfo)
+						if draginfo.isType("number") then
+							setValue(getValue() + draginfo.getNumberData());
+							return true;
+						end
+					end
+				</script>
+				<tabtarget>
+					<next>coinname1</next>
+					<prev>encumbrancepushordrag</prev>
+				</tabtarget>
+			</numberfield>
+
+			<stringfield name="coinname2" source="coins.slot2.name">
+				<anchored>
+					<to>coinname1</to>
+					<position>below</position>
+					<offset>0,7</offset>
+					<size>
+						<height>18</height>
+					</size>
+				</anchored>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>textline</name>
+					<offset>1,1,0,0</offset>
+				</frame>
+				<tabtarget>
+					<next>coinamount3</next>
+					<prev>coinamount2</prev>
+				</tabtarget>
+			</stringfield>
+			<numberfield name="coinamount2" source="coins.slot2.amount">
+				<anchored>
+					<to>coinamount1</to>
+					<position>below</position>
+					<offset>0,8</offset>
+					<size>
+						<height>16</height>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>5,5,5,6</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,6</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<noreset />
+				<stateframe>
+					<drophilight>
+						<name>sheetfocusplus</name>
+						<offset>5,5,5,5</offset>
+					</drophilight>
+				</stateframe>
+				<droptypes>
+					<type>number</type>
+				</droptypes>
+				<script>
+					function onDrop(x, y, draginfo)
+						if draginfo.isType("number") then
+							setValue(getValue() + draginfo.getNumberData());
+							return true;
+						end
+					end
+				</script>
+				<tabtarget>
+					<next>coinname2</next>
+					<prev>coinname1</prev>
+				</tabtarget>
+			</numberfield>
+
+			<stringfield name="coinname3" source="coins.slot3.name">
+				<anchored>
+					<to>coinname2</to>
+					<position>below</position>
+					<offset>0,7</offset>
+					<size>
+						<height>18</height>
+					</size>
+				</anchored>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>textline</name>
+					<offset>1,1,0,0</offset>
+				</frame>
+				<tabtarget>
+					<next>coinamount4</next>
+					<prev>coinamount3</prev>
+				</tabtarget>
+			</stringfield>
+			<numberfield name="coinamount3" source="coins.slot3.amount">
+				<anchored>
+					<to>coinamount2</to>
+					<position>below</position>
+					<offset>0,8</offset>
+					<size>
+						<height>16</height>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>5,5,5,6</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,6</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<noreset />
+				<stateframe>
+					<drophilight>
+						<name>sheetfocusplus</name>
+						<offset>5,5,5,5</offset>
+					</drophilight>
+				</stateframe>
+				<droptypes>
+					<type>number</type>
+				</droptypes>
+				<script>
+					function onDrop(x, y, draginfo)
+						if draginfo.isType("number") then
+							setValue(getValue() + draginfo.getNumberData());
+							return true;
+						end
+					end
+				</script>
+				<tabtarget>
+					<next>coinname3</next>
+					<prev>coinname2</prev>
+				</tabtarget>
+			</numberfield>
+
+			<stringfield name="coinname4" source="coins.slot4.name">
+				<anchored>
+					<to>coinname3</to>
+					<position>below</position>
+					<offset>0,7</offset>
+					<size>
+						<height>18</height>
+					</size>
+				</anchored>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>textline</name>
+					<offset>1,1,0,0</offset>
+				</frame>
+				<tabtarget>
+					<next>coinamount5</next>
+					<prev>coinamount4</prev>
+				</tabtarget>
+			</stringfield>
+			<numberfield name="coinamount4" source="coins.slot4.amount">
+				<anchored>
+					<to>coinamount3</to>
+					<position>below</position>
+					<offset>0,8</offset>
+					<size>
+						<height>16</height>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>5,5,5,6</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,6</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<noreset />
+				<stateframe>
+					<drophilight>
+						<name>sheetfocusplus</name>
+						<offset>5,5,5,5</offset>
+					</drophilight>
+				</stateframe>
+				<droptypes>
+					<type>number</type>
+				</droptypes>
+				<script>
+					function onDrop(x, y, draginfo)
+						if draginfo.isType("number") then
+							setValue(getValue() + draginfo.getNumberData());
+							return true;
+						end
+					end
+				</script>
+				<tabtarget>
+					<next>coinname4</next>
+					<prev>coinname3</prev>
+				</tabtarget>
+			</numberfield>
+
+			<stringfield name="coinname5" source="coins.slot5.name">
+				<anchored>
+					<to>coinname4</to>
+					<position>below</position>
+					<offset>0,7</offset>
+					<size>
+						<height>18</height>
+					</size>
+				</anchored>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>textline</name>
+					<offset>1,1,0,0</offset>
+				</frame>
+				<tabtarget>
+					<next>coinamount6</next>
+					<prev>coinamount5</prev>
+				</tabtarget>
+			</stringfield>
+			<numberfield name="coinamount5" source="coins.slot5.amount">
+				<anchored>
+					<to>coinamount4</to>
+					<position>below</position>
+					<offset>0,8</offset>
+					<size>
+						<height>16</height>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>5,5,5,6</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,6</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<noreset />
+				<stateframe>
+					<drophilight>
+						<name>sheetfocusplus</name>
+						<offset>5,5,5,5</offset>
+					</drophilight>
+				</stateframe>
+				<droptypes>
+					<type>number</type>
+				</droptypes>
+				<script>
+					function onDrop(x, y, draginfo)
+						if draginfo.isType("number") then
+							setValue(getValue() + draginfo.getNumberData());
+							return true;
+						end
+					end
+				</script>
+				<tabtarget>
+					<next>coinname5</next>
+					<prev>coinname4</prev>
+				</tabtarget>
+			</numberfield>
+
+			<stringfield name="coinname6" source="coins.slot6.name">
+				<anchored>
+					<to>coinname5</to>
+					<position>below</position>
+					<offset>0,7</offset>
+					<size>
+						<height>18</height>
+					</size>
+				</anchored>
+				<font>sheettextsmall</font>
+				<frame>
+					<name>textline</name>
+					<offset>1,1,0,0</offset>
+				</frame>
+				<tabtarget>
+					<next>coinother</next>
+					<prev>coinamount6</prev>
+				</tabtarget>
+			</stringfield>
+			<numberfield name="coinamount6" source="coins.slot6.amount">
+				<anchored>
+					<to>coinamount5</to>
+					<position>below</position>
+					<offset>0,8</offset>
+					<size>
+						<height>16</height>
+					</size>
+				</anchored>
+				<frame>
+					<name>modifier</name>
+					<offset>5,5,5,6</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,6</offset>
+				</keyeditframe>
+				<font>sheetnumbersmall</font>
+				<noreset />
+				<stateframe>
+					<drophilight>
+						<name>sheetfocusplus</name>
+						<offset>5,5,5,5</offset>
+					</drophilight>
+				</stateframe>
+				<droptypes>
+					<type>number</type>
+				</droptypes>
+				<script>
+					function onDrop(x, y, draginfo)
+						if draginfo.isType("number") then
+							setValue(getValue() + draginfo.getNumberData());
+							return true;
+						end
+					end
+				</script>
+				<tabtarget>
+					<next>coinname6</next>
+					<prev>coinname5</prev>
+				</tabtarget>
+			</numberfield>
+			
+			<stringfield name="coinother">
+				<anchored>
+					<left>
+						<parent>coinname1</parent>
+						<anchor>right</anchor>
+						<offset>10</offset>
+					</left>
+					<right>
+						<parent>coinframe</parent>
+						<anchor>right</anchor>
+						<offset>-15</offset>
+					</right>
+					<top>
+						<parent>coinamount1</parent>
+						<anchor>top</anchor>
+						<offset>-5</offset>
+					</top>
+					<bottom>
+						<parent>coinamount6</parent>
+						<anchor>bottom</anchor>
+						<offset>5</offset>
+					</bottom>
+				</anchored>
+				<font>sheettextsmall</font>
+				<multilinespacing>15</multilinespacing>
+				<frame>
+					<name>modifier</name>
+					<offset>6,5,6,5</offset>
+				</frame>
+				<tabtarget>
+					<next>armorcheckpenalty</next>
+					<prev>coinname6</prev>
+				</tabtarget>
+			</stringfield>
+			<stringcontrol>
+				<anchored>
+					<to>coinother</to>
+					<position>aboveleft</position>
+					<offset>0,2</offset>
+				</anchored>
+				<font>sheetlabelsmall</font>
+				<static>Other</static>
+			</stringcontrol>
+
+		
+
+
+
+			
+
+		</sheetdata>
+	</windowclass>
+	!-->
+	</root>
+

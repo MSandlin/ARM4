@@ -1,0 +1,61 @@
+<root>
+
+	
+<!--
+	<template name="tabcontrol">
+		<genericcontrol>
+			<tab mergerule="resetandadd" />
+			<frame>
+				<name>tabs</name>
+			</frame>
+			<script file="scripts/charsheet_tabs.lua" />
+		</genericcontrol>
+	</template>
+	
+	<template name="button_portrait_folder">
+		<button_text_sm>
+			<anchored position="insidetopleft" offset="12,10" width="50" />
+			<state textres="portrait_button_folder" />
+			<script>
+				function onButtonPress()
+					Interface.openDataFolder("portraits");
+					window.close();
+				end
+			</script>
+		</button_text_sm>
+	</template>
+	
+
+	<template name="hitpointfield">
+		<jpgnumberfield>
+			<noreset />
+			<frame>
+				<name>sheetfocus</name>
+				<offset>5,5,5,5</offset>
+			</frame>
+			<keyeditframe>
+				<name>sheetfocus</name>
+				<offset>5,5,5,5</offset>
+			</keyeditframe>
+			<font>sheetnumber</font>
+			<stateframe>
+				<drophilight>
+					<name>sheetfocusplus</name>
+					<offset>5,5,5,5</offset>
+				</drophilight>
+			</stateframe>
+			<droptypes>
+				<type>number</type>
+			</droptypes>
+			<script>
+				function onDrop(x, y, draginfo)
+					if draginfo.isType("number") then
+						setValue(getValue() + draginfo.getNumberData());
+						return true;
+					end
+				end
+			</script>
+		</jpgnumberfield>
+	</template>
+!-->
+</root>

@@ -1,0 +1,124 @@
+<!-- This file is provided under the Open Game License version 1.0a
+  -- For more information on OGL and related issues, see 
+  --   http://www.wizards.com/d20
+  --
+  -- For information on the Fantasy Grounds d20 Ruleset licensing and
+  -- the OGL license text, see the d20 ruleset license in the program
+  -- options.
+  --
+  -- All producers of work derived from this definition are adviced to
+  -- familiarize themselves with the above licenses, and to takef special
+  -- care in providing the definition of Product Identity (as specified
+  -- by the OGL) in their products.
+  --
+  -- Copyright 2007 SmiteWorks Ltd.
+  -->
+
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="2.8">
+
+<windowclass name="charsheet_poweritem">
+			<sizelimits>
+				<minimum>
+					<height>18</height>
+				</minimum>
+			</sizelimits>
+			
+			<script> 
+			
+			</script>
+		<sheetdata>
+			
+			<stringfield name="itemname">
+				<bounds rect="6,9,450,20" />
+				
+				 <frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+
+			</stringfield>
+						
+			<numberfield name="skillcost">
+			 <bounds rect="462,9,30,20" />
+			    <frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</numberfield>
+			
+			<numberfield name="slevel">
+				<bounds rect="496,9,30,20" />
+			    <frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			
+			</numberfield>
+			
+			<numberfield name="alevel">
+				<bounds rect="530,9,30,20" />
+			    <frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			
+			</numberfield>
+			
+			<numberfield name="Bp">
+				<bounds rect="564,9,30,20" />
+			    <frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			
+			</numberfield>
+			
+						
+			
+		</sheetdata>
+		<script>
+		
+			
+		</script>
+		
+		
+	</windowclass>
+
+
+<windowclass name="charsheet_powers">
+		<frame name="generic_charsheet_jedi" />
+		<!-- <datasource name="charsheet" /> -->
+		<placement>
+			<size>
+				<width>739</width>
+				<height>762</height>
+			</size>
+		</placement>
+		<sheetdata>
+		
+		<windowlist name="powerlist">
+				<bounds rect="16,060,704,410" />
+				<datasource>.powerlist</datasource>
+				<class>charsheet_poweritem</class>
+				<allowcreate />
+				<allowdelete /> 
+				
+				<columns>
+					<fillwidth />
+					<width>704</width>
+				</columns>
+				
+				
+				<script>
+					function onLoseFocus()
+					end
+				</script>
+			</windowlist>
+
+			
+
+		</sheetdata>
+	</windowclass>
+	</root>
+

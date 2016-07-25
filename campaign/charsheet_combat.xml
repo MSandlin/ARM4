@@ -1,0 +1,232 @@
+<root>
+
+	<windowclass name="charsheet_combat">
+		<frame name="generic_charsheet_combat" />
+		<!-- <datasource name="charsheet" /> -->
+		<placement>
+			<size>
+				<width>739</width>
+				<height>762</height>
+			</size>
+		</placement>
+		<sheetdata>
+		<stringfield name="Weapon.name.label" >
+			<bounds rect="25,55,75,18" />
+			<static>Weapon</static>
+		</stringfield>
+		<stringfield name="Weapon.abonus.label" >
+			<bounds rect="150,55,25,18" />
+			<center />
+			<static>A+</static>
+		</stringfield>
+		<stringfield name="Weapon.dbonus.label" >
+			<bounds rect="185,55,25,18" />
+			<center />
+			<static>D+</static>
+		</stringfield>
+		<stringfield name="Weapon.ibonus.label" >
+			<bounds rect="210,55,25,18" />
+			<center />
+			<static>I+</static>
+		</stringfield>
+		<stringfield name="Weapon.Skill.label" >
+			<bounds rect="250,55,35,18" />
+			<center />
+			<static>Skill</static>
+		</stringfield>
+		<stringfield name="Weapon.Stat.label" >
+			<bounds rect="292,58,45,18" />
+			<static>DEX</static>
+			
+		</stringfield>
+		
+		<stringfield name="Weapon.Stat2.label" >
+			<bounds rect="332,58,45,18" />
+			<static>QUI</static>
+			
+		</stringfield>
+		
+		<stringfield name="Attack.label" >
+			<bounds rect="365,58,45,18" />
+			<static>ATTACK</static>
+			
+		</stringfield>
+		
+		<stringfield name="Defence.label" >
+			<bounds rect="412,58,45,18" />
+			<static>DEF</static>
+			
+		</stringfield>
+		
+		<stringfield name="Weapon.Init.label" >
+			<bounds rect="450,58,25,18" />
+			<center />
+			<static>I</static>
+			
+		</stringfield>
+		
+		<stringfield name="Weapon.Init2.label" >
+			<bounds rect="480,58,25,18" />
+			<center />
+			<static>Act</static>
+			
+		</stringfield>
+				
+		<stringfield name="Weapon.STR.label" >
+			<bounds rect="510,58,25,18" />
+			<center />
+			<static>STR</static>
+			
+		</stringfield>
+				
+						
+		<stringfield name="Weapon.PEN.label" >
+			<bounds rect="600,58,25,18" />
+			<center />
+			<static>PEN</static>
+			
+		</stringfield>		
+
+		<stringfield name="Weapon.reach.label" >
+			<bounds rect="680,55,35,18" />
+			<center />
+			<static>Reach</static>
+			
+		</stringfield>		
+		
+		
+			<windowlist name="weaponslist">
+				<bounds rect="16,65,704,320" />
+				<datasource>.weapons</datasource>
+				<class>charsheet_weapons</class>
+				<allowcreate />
+				<allowdelete /> 
+				<skipempty />
+				<columns>
+					<fillwidth />
+					<width>704</width>
+				</columns>
+			</windowlist>
+
+			<scrollbar name="meleescroll">
+				<bounds>-25,65,20,320</bounds>
+					<target name="weaponslist" />
+			</scrollbar>
+			
+			
+			
+		<stringfield name="rWeapon.name.label" >
+			<bounds rect="25,430,75,18" />
+			<static>Weapon</static>
+		</stringfield>
+		<stringfield name="rWeapon.abonus.label" >
+			<bounds rect="150,430,25,18" />
+			<center />
+			<static>A+</static>
+		</stringfield>
+		
+		<stringfield name="rWeapon.ibonus.label" >
+			<bounds rect="182,430,25,18" />
+			<center />
+			<static>I+</static>
+		</stringfield>
+		<stringfield name="rWeapon.Skill.label" >
+			<bounds rect="210,430,35,18" />
+			<center />
+			<static>Skill</static>
+		</stringfield>
+		
+		
+		<stringfield name="rAttack.label" >
+			<bounds rect="248,433,45,18" />
+			<static>ATTACK</static>
+			
+		</stringfield>
+				
+		<stringfield name="rWeapon.Init.label" >
+			<bounds rect="297,430,40,18" />
+			<center />
+			<static>I</static>
+		</stringfield>
+		
+		<stringfield name="rWeapon.Init2.label" >
+			<bounds rect="345,430,25,18" />
+			<center />
+			<static>Act</static>
+			
+		</stringfield>
+		
+		<stringfield name="rWeapon.RoF.label" >
+			<bounds rect="379,430,25,18" />
+			<center />
+			<static>RoF</static>
+			
+		</stringfield>
+				
+		<stringfield name="rWeapon.STR.label" >
+			<bounds rect="414,430,25,18" />
+			<center />
+			<static>Clip</static>
+			
+		</stringfield>
+				
+		<stringfield name="rWeapon.Damp.label" >
+			<bounds rect="441,430,40,18" />
+			<center />
+			<static>Ammo</static>
+			
+		</stringfield>		
+
+		<stringfield name="rWeapon.Damag.label" >
+			<bounds rect="497,430,25,18" />
+			<center />
+			<static>Dam</static>
+			
+		</stringfield>
+				
+		<stringfield name="rWeapon.PEN.label" >
+			<bounds rect="527,430,180,18" />
+			<center />
+			<static>PENETRATION</static>
+			
+		</stringfield>		
+
+		<stringfield name="rWeapon.reach.label" >
+			<bounds rect="680,430,35,18" />
+			<center />
+			<static>Range</static>
+			
+		</stringfield>		
+			
+			
+			
+			
+			
+			
+			
+			<windowlist name="rangedweaponslist">
+				<bounds rect="16,440,704,250" />
+				<datasource>.rangedweapons</datasource>
+				<class>charsheet_ranged_weapons</class>
+				<allowcreate />
+				<allowdelete /> 
+				<skipempty />
+				<columns>
+					<fillwidth />
+					<width>704</width>
+				</columns>
+			</windowlist>
+			
+			<scrollbar name="magicscroll">
+				<bounds>-25,440,20,250</bounds>
+					<target name="rangedweaponslist" />
+			</scrollbar>
+			
+            
+				
+				
+		</sheetdata>
+	</windowclass>
+
+
+</root>

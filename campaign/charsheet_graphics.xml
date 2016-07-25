@@ -1,0 +1,117 @@
+<root>
+	<framedef name="generic_charsheet_main">
+		<bitmap file="graphics\frames\charsheet_main.png" />
+		<topleft rect="0,0,0,0" />
+		<top rect="0,0,0,0" />
+		<topright rect="0,0,0,0" />
+		<left rect="0,0,0,0" />
+		<middle rect="0,0,739,762" />
+		<right rect="0,0,0,0" />
+		<bottomleft rect="0,0,0,0" />
+		<bottom rect="0,0,0,0" />
+		<bottomright rect="0,0,0,0" />
+	</framedef>
+
+	
+	<framedef name="generic_charsheet_other">
+		<bitmap file="graphics\frames\generic_charsheet_other.png" />
+		<topleft rect="0,0,0,0" />
+		<top rect="0,0,0,0" />
+		<topright rect="0,0,0,0" />
+		<left rect="0,0,0,0" />
+		<middle rect="0,0,739,762" />
+		<right rect="0,0,0,0" />
+		<bottomleft rect="0,0,0,0" />
+		<bottom rect="0,0,0,0" />
+		<bottomright rect="0,0,0,0" />
+	</framedef>
+
+	
+	
+	<framedef name="generic_charsheet_magic">
+		<bitmap file="graphics\frames\charsheet_inventory.png" />
+		<topleft rect="0,0,0,0" />
+		<top rect="0,0,0,0" />
+		<topright rect="0,0,0,0" />
+		<left rect="0,0,0,0" />
+		<middle rect="0,0,739,762" />
+		<right rect="0,0,0,0" />
+		<bottomleft rect="0,0,0,0" />
+		<bottom rect="0,0,0,0" />
+		<bottomright rect="0,0,0,0" />
+	</framedef>
+	
+	<framedef name="generic_charsheet_combat">
+		<bitmap file="graphics\frames\charsheet_combat.png" />
+		<topleft rect="0,0,0,0" />
+		<top rect="0,0,0,0" />
+		<topright rect="0,0,0,0" />
+		<left rect="0,0,0,0" />
+		<middle rect="0,0,739,762" />
+		<right rect="0,0,0,0" />
+		<bottomleft rect="0,0,0,0" />
+		<bottom rect="0,0,0,0" />
+		<bottomright rect="0,0,0,0" />
+	</framedef>
+	
+	<framedef name="generic_charsheet_jedi">
+		<bitmap file="graphics\frames\generic_charsheet_other.png" />
+		<topleft rect="0,0,0,0" />
+		<top rect="0,0,0,0" />
+		<topright rect="0,0,0,0" />
+		<left rect="0,0,0,0" />
+		<middle rect="0,0,739,762" />
+		<right rect="0,0,0,0" />
+		<bottomleft rect="0,0,0,0" />
+		<bottom rect="0,0,0,0" />
+		<bottomright rect="0,0,0,0" />
+	</framedef>
+	
+	<framedef name="generic_charsheet_bg">
+		<bitmap file="graphics\frames\generic_charsheet_other.png" />
+		<topleft rect="0,0,0,0" />
+		<top rect="0,0,0,0" />
+		<topright rect="0,0,0,0" />
+		<left rect="0,0,0,0" />
+		<middle rect="0,0,739,762" />
+		<right rect="0,0,0,0" />
+		<bottomleft rect="0,0,0,0" />
+		<bottom rect="0,0,0,0" />
+		<bottomright rect="0,0,0,0" />
+	</framedef>
+
+	
+	<icon name="formframe" file="graphics\icons/ArtFrame.png" />
+	<icon name="forceframe" file="graphics\icons/forceframe.png" />
+	<icon name="main_icon" file="graphics\icons/mainicon.png" />
+	<icon name="notes_icon" file="graphics\icons/notesicon.png" />
+	<icon name="magic_icon" file="graphics\icons/magicicon.png" />
+	<icon name="combat_icon" file="graphics\icons/combaticon.png" />
+	<icon name="jedi_icon" file="graphics\icons/jediicon.png" />
+	<icon name="power_icon" file="graphics\icons/powericon.png" />
+	<icon name="inventory_icon" file="graphics\icons/inventoryicon.png" />
+	<icon name="calculator" file="graphics\icons/calculator.png" />
+	
+	<framedef name="spellentry">
+		<bitmap file="graphics\frames\spellentry.png" />
+        <topleft rect="0,0,704,109" />
+		<top rect="5,0,694,5" />
+		<topright rect ="699,0,5,5" />
+		<left  rect="0,5,5,104" /> 
+		<middle rect="5,5,694,104" />
+		<right rect="699,5,5,104" />
+	</framedef>
+	
+	<framedef name="spellentry_small">
+		<bitmap file="graphics\frames\spellentrysmall.png" />
+        <topleft rect="0,0,704,36" />
+		
+	</framedef>
+	
+	<icon name="icon_master" file="graphics\icons/icon_master.png" />
+	<icon name="icon_wild" file="graphics\icons/icon_wild.png" />
+	<icon name="icon_normal" file="graphics\icons/icon_normal.png" />
+	<icon name="icon_botch" file="graphics\icons/icon_botch.png" />
+	
+	
+</root>

@@ -1,0 +1,70 @@
+
+
+<root version="3.0">
+
+
+
+
+	<icon name="indicator_checkon" file="graphics/icons/indicator_checkon.png" />
+	<icon name="indicator_checkoff" file="graphics/icons/indicator_checkoff.png" />
+	
+	
+	<template name="filtertrigger2">
+		<genericcontrol>
+			<icon>search_icon</icon>
+			<widgetposition>
+				<anchor>bottomleft</anchor>
+				<offsetx>5</offsetx>
+				<offsety>-5</offsety>
+			</widgetposition>
+			<script>
+				function onInit()
+					window[target[1]].setVisible(false);
+					
+				end
+				
+				function onClickDown(button, x, y)
+					return true;
+				end
+				
+				function onClickRelease(button, x, y)
+					if button == 1 then
+						setVisible(false);
+						window[target[1]].setVisible(true);
+						window[target[1]].setFocus();
+					elseif button == 2 then
+						window[target[1]].setValue("");
+						window[target[1]].setVisible(false);
+					end
+
+					return true;
+				end
+				
+				
+				
+				function updateWidget(state)
+					if widget and not state then
+						window[target[1]].setVisible(true);
+						widget.destroy();
+						widget = nil;
+					elseif not widget and state then
+						widget = addBitmapWidget("indicator_checkon");
+						widget.setPosition(widgetposition[1].anchor[1], widgetposition[1].offsetx[1], widgetposition[1].offsety[1]);
+					end
+				end
+			</script>
+		</genericcontrol>
+	</template>
+	
+	<template name="filter2">
+		<stringcontrol>
+			<frame>
+				<name>search</name>
+				<offset>17,3,3,3</offset>
+			</frame>
+			<font>sheettext</font>
+			<script file="common/scripts/template_filter.lua" />
+		</stringcontrol>
+	</template>
+	
+	</root>

@@ -1,0 +1,290 @@
+
+<root>
+
+<windowclass name="cslaboratory">
+		<frame name="generic_charsheet_other" />
+		<!-- <datasource name="charsheet" /> -->
+		<placement>
+			<size>
+				<width>739</width>
+				<height>762</height>
+			</size>
+		</placement>
+		<sheetdata>
+
+			<stringfield name="Labnotes" >
+				<bounds rect="25,50,75,21" />
+				
+					<static>Laboratory</static>
+			</stringfield>
+
+			<stringfield name="Base" >
+			<bounds rect="30,90,50,21" />
+			<static>Base</static>
+			</stringfield>
+			
+			<numberfield name="basevalue" >
+			<bounds rect="30,115,25,21" />
+			<center />
+			<default>0</default>
+			<script>
+			function onValueChanged()
+				local base = window.getDatabaseNode().getChild("basevalue").getValue();
+				local duration = window.getDatabaseNode().getChild("durationvalue").getValue();
+				local reach = window.getDatabaseNode().getChild("reachvalue").getValue();
+				local misc = window.getDatabaseNode().getChild("miscvalue").getValue();
+				local totalvalue 
+				local modsvalue
+				local mult
+				local lacking
+				local tempbase
+				
+				lacking = 5 - base;
+				totalvalue = base + duration + reach + misc;
+				modsvalue = duration + reach + misc;
+				
+				if base > 5 then 
+					totalvalue = base + (modsvalue * 5);
+					
+					elseif modsvalue >= lacking then
+						modsvalue = modsvalue - lacking;
+						base = base + lacking;
+						totalvalue = base + (modsvalue*5);
+					else
+				end
+				
+					if totalvalue > 5 then 
+							totalvalue = (math.ceil(totalvalue/5)*5)			
+					end
+				window.getDatabaseNode().getChild("finalvalue").setValue(totalvalue);
+			end
+			</script>
+			
+			</numberfield>
+			
+			
+			
+			
+			<stringfield name="Duration" >
+			<bounds rect="130,90,50,21" />
+			<static>Duration</static>
+			</stringfield>
+			
+			<combobox name="durationValueCombo" >
+			<bounds rect="130,115,60,21" />
+			<script>
+			function onInit()
+				add("0","Momentary")
+				add("+1","Diameter")
+				add("+1 ","Concentration")
+				add("+2","Sun")
+				add("+3","Moon")
+				add("+4","Year")
+				add("+6","100 Years")
+				
+			end
+			
+			function onValueChanged()
+				local a = tonumber(getListValue());
+				
+				window.getDatabaseNode().getChild("durationvalue").setValue(a);
+			end
+			
+			</script>
+			</combobox>
+			
+			
+			
+			
+			<numberfield name="durationvalue" >
+			<bounds rect="80,115,25,21" />
+			<center />
+			<default>0</default>
+			<invisible />
+			<script>
+			function onValueChanged()
+				local base = window.getDatabaseNode().getChild("basevalue").getValue();
+				local duration = window.getDatabaseNode().getChild("durationvalue").getValue();
+				local reach = window.getDatabaseNode().getChild("reachvalue").getValue();
+				local misc = window.getDatabaseNode().getChild("miscvalue").getValue();
+				local totalvalue 
+				local modsvalue
+				local mult
+				local lacking
+				local tempbase
+				
+				lacking = 5 - base;
+				totalvalue = base + duration + reach + misc;
+				modsvalue = duration + reach + misc;
+				
+				if base > 5 then 
+					totalvalue = base + (modsvalue * 5);
+					
+					elseif modsvalue >= lacking then
+						modsvalue = modsvalue - lacking;
+						base = base + lacking;
+						totalvalue = base + (modsvalue*5);
+					else
+				end
+				
+					if totalvalue > 5 then 
+							totalvalue = (math.ceil(totalvalue/5)*5)			
+					end
+				window.getDatabaseNode().getChild("finalvalue").setValue(totalvalue);
+			end
+			</script>
+			</numberfield>
+			
+			<stringfield name="Reach" >
+			<bounds rect="230,90,60,21" />
+			<static>Reach</static>
+			</stringfield>
+			
+			<combobox name="reachValueCombo" >
+			<bounds rect="230,115,60,21" />
+			<script>
+			function onInit()
+				add("+0","Self")
+				add("+1","Touch")
+				add("+2","Voice")
+				add("+3","Circle")
+				add("+3 ","Sight")
+				add("+4","Boundary")
+				
+			end
+			
+			function onValueChanged()
+				local a = tonumber(getListValue());
+				window.getDatabaseNode().getChild("reachvalue").setValue(a);
+			end
+			
+			</script>
+			</combobox>
+			
+			
+			<numberfield name="reachvalue" >
+			<bounds rect="130,115,25,21" />
+			<center />
+			<invisible />
+			<default>0</default>
+			<script>
+			function onValueChanged()
+				local base = window.getDatabaseNode().getChild("basevalue").getValue();
+				local duration = window.getDatabaseNode().getChild("durationvalue").getValue();
+				local reach = window.getDatabaseNode().getChild("reachvalue").getValue();
+				local misc = window.getDatabaseNode().getChild("miscvalue").getValue();
+				local totalvalue 
+				local modsvalue
+				local mult
+				local lacking
+				local tempbase
+				
+				lacking = 5 - base;
+				totalvalue = base + duration + reach + misc;
+				modsvalue = duration + reach + misc;
+				
+				if base > 5 then 
+					totalvalue = base + (modsvalue * 5);
+					
+					elseif modsvalue >= lacking then
+						modsvalue = modsvalue - lacking;
+						base = base + lacking;
+						totalvalue = base + (modsvalue*5);
+					else
+				end
+				
+					if totalvalue > 5 then 
+							totalvalue = (math.ceil(totalvalue/5)*5)			
+					end
+				window.getDatabaseNode().getChild("finalvalue").setValue(totalvalue);
+			end
+			</script>
+
+			</numberfield>
+			
+			<stringfield name="Misc" >
+			<bounds rect="330,90,60,21" />
+			<static>Misc</static>
+			</stringfield>
+			
+			<combobox name="miscValueCombo" >
+			<bounds rect="330,115,60,21" />
+			<script>
+			function onInit()
+				add("+0","Nil")
+				add("+1","Requisite")
+				add("+2","Many Requisites")
+				add("+2 ","Unnatural")
+				add("+2  ","Faerie Spell")
+				add("-1","Ritual")
+				
+			end
+			
+			function onValueChanged()
+				local a = tonumber(getListValue());
+				window.getDatabaseNode().getChild("miscvalue").setValue(a);
+			end
+			
+			</script>
+			</combobox>
+			
+			<numberfield name="miscvalue" >
+			<bounds rect="180,115,25,21" />
+			<center />
+			<invisible />
+			<script>
+			function onValueChanged()
+				local base = window.getDatabaseNode().getChild("basevalue").getValue();
+				local duration = window.getDatabaseNode().getChild("durationvalue").getValue();
+				local reach = window.getDatabaseNode().getChild("reachvalue").getValue();
+				local misc = window.getDatabaseNode().getChild("miscvalue").getValue();
+				local totalvalue 
+				local modsvalue
+				local mult
+				local lacking
+				local tempbase
+				
+				lacking = 5 - base;
+				totalvalue = base + duration + reach + misc;
+				modsvalue = duration + reach + misc;
+				
+				if base > 5 then 
+					totalvalue = base + (modsvalue * 5);
+					
+					elseif modsvalue >= lacking then
+						modsvalue = modsvalue - lacking;
+						base = base + lacking;
+						totalvalue = base + (modsvalue*5);
+					else
+				end
+				
+					if totalvalue > 5 then 
+							totalvalue = (math.ceil(totalvalue/5)*5)			
+					end
+				window.getDatabaseNode().getChild("finalvalue").setValue(totalvalue);
+			end
+			</script>
+			</numberfield>
+			
+			
+			<stringfield name="Final" >
+			<bounds rect="-200,90,80,21" />
+			<static>Final Level</static>
+			<center />
+			</stringfield>
+			
+			<numberfield name="finalvalue" >
+			<bounds rect="-175,115,30,21" />
+			<center />
+			<default>0</default>
+			</numberfield>
+			
+			
+			
+
+			
+
+		</sheetdata>
+	</windowclass>
+	
+	</root>

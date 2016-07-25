@@ -1,0 +1,1095 @@
+<root>
+
+		<windowclass name="charsheet_forcelistitem">
+			<sizelimits>
+			    <width>
+				700
+				</width>
+				<minimum>
+					<height>18</height>
+				</minimum>
+			</sizelimits>
+			<script file="campaign/scripts/force_list_entry.lua" />
+			<script>
+		
+
+		
+
+		</script>
+		<sheetdata>
+		
+		
+		
+		
+		
+			<genericcontrol name="forceframe">
+			    <bounds>0,0,-1,109</bounds>
+				<frame>
+					<name>spellentry</name>
+				</frame>
+				<sizelimits>
+				<minimum>
+					<height>18</height>
+				</minimum>
+				
+			</sizelimits>
+			<invisible />
+			</genericcontrol>
+			
+			<genericcontrol name="forceframesmall">
+			    <bounds>0,0,-1,37</bounds>
+				<frame>
+					<name>spellentry_small</name>
+				</frame>
+				<sizelimits>
+				<minimum>
+					<height>36</height>
+				</minimum>
+			</sizelimits>
+			
+			</genericcontrol>
+			
+			
+			<stringfield name="name">
+				<bounds rect="6,9,200,20" />
+				
+				<script>
+					function onValueChanged()
+						
+					end
+				</script>
+
+			</stringfield>
+			
+			
+			
+			
+			
+			
+			
+			<numberfield name="level">
+				<bounds rect="297,6,36,23" />
+				<script>
+					function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+				
+					function onValueChanged()
+							local test;
+							local cost;
+							local points = 0;
+							cost = window.getDatabaseNode().getChild("level").getValue() 
+							 if cost>=0 then
+								if cost >5 then
+									window.getDatabaseNode().getChild("forcexp").setValue( math.ceil(cost/5) );
+									else
+									window.getDatabaseNode().getChild("forcexp").setValue( (1/5) );
+									end
+													
+								for k, v in pairs(window.windowlist.getDatabaseNode().getChildren()) do
+									if v.getChild("forcexp") then
+										points = points + v.getChild("forcexp").getValue();
+								    end
+							    end
+								window.windowlist.window.getDatabaseNode().getChild("forcesxp").setValue(points);		
+								
+							end
+							
+							
+							local Qui = window.getDatabaseNode().getChild("jqstat").getValue() ;
+							local level = window.getDatabaseNode().getChild("level").getValue(); 
+							local Finesse = window.getDatabaseNode().getChild("Skill").getValue();
+							local Ibonus = window.getDatabaseNode().getChild("forceIbonus").getValue() 
+							
+							local out = Finesse + Qui + Ibonus - level;
+							window.getDatabaseNode().getChild("init").setValue( out );
+							
+							
+							
+					return true;		
+					end
+				</script>
+				
+				<noreset />
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				
+				
+				
+			</numberfield>
+			<stringfield name="forms">
+				<bounds rect="337,9,50,23" />
+				<hideonvalue value="0" />
+			</stringfield>
+			<numberfield name="castingtotal">
+				<bounds rect="391,6,34,23" />
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<tooltip>
+					<text>Doubleclick to Use</text>
+				</tooltip>
+				<hideonvalue value="0" />
+				<script>
+				
+				function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+				
+				
+				function onDoubleClick()
+					local a, b,c,d,e,f,g,h
+				
+						
+						a = window.windowlist.window.getDatabaseNode().getChild("willpower").getValue()		 
+						b = window.getDatabaseNode().getChild("castingtotal").getValue() 
+						c = window.getDatabaseNode().getChild("forms").getValue() 
+						d = window.getDatabaseNode().getChild("level").getValue() 
+						e = window.getDatabaseNode().getChild("name").getValue() 
+						g = window.windowlist.window.getDatabaseNode().getChild("wfpen").getValue()	
+						h = g
+						
+						if g ~= 0 then
+						   f = "Using " .. e .. " with " .. c .. " totalling a CT (" ..b ..")+ Will (" ..a .. ")  which gives us " .. b+a .. " with a penalty of " ..g .. " due to wounds and fatigue"  .. " vs a Difficulty of " ..d ;
+						   
+						else
+							f = "Using " .. e .. " with " .. c .. " totalling a CT (" ..b ..")+ Will (" ..a .. ")  which gives us " .. b+a .. "+1d10 vs force Level " ..d ;
+						   
+						end
+						h = tonumber(a) + tonumber(b) + tonumber(g)
+						
+						
+						local rRoll = {};
+						rRoll.sType = "dice";
+						rRoll.sDesc = f;
+						rRoll.aDice = {"d10"};
+						rRoll.nMod = b+a; 
+						rRoll.nTarget = d;
+						rRoll.sSubType ="spell";
+						
+            
+						ActionsManager.performAction(draginfo, rActor, rRoll);
+						
+						
+						a = window.windowlist.window.getDatabaseNode().getChild("quickness").getValue()		 
+						window.getDatabaseNode().getChild("jqstat").setValue(a);
+						return true;
+					end
+				</script>
+			</numberfield>
+			<stringfield name="forcerange">
+				<bounds rect="473,11,60,23" />
+				<hideonvalue value="0" />
+			</stringfield>
+			<stringfield name="forceduration">
+				<bounds rect="587,11,85,23" />
+				<hideonvalue value="0" />
+			</stringfield>
+			<buttoncontrol name="activateactive">
+				<bounds rect="-30,6,25,25" />
+				<icon>
+					<normal>indicator_expand</normal>
+					<pressed>indicator_expand_down</pressed>
+				</icon>
+				<script>
+					function onButtonPress()
+						window.toggleForceActive();
+						local a = window.windowlist.window.getDatabaseNode().getChild("quickness").getValue()		 
+						window.getDatabaseNode().getChild("jqstat").setValue(a);
+				
+					end
+					
+					function onInit()
+						setColor("7fffffff");
+						
+					
+						a = window.windowlist.window.getDatabaseNode().getChild("quickness").getValue()		 
+						window.getDatabaseNode().getChild("jqstat").setValue(a);
+				
+					end
+				</script>
+			</buttoncontrol>
+			
+			<stringfield name="shortdescription">
+				<bounds rect="6,34,680,48" />
+				<multiline spacing="24" />
+				<invisible />
+			</stringfield>
+			
+			
+			
+			<stringfield name="FinesseTag">
+			<bounds rect="15,80,60,23" />
+			<static>Finesse</static>
+			<readonly />
+			<invisible />
+			</stringfield>
+			<numberfield name="Skill">
+			<invisible />
+				<bounds rect="75,80,34,23" />
+				<description text="Initiative" />
+				
+				<script>
+				function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+				
+					function onValueChanged()
+							local Qui = window.getDatabaseNode().getChild("jqstat").getValue() ;
+							local level = window.getDatabaseNode().getChild("level").getValue(); 
+							local Finesse = window.getDatabaseNode().getChild("Skill").getValue();
+							local Ibonus = window.getDatabaseNode().getChild("forceIbonus").getValue() 
+							
+							local out = Finesse + Qui + Ibonus - level;
+							window.getDatabaseNode().getChild("init").setValue( out );
+					return;
+					end
+				</script>
+			</numberfield>
+			
+			<stringfield name="QuiTag">
+			<invisible />
+			<bounds rect="115,80,30,23" />
+			<static>Qui</static>
+			<readonly />
+			</stringfield>
+			<numberfield name="jqstat">
+				<bounds rect="145,80,34,23" />
+				<description text="Initiative" />
+				<readonly />
+				<invisible />
+				<script>
+				
+				
+				
+				function onValueChanged()
+					local Qui = getValue() ;
+					local level = window.getDatabaseNode().getChild("level").getValue(); 
+					local Finesse = window.getDatabaseNode().getChild("Skill").getValue();
+					local Ibonus = window.getDatabaseNode().getChild("forceIbonus").getValue() 
+						
+							local out = Finesse + Qui + Ibonus - level;
+							window.getDatabaseNode().getChild("init").setValue( out );
+					return true
+				end
+				
+				
+				
+				</script>
+			</numberfield>
+			
+			<stringfield name="forceIbonusTag">
+			<bounds rect="185,80,15,23" />
+			<static>I+</static>
+			<invisible />
+			<readonly />
+			
+			
+			</stringfield>
+			<numberfield name="forceIbonus">
+				<bounds rect="200,80,25,23" />
+				<description text="Initiative" />
+				<displaysign />
+				<invisible />
+				<script>
+				function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+				
+				
+					function onValueChanged()
+							local Qui = window.getDatabaseNode().getChild("jqstat").getValue() ;
+							local level = window.getDatabaseNode().getChild("level").getValue(); 
+							local Finesse = window.getDatabaseNode().getChild("Skill").getValue();
+							local Ibonus = window.getDatabaseNode().getChild("forceIbonus").getValue() 
+							
+							local out = Finesse + Qui + Ibonus - level;
+							window.getDatabaseNode().getChild("init").setValue( out );
+					return;
+					end
+				</script>
+			</numberfield>
+			
+			<stringfield name="initTag">
+			<bounds rect="230,80,35,23" />
+			<static>Init</static>
+			<readonly />
+			<invisible />
+			</stringfield>
+			
+			<numberfield name="init">
+				<bounds rect="270,80,34,23" />
+				<description text="Initiative" />
+				<readonly />
+				<invisible />
+				<script>
+				function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+				
+				
+				function onValueChanged()
+				
+				
+				
+					local a, b, c 
+					b = 0;
+					a = window.getDatabaseNode().getChild("init").getValue() 
+					
+					if 0 > a then 
+					b = 10-a;
+					end
+					
+					if a == 0 then 
+						b = 10;
+					end
+					
+					if a >= 1 then 
+						b = 9;
+					end
+					
+					if a >= 3 then 
+						b = 8;
+					end
+					
+					if a >= 6 then 
+						b = 7;
+					end
+					
+					if a >= 10 then 
+						b = 6;
+					end
+					
+					if a >= 15 then 
+						b = 5;
+					end
+					
+					if a >= 21 then 
+						b = 4;
+					end
+					
+					if a >= 28 then 
+						b = 3;
+					end
+					
+					if a >= 36 then 
+						b = 2;
+					end
+					
+					if a >= 45 then 
+						b = 1;
+					end
+					
+					
+				window.getDatabaseNode().getChild("CastAct").setValue(b);
+					
+				end
+				</script>
+			</numberfield>
+			
+			
+			<stringfield name="ActTag">
+			<bounds rect="425,80,34,23" />
+			<invisible />
+			<static>Act</static>
+			
+			</stringfield>
+			<numberfield name="CastAct">
+			<readonly />
+			<bounds rect="450,80,34,23" />
+			<invisible />
+			</numberfield>
+			
+			<numberfield name="forcexp">
+			<bounds rect="650,80,34,23" />
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<readonly />
+				<hideonvalue value="0" />
+				<invisible />
+			</numberfield>
+		
+		
+		</sheetdata>
+		
+		
+	</windowclass>
+	
+	
+
+		<windowclass name="charsheet_jedi">
+		<frame name="generic_charsheet_jedi" />
+		<!-- <datasource name="charsheet" /> -->
+		<placement>
+			<size>
+				<width>739</width>
+				<height>762</height>
+			</size>
+		</placement>
+		<sheetdata>
+		<genericcontrol name="FormFrame">
+				<bounds>19,70,429,85</bounds>
+				<icon>forceframe</icon>
+				
+		</genericcontrol>
+		
+		
+			<stringfield name="FpTag">
+			<bounds rect="450,86,70,20" />
+			<static>Force Points / Fatigue </static>
+			</stringfield>
+			<numberfield name="fpperfatigue">
+			<bounds rect="525,86,20,20" />
+			</numberfield>
+			<numberfield name="fpcost">
+			<bounds rect="560,86,20,20" />
+			</numberfield>
+			<numberfield name="fpxp">
+			<bounds rect="585,86,20,20" />
+			<script>
+			function onValueChanged()
+				local temp1
+				local temp2
+				local temp3
+				local temp4
+					temp1 = window.getDatabaseNode().getChild("jediformxp").getValue() 
+					temp2 = window.getDatabaseNode().getChild("jeditechxp").getValue() 
+					temp3 = window.getDatabaseNode().getChild("forcesxp").getValue() 
+					temp4 = window.getDatabaseNode().getChild("fpxp").getValue() 
+					window.getDatabaseNode().getChild("xpjedi").setValue(temp1+temp2+temp3+temp4);
+					return true;
+				end  
+			</script>
+			</numberfield>
+			<stringfield name="FpuTag">
+			<bounds rect="450,107,70,20" />
+			<static>FP used</static>
+			</stringfield>
+			<numberfield name="fpused">
+			<bounds rect="525,107,20,20" />
+			<script>
+			function onValueChanged()
+			local a,b,c;
+			a = window.getDatabaseNode().getChild("fpperfatigue").getValue() 
+			b = window.getDatabaseNode().getChild("fpused").getValue() 
+			
+			
+			if a~= 0 then 
+			    c= math.floor(b/a) ;
+				else 
+				c = 0;
+			end
+			
+			window.getDatabaseNode().getChild("fpfatigue").setValue(c) 
+			end;
+			</script>
+			
+			</numberfield>
+			<numberfield name="fpfatigue">
+			<bounds rect="560,107,20,20" />
+			<readonly />
+						</numberfield>
+		
+		
+		
+		    <stringfield name="Crtag">
+				<bounds rect="25,91,70,20" />
+				<static>Create/Improve</static>
+				
+			</stringfield>
+			<numberfield name="Create" >
+				<bounds rect="183,91,20,10" />
+				<script>
+				function onValueChanged()
+					local x,a,b,c,d,e,f,g,h,i,j
+					x = getValue() 
+						window.getDatabaseNode().getChild("createxp").setValue( ((x^2)/2 +(x/2)) );						
+					a = window.getDatabaseNode().getChild("createxp").getValue()
+					b = window.getDatabaseNode().getChild("sensexp").getValue()
+					c = window.getDatabaseNode().getChild("controlxp").getValue()
+					d = window.getDatabaseNode().getChild("destroyxp").getValue()					
+					x = a+b+c+d
+					window.getDatabaseNode().getChild("jeditechxp").setValue( x )
+					
+					x = window.getDatabaseNode().getChild("Create").getValue()
+					a = window.getDatabaseNode().getChild("Body").getValue()
+					b = window.getDatabaseNode().getChild("Mind").getValue()
+					c = window.getDatabaseNode().getChild("Energy").getValue()
+					d = window.getDatabaseNode().getChild("Matter").getValue()
+										
+					window.getDatabaseNode().getChild("CrBo").setValue( x+a );
+					window.getDatabaseNode().getChild("CrMi").setValue( x+b );
+					window.getDatabaseNode().getChild("CrEn").setValue( x+c );
+					window.getDatabaseNode().getChild("CrMa").setValue( x+d );
+					
+				end
+				</script>
+			</numberfield>
+			<numberfield name="createxp" >
+				<bounds rect="206,91,20,10" />
+				<readonly />
+				<nodrag />
+				
+			</numberfield>
+			<stringfield name="SenTag">
+			<bounds rect="25,107,70,20" />
+			<static>Sense/Know</static>
+			
+			</stringfield>
+			<numberfield name="Sense" >
+				<bounds rect="183,107,20,10" />
+				<script>
+				function onValueChanged()
+					local x,a,b,c,d,e,f,g,h,i,j
+					x = getValue() 
+						window.getDatabaseNode().getChild("sensexp").setValue( ((x^2)/2 +(x/2)) );						
+					a = window.getDatabaseNode().getChild("createxp").getValue()
+					b = window.getDatabaseNode().getChild("sensexp").getValue()
+					c = window.getDatabaseNode().getChild("controlxp").getValue()
+					d = window.getDatabaseNode().getChild("destroyxp").getValue()					
+					x = a+b+c+d
+					window.getDatabaseNode().getChild("jeditechxp").setValue( x )
+					
+					x = window.getDatabaseNode().getChild("Sense").getValue()
+					a = window.getDatabaseNode().getChild("Body").getValue()
+					b = window.getDatabaseNode().getChild("Mind").getValue()
+					c = window.getDatabaseNode().getChild("Energy").getValue()
+					d = window.getDatabaseNode().getChild("Matter").getValue()
+										
+					window.getDatabaseNode().getChild("SeBo").setValue( x+a );
+					window.getDatabaseNode().getChild("SeMi").setValue( x+b );
+					window.getDatabaseNode().getChild("SeEn").setValue( x+c );
+					window.getDatabaseNode().getChild("SeMa").setValue( x+d );
+					
+				end
+				</script>
+			</numberfield>
+			<numberfield name="sensexp" >
+				<bounds rect="206,107,20,10" />
+				<readonly />
+				<nodrag />
+				
+			</numberfield>
+			<stringfield name="ConTag">
+			<bounds rect="25,123,70,20" />
+			<static>Control/Alter</static>
+			
+			</stringfield>
+			<numberfield name="Control" >
+				<bounds rect="183,123,20,10" />
+				<script>
+				function onValueChanged()
+					local x,a,b,c,d,e,f,g,h,i,j
+					x = getValue() 
+						window.getDatabaseNode().getChild("controlxp").setValue( ((x^2)/2 +(x/2)) );						
+					a = window.getDatabaseNode().getChild("createxp").getValue()
+					b = window.getDatabaseNode().getChild("sensexp").getValue()
+					c = window.getDatabaseNode().getChild("controlxp").getValue()
+					d = window.getDatabaseNode().getChild("destroyxp").getValue()					
+					x = a+b+c+d
+					window.getDatabaseNode().getChild("jeditechxp").setValue( x )
+					
+					x = window.getDatabaseNode().getChild("Control").getValue()
+					a = window.getDatabaseNode().getChild("Body").getValue()
+					b = window.getDatabaseNode().getChild("Mind").getValue()
+					c = window.getDatabaseNode().getChild("Energy").getValue()
+					d = window.getDatabaseNode().getChild("Matter").getValue()
+										
+					window.getDatabaseNode().getChild("CoBo").setValue( x+a );
+					window.getDatabaseNode().getChild("CoMi").setValue( x+b );
+					window.getDatabaseNode().getChild("CoEn").setValue( x+c );
+					window.getDatabaseNode().getChild("CoMa").setValue( x+d );
+				end
+				</script>
+			</numberfield>
+			<numberfield name="controlxp" >
+				<bounds rect="206,123,20,10" />
+				<readonly />
+				<nodrag />
+				
+			</numberfield>
+			<stringfield name="DesTag">
+			<bounds rect="25,139,70,20" />
+			<static>Destroy/Weaken</static>
+			
+			</stringfield>
+			<numberfield name="Destroy" >
+				<bounds rect="183,139,20,10" />
+				<script>
+				function onValueChanged()
+					local x,a,b,c,d,e,f,g,h,i,j
+					x = getValue() 
+						window.getDatabaseNode().getChild("destroyxp").setValue( ((x^2)/2 +(x/2)) );						
+					a = window.getDatabaseNode().getChild("createxp").getValue()
+					b = window.getDatabaseNode().getChild("sensexp").getValue()
+					c = window.getDatabaseNode().getChild("controlxp").getValue()
+					d = window.getDatabaseNode().getChild("destroyxp").getValue()					
+					x = a+b+c+d
+					window.getDatabaseNode().getChild("jeditechxp").setValue( x )
+					
+					x = window.getDatabaseNode().getChild("Destroy").getValue()
+					a = window.getDatabaseNode().getChild("Body").getValue()
+					b = window.getDatabaseNode().getChild("Mind").getValue()
+					c = window.getDatabaseNode().getChild("Energy").getValue()
+					d = window.getDatabaseNode().getChild("Matter").getValue()
+										
+					window.getDatabaseNode().getChild("DeBo").setValue( x+a );
+					window.getDatabaseNode().getChild("DeMi").setValue( x+b );
+					window.getDatabaseNode().getChild("DeEn").setValue( x+c );
+					window.getDatabaseNode().getChild("DeMa").setValue( x+d );
+				end
+				</script>
+			</numberfield>
+			<numberfield name="destroyxp" >
+				<bounds rect="206,139,20,10" />
+				<readonly />
+				<nodrag />
+				
+			</numberfield>
+			    
+			<numberfield name="jeditechxp">
+			<bounds rect="106,180,20,10" />
+			  <nodrag /> 
+			  <readonly />
+			<script>
+			  function onValueChanged()
+				local temp1
+				local temp2
+				local temp3
+				local temp4
+					temp1 = window.getDatabaseNode().getChild("jediformxp").getValue() 
+					temp2 = window.getDatabaseNode().getChild("jeditechxp").getValue() 
+					temp3 = window.getDatabaseNode().getChild("forcesxp").getValue() 
+					temp4 = window.getDatabaseNode().getChild("fpxp").getValue() 
+					window.getDatabaseNode().getChild("xpjedi").setValue(temp1+temp2+temp3+temp4);
+					return true;
+				end  
+			  </script>			  			
+						
+			</numberfield>
+			<numberfield name="jediformxp">
+			<bounds rect="206,180,20,10" />
+			  <nodrag /> 
+			  <readonly />
+			<script>
+			  function onValueChanged()
+				local temp1
+				local temp2
+				local temp3
+				local temp4
+					temp1 = window.getDatabaseNode().getChild("jediformxp").getValue() 
+					temp2 = window.getDatabaseNode().getChild("jeditechxp").getValue() 
+					temp3 = window.getDatabaseNode().getChild("forcesxp").getValue() 
+					temp4 = window.getDatabaseNode().getChild("fpxp").getValue() 
+					window.getDatabaseNode().getChild("xpjedi").setValue(temp1+temp2+temp3+temp4);
+					return true;
+				end  
+			  </script>
+
+
+			  </numberfield>
+
+			<numberfield name="forcesxp">
+			<bounds rect="306,180,20,10" />
+			  <nodrag /> 
+			  <readonly />
+			  <script>
+			  function onValueChanged()
+				local temp1
+				local temp2
+				local temp3
+				local temp4
+					temp1 = window.getDatabaseNode().getChild("jediformxp").getValue() 
+					temp2 = window.getDatabaseNode().getChild("jeditechxp").getValue() 
+					temp3 = window.getDatabaseNode().getChild("forcesxp").getValue() 
+					temp4 = window.getDatabaseNode().getChild("fpxp").getValue() 
+					window.getDatabaseNode().getChild("xpjedi").setValue(temp1+temp2+temp3+temp4);
+					return true;
+				end  
+			  </script>
+			</numberfield>
+		
+		
+			<numberfield name="bodyxp" >
+				<bounds rect="256,75,20,10" />
+				<readonly />
+				<nodrag />
+				
+			</numberfield>
+			<stringfield name="BodyTag">
+			<bounds rect="233,50,55,21" />
+			<static>Body</static>
+			</stringfield>
+			<numberfield name="Body" >
+				<bounds rect="233,75,20,10" />
+				<script>
+				function onValueChanged()
+					local x,a,b,c,d,e,f,g,h,i,j
+					x = getValue() 
+						window.getDatabaseNode().getChild("bodyxp").setValue( ((x^2)/2 +(x/2)) );						
+                    a = window.getDatabaseNode().getChild("bodyxp").getValue()
+					b = window.getDatabaseNode().getChild("mindxp").getValue()
+					c = window.getDatabaseNode().getChild("energyxp").getValue()
+					d = window.getDatabaseNode().getChild("matterxp").getValue()
+					x = a+b+c+d
+					window.getDatabaseNode().getChild("jediformxp").setValue( x )
+					
+					x = window.getDatabaseNode().getChild("Body").getValue()
+					a = window.getDatabaseNode().getChild("Create").getValue()
+					b = window.getDatabaseNode().getChild("Sense").getValue()
+					c = window.getDatabaseNode().getChild("Control").getValue()
+					d = window.getDatabaseNode().getChild("Destroy").getValue()
+										
+					window.getDatabaseNode().getChild("CrBo").setValue( x+a );
+					window.getDatabaseNode().getChild("SeBo").setValue( x+b );
+					window.getDatabaseNode().getChild("CoBo").setValue( x+c );
+					window.getDatabaseNode().getChild("DeBo").setValue( x+d );
+				end
+				</script>
+			</numberfield>
+			<numberfield name="mindxp" >
+				<bounds rect="314,75,20,10" />
+				<readonly />
+				<nodrag />
+				
+			</numberfield>
+			<stringfield name="MindTag">
+			<bounds rect="291,50,55,21" />
+			<static>Mind</static>
+			</stringfield>
+			<numberfield name="Mind" >
+				<bounds rect="291,75,20,10" />
+				<script>
+				function onValueChanged()
+					local x,a,b,c,d,e,f,g,h,i,j
+					x = getValue() 
+						window.getDatabaseNode().getChild("mindxp").setValue( ((x^2)/2 +(x/2)) );						
+                    a = window.getDatabaseNode().getChild("bodyxp").getValue()
+					b = window.getDatabaseNode().getChild("mindxp").getValue()
+					c = window.getDatabaseNode().getChild("energyxp").getValue()
+					d = window.getDatabaseNode().getChild("matterxp").getValue()
+					x = a+b+c+d
+					window.getDatabaseNode().getChild("jediformxp").setValue( x )
+					
+					x = window.getDatabaseNode().getChild("Mind").getValue()
+					a = window.getDatabaseNode().getChild("Create").getValue()
+					b = window.getDatabaseNode().getChild("Sense").getValue()
+					c = window.getDatabaseNode().getChild("Control").getValue()
+					d = window.getDatabaseNode().getChild("Destroy").getValue()
+										
+					window.getDatabaseNode().getChild("CrMi").setValue( x+a );
+					window.getDatabaseNode().getChild("SeMi").setValue( x+b );
+					window.getDatabaseNode().getChild("CoMi").setValue( x+c );
+					window.getDatabaseNode().getChild("DeMi").setValue( x+d );
+				end
+				</script>
+			</numberfield>
+			<numberfield name="energyxp" >
+				<bounds rect="364,75,20,10" />
+				<readonly />
+				<nodrag />
+				
+			</numberfield>
+			<stringfield name="EnergyTag">
+			<bounds rect="341,50,55,21" />
+			<static>Energy</static>
+			</stringfield>
+			<numberfield name="Energy" >
+				<bounds rect="341,75,20,10" />
+				<script>
+				function onValueChanged()
+					local x,a,b,c,d,e,f,g,h,i,j
+					x = getValue() 
+						window.getDatabaseNode().getChild("energyxp").setValue( ((x^2)/2 +(x/2)) );						
+                    a = window.getDatabaseNode().getChild("bodyxp").getValue()
+					b = window.getDatabaseNode().getChild("mindxp").getValue()
+					c = window.getDatabaseNode().getChild("energyxp").getValue()
+					d = window.getDatabaseNode().getChild("matterxp").getValue()
+					x = a+b+c+d
+					window.getDatabaseNode().getChild("jediformxp").setValue( x )
+					
+					x = window.getDatabaseNode().getChild("Energy").getValue()
+					a = window.getDatabaseNode().getChild("Create").getValue()
+					b = window.getDatabaseNode().getChild("Sense").getValue()
+					c = window.getDatabaseNode().getChild("Control").getValue()
+					d = window.getDatabaseNode().getChild("Destroy").getValue()
+										
+					window.getDatabaseNode().getChild("CrEn").setValue( x+a );
+					window.getDatabaseNode().getChild("SeEn").setValue( x+b );
+					window.getDatabaseNode().getChild("CoEn").setValue( x+c );
+					window.getDatabaseNode().getChild("DeEn").setValue( x+d );
+				end
+				</script>
+			</numberfield>
+			<numberfield name="matterxp" >
+				<bounds rect="423,75,20,10" />
+				<readonly />
+				<nodrag />
+				
+			</numberfield>
+			<stringfield name="MatterTag">
+			<bounds rect="400,50,55,21" />
+			<static>Matter</static>
+			</stringfield>
+			<numberfield name="Matter" >
+				<bounds rect="400,75,20,10" />
+				<script>
+				function onValueChanged()
+					local x,a,b,c,d,e,f,g,h,i,j
+					x = getValue() 
+						window.getDatabaseNode().getChild("matterxp").setValue( ((x^2)/2 +(x/2)) );						
+                    a = window.getDatabaseNode().getChild("bodyxp").getValue()
+					b = window.getDatabaseNode().getChild("mindxp").getValue()
+					c = window.getDatabaseNode().getChild("energyxp").getValue()
+					d = window.getDatabaseNode().getChild("matterxp").getValue()
+					x = a+b+c+d
+					window.getDatabaseNode().getChild("jediformxp").setValue( x )
+					
+					x = window.getDatabaseNode().getChild("Matter").getValue()
+					a = window.getDatabaseNode().getChild("Create").getValue()
+					b = window.getDatabaseNode().getChild("Sense").getValue()
+					c = window.getDatabaseNode().getChild("Control").getValue()
+					d = window.getDatabaseNode().getChild("Destroy").getValue()
+										
+					window.getDatabaseNode().getChild("CrMa").setValue( x+a );
+					window.getDatabaseNode().getChild("SeMa").setValue( x+b );
+					window.getDatabaseNode().getChild("CoMa").setValue( x+c );
+					window.getDatabaseNode().getChild("DeMa").setValue( x+d );
+				end
+				</script>
+			</numberfield>
+
+			
+			<numberfield name="CrBo" >
+				<bounds rect="236,91,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description text="Create/Strengthen Body" />
+			</numberfield>
+			<numberfield name="CrMi" >
+				<bounds rect="296,91,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description text="Create/Strengthen Mind" />
+			</numberfield>
+			<numberfield name="CrEn" >
+				<bounds rect="346,91,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description text="Create/Strengthen Energy" />
+			</numberfield>
+			<numberfield name="CrMa" >
+				<bounds rect="400,91,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description text="Create/Strengthen Matter" />
+			</numberfield>
+			<numberfield name="SeBo" >
+				<bounds rect="236,107,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description text="Sense/Knowledge Body" />
+			</numberfield>
+			<numberfield name="SeMi" >
+				<bounds rect="296,107,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description text="Sense/Knowledge Mind" />
+			</numberfield>
+			<numberfield name="SeEn" >
+				<bounds rect="346,107,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description text="Sense/Knowledge Energy" />
+			</numberfield>
+			<numberfield name="SeMa" >
+				<bounds rect="400,107,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description text="Sense/Knowledge Matter" />
+			</numberfield>
+			<numberfield name="CoBo" >
+				<bounds rect="236,123,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description text="Control/Alter Body" />
+			</numberfield>
+			<numberfield name="CoMi" >
+				<bounds rect="296,123,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description text="Control/Alter Mind" />
+			</numberfield>
+			<numberfield name="CoEn" >
+				<bounds rect="346,123,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description text="Control/Alter Energy" />
+			</numberfield>
+			<numberfield name="CoMa" >
+				<bounds rect="400,123,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description text="Control/Alter Matter" />
+			</numberfield>
+			<numberfield name="DeBo" >
+				<bounds rect="236,139,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description text="Destroy/Weaken Body" />
+			</numberfield>
+			<numberfield name="DeMi" >
+				<bounds rect="296,139,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description text="Destroy/Weaken Mind" />
+			</numberfield>
+			<numberfield name="DeEn" >
+				<bounds rect="346,139,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description text="Destroy/Weaken Energy" />
+			</numberfield>
+			<numberfield name="DeMa" >
+				<bounds rect="400,139,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description text="Destroy/Weaken Matter" />
+			</numberfield>
+			
+			<windowlist name="forcelist">
+				<bounds rect="16,200,704,-70" />
+				<datasource>.forcelist</datasource>
+				<class>charsheet_forcelistitem</class>
+				<allowcreate />
+				<allowdelete /> 
+				<skipempty />
+				<columns>
+					<fillwidth />
+					<width>704</width>
+				</columns>
+				<script>
+				function onFilter(w)
+						local f
+						
+						if window.filter ~= Null then
+						f=window.filter.getValue();
+						f=string.lower(f);
+						 else
+						f = ""
+						end
+						
+						if string.find(string.lower(w.name.getValue()), f, 0, true) then
+							return true;
+						end
+						
+						return false;
+					end
+
+				function onSortCompare(w1, w2)
+					if w1.name.getValue() == "" then
+						return true;
+					elseif w2.name.getValue() == "" then
+						return false;
+					end
+	
+					return w1.name.getValue() > w2.name.getValue();
+				end
+
+
+				function onListRearranged(listchanged)
+					local points = 0;
+					local experience =0;
+						for k, w in pairs(getWindows()) do
+							local entry = {};
+							experience = w.forcexp.getValue();
+							points = points + experience;
+						end
+						
+					window.getDatabaseNode().getChild("forcesxp").setValue(points);		
+	
+				return true
+				end
+					
+				</script>
+				
+				
+			</windowlist>
+
+            <scrollbar name="forcescroll">
+				<bounds>-25,200,20,-70</bounds>
+					<target name="forcelist" />
+			</scrollbar>
+		
+			<filter2 name="filter">
+				<bounds>41,-60,-50,20</bounds>
+				<target>forcelist</target>
+				<trigger>filtertrigger</trigger>
+			</filter2>
+			<filtertrigger2 name="filtertrigger">
+				<bounds>15,-60,21,41</bounds>
+				<target>filter</target>
+		</filtertrigger2>		
+
+		
+		</sheetdata>
+
+		
+
+
+
+		</windowclass>
+
+</root>

@@ -1,0 +1,322 @@
+<!-- This file is part of the Fantasy Grounds Open Foundation Ruleset project. 
+  -- For the latest information, see http://www.fantasygrounds.com/
+  --
+  -- Copyright 2008 SmiteWorks Ltd.
+  --
+  -- This file is provided under the Open Game License version 1.0a
+  -- Refer to the license.html file for the full license text
+  --
+  -- All producers of work derived from this material are advised to
+  -- familiarize themselves with the license, and to take special
+  -- care in providing the definition of Product Identity (as specified
+  -- by the OGL) in their products.
+  --
+  -- All material submitted to the Open Foundation Ruleset project must
+  -- contain this notice in a manner applicable to the source file type.
+  -->
+
+<?xml version="1.0" encoding="iso-8859-1"?>
+<root version="2.0">
+	<windowclass name="combat_actorlistentry">
+		<sizelimits>
+			<minimum>
+				<height>10</height>
+			</minimum>
+		</sizelimits>
+		<sheetdata>
+			<tokenfield name="token">
+				<bounds>0,0,23,23</bounds>
+				<empty>indicator_emptytoken</empty>
+			</tokenfield>
+			<windowreferencefield name="link">
+				<anchored>
+					<right>
+						<anchor>right</anchor>
+					</right>
+					<top>
+						<anchor>top</anchor>
+						<offset>2</offset>
+					</top>
+					<size>
+						<width>20</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>button_openwindow</normal>
+					<pressed>button_emptytarget</pressed>
+				</icon>
+				<description>
+					<field>name</field>
+				</description>
+			</windowreferencefield>
+			<stringfield name="name">
+				<anchored>
+					<left>
+						<parent>token</parent>
+						<anchor>right</anchor>
+						<offset>3</offset>
+					</left>
+					<right>
+						<parent>link</parent>
+						<anchor>left</anchor>
+						<offset>-3</offset>
+					</right>
+					<top>
+						<anchor>top</anchor>
+						<offset>2</offset>
+					</top>
+					<size>
+						<height>20</height>
+					</size>
+				</anchored>
+				<empty>&#171; New Actor &#187;</empty>
+				<selectioncolor>#90ffffff</selectioncolor>
+				<font>sheettext</font>
+				<linktarget>open</linktarget>
+			</stringfield>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="combat">
+		<datasource>combat</datasource>
+		<frame>charsheet</frame>
+		<placement>
+			<size>
+				<width>300</width>
+				<height>450</height>
+			</size>
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_combat</minimize>
+		<tooltip>
+			<field>name</field>
+		</tooltip>
+		<sheetdata>
+			<!-- NAME -->
+			<genericcontrol name="nameframe">
+				<bounds>10,20,-10,35</bounds>
+				<frame>
+					<name>sheetgroup</name>
+				</frame>
+			</genericcontrol>
+			<stringfield name="name">
+				<anchored>
+					<top>
+						<parent>nameframe</parent>
+						<anchor>top</anchor>
+						<offset>9</offset>
+					</top>
+					<left>
+						<parent>nameframe</parent>
+						<anchor>left</anchor>
+						<offset>35</offset>
+					</left>
+					<right>
+						<parent>nameframe</parent>
+						<anchor>right</anchor>
+						<offset>-15</offset>
+					</right>
+				</anchored>
+				<empty>&#171; New Combat &#187;</empty>
+				<font>sheettext</font>
+			</stringfield>
+			<windowopencontrol>
+				<anchored>
+					<to>nameframe</to>
+					<position>insidetopleft</position>
+					<offset>13,8</offset>
+					<size>
+						<width>20</width>
+						<height>20</height>
+					</size>
+				</anchored>
+				<icon>
+					<normal>button_openwindow</normal>
+					<pressed>button_emptytarget</pressed>
+				</icon>
+				<class>combat</class>
+				<description>
+					<field>name</field>
+				</description>
+				<script>
+					function onDragStart(button, x, y, draginfo)
+						draginfo.setType("shortcut");
+						draginfo.setShortcutData(window.getClass(), window.getDatabaseNode().getNodeName());
+						draginfo.setIcon("combat_drag");
+						return true;
+					end
+				</script>
+			</windowopencontrol>
+
+			<!-- Actor list -->
+			<windowlist name="actorlist">
+				<class>combat_actorlistentry</class>
+				<datasource>.actors</datasource>
+				<bounds>20,65,-20,-25</bounds>
+				<frame>
+					<name>sheetgroup</name>
+					<offset>10,10,10,10</offset>
+				</frame>
+				<allowcreate />
+				<allowdelete />
+				<script>
+					function onDrop(x, y, draginfo)
+						local class, data = draginfo.getShortcutData();
+						local datanode = DB.findNode(data);
+						local dropclass = CombatManager.getDropClass(class);
+						
+						if dropclass and datanode then
+							local w = createWindow();
+							
+							if dropclass.namefield and datanode.getChild(dropclass.namefield) then
+								w.name.setValue(datanode.getChild(dropclass.namefield).getValue());
+							end
+							if dropclass.tokenfield and datanode.getChild(dropclass.tokenfield) then
+								w.token.setPrototype(datanode.getChild(dropclass.tokenfield).getValue());
+							end
+							
+							w.link.setValue(class, data);
+							
+							return true;
+						end
+					end
+				</script>
+			</windowlist>
+			<scrollercontrol>
+				<bounds>-53,-35,45,27</bounds>
+				<target>actorlist</target>
+				<button>
+					<normal>button_scroller</normal>
+					<pressed>button_scroller_down</pressed>
+				</button>
+			</scrollercontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="combatsmall">
+		<sizelimits>
+			<minimum>
+				<height>10</height>
+			</minimum>
+		</sizelimits>
+		<sheetdata>
+			<windowreferencecontrol name="open">
+				<bounds>0,0,20,20</bounds>
+				<icon>
+					<normal>button_openwindow</normal>
+					<pressed>button_emptytarget</pressed>
+				</icon>
+				<class>combat</class>
+				<description>
+					<field>name</field>
+				</description>
+				<!-- <script file="scripts/adventurelistshortcut.lua" /> !-->
+			</windowreferencecontrol>
+			<linkstringfield name="name">
+				<bounds>25,1,-1,20</bounds>
+				<empty>&#171; New Combat &#187;</empty>
+				<selectioncolor>#90ffffff</selectioncolor>
+				<font>sheettext</font>
+				<linktarget>open</linktarget>
+			</linkstringfield>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="combatlist">
+		<frame>scrollboxfortabs</frame>
+		<placement>
+			<size>
+				<width>275</width>
+				<height>350</height>
+			</size>
+		</placement>
+		<sizelimits>
+			<dynamic />
+			<minimum>
+				<width>200</width>
+				<height>290</height>
+			</minimum>
+		</sizelimits>
+		<nodelete />
+		<sheetdata>
+			<genericcontrol>
+				<bounds>16,21,30,177</bounds>
+				<icon>title_combat</icon>
+			</genericcontrol>
+			<windowlist name="list">
+				<bounds>50,25,-30,-34</bounds>
+				<datasource>.</datasource>
+				<class>combatsmall</class>
+				<sortfields>name</sortfields>
+				<footer>footer_narrow</footer>
+				<allowcreate />
+				<allowdelete />
+				<script>
+					function onSortCompare(w1, w2)
+						return w1.name.getValue() &gt; w2.name.getValue();
+					end;
+					
+					function onFilter(w)
+						local f = string.lower(window.filter.getValue());
+						
+						if f == "" then
+							return true;
+						end
+						
+						if string.find(string.lower(w.name.getValue()), f, 0, true) then
+							return true;
+						end
+						
+						return false;
+					end
+				</script>
+			</windowlist>
+			<scrollercontrol>
+				<bounds>-105,-61,45,27</bounds>
+				<target>list</target>
+				<button>
+					<normal>button_scroller</normal>
+					<pressed>button_scroller_down</pressed>
+				</button>
+			</scrollercontrol>
+			<buttoncontrol>
+				<bounds>-55,-58,34,25</bounds>
+				<icon>
+					<normal>button_newwindow</normal>
+					<pressed>button_newwindowdown</pressed>
+				</icon>
+				<class>combat</class>
+				<script>
+					function onButtonPress()
+						local node = window.getDatabaseNode();
+						if node then
+							node = node.createChild();
+							if node then
+								Interface.openWindow(class[1], node.getNodeName());
+							end
+						end
+					end
+				</script>
+			</buttoncontrol>
+			<categoryselectioncontrol>
+				<bounds>24,-39,-24,-1</bounds>
+				<targetcontrol>list</targetcontrol>
+			</categoryselectioncontrol>
+
+			<filter name="filter">
+				<bounds>55,-70,-50,20</bounds>
+				<target>list</target>
+				<trigger>filtertrigger</trigger>
+			</filter>
+			<filtertrigger name="filtertrigger">
+				<bounds>20,-85,21,41</bounds>
+				<target>filter</target>
+			</filtertrigger>
+			
+			<closebuttonlist />	
+		</sheetdata>
+	</windowclass>
+</root>

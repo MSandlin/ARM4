@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+
+<includefile source="campaign/charsheet_classes.xml" />
+<includefile source="campaign/charsheet_main.xml" />
+<includefile source="campaign/charsheet_graphics.xml" />	
+<includefile source="campaign/charsheet_template.xml" />
+<includefile source="campaign/charsheet_magic.xml" />
+<includefile source="campaign/charsheet_combat.xml" />
+<includefile source="campaign/charsheet_jedi.xml" /> 
+<includefile source="campaign/charsheet_inventory.xml" />
+<includefile source="campaign/charsheet_powers.xml" />
+<includefile source="campaign/charsheet_laboratory.xml" />
+
+
+
+	<windowclass name="charsheet">
+		
+		<datasource name="charsheet" />
+		<placement>
+			<size>
+				<width>739</width>
+				<height>762</height>
+			</size>
+			<position>
+				<x>15</x>
+				<y>50</y>
+			</position>
+		</placement>
+		<minimize />
+		<nodelete />
+		<playercontrol />
+		<sharable />
+		<script>
+			function onInit()
+				if User.isLocal() then
+					speak.setVisible(false);
+					portrait.setVisible(false);
+					localportrait.setVisible(true);
+				end
+			end
+		</script>
+		<sheetdata>
+			
+		
+
+			<subwindow name="1main">
+				<bounds>0,0,-1,-1</bounds>
+				<class>charsheet_main</class>
+			</subwindow>
+			<subwindow name="2main">
+				<bounds>0,0,-1,-1</bounds>
+				<class>charsheet_combat</class>
+			</subwindow>
+			<subwindow name="3main">
+				<bounds>0,0,-1,-1</bounds>
+				<class>charsheet_magic</class>
+			</subwindow>
+			
+			<subwindow name="4main">
+				<bounds>0,0,-1,-1</bounds>
+				<class>charsheet_jedi</class>	
+			</subwindow> 
+			
+			<subwindow name="5main">
+				<bounds>0,0,-1,-1</bounds>
+				<class>charsheet_powers</class>			
+			</subwindow> 
+			
+			<subwindow name="6inv">
+				<bounds>0,0,-1,-1</bounds>
+				<class>charsheet_inventory</class>			
+			</subwindow>
+			<subwindow name="7pow">
+				<bounds>0,0,-1,-1</bounds>
+				<class>charsheet_other</class>			
+			</subwindow>
+			
+			<subwindow name="8lab">
+				<bounds>0,0,-1,-1</bounds>
+				<class>cslaboratory</class>			
+			</subwindow>
+			
+			<genericcontrol name="tabframe">
+				<bounds>315,0,400,51</bounds>
+				<tab>
+					<icon>main_icon</icon>
+					<tooltip>
+					<text>Charsheet frontpage</text>
+					</tooltip>
+					<subwindow>1main</subwindow>
+				</tab>
+				<tab>
+					<icon>combat_icon</icon>
+					<subwindow>2main</subwindow>
+				</tab>
+				<tab>
+					<icon>magic_icon</icon>
+					<subwindow>3main</subwindow>
+					
+				</tab> 
+				
+				<tab>
+					<icon>jedi_icon</icon>
+					<subwindow>4main</subwindow>
+				</tab>
+				
+				<tab>
+					<icon>power_icon</icon>
+					<subwindow>5main</subwindow>
+				</tab>
+				<tab>
+					<icon>inventory_icon</icon>
+					<subwindow>6inv</subwindow>
+				</tab>
+				<tab>
+					<icon>notes_icon</icon>
+					<subwindow>7pow</subwindow>
+				</tab>
+				<tab>
+					<icon>lab_icon</icon>
+					<subwindow>8lab</subwindow>
+				</tab>
+				
+				<activate>1</activate>
+				<script file="campaign/scripts/charsheet_tabs.lua" />
+			</genericcontrol>
+		
+			<close_charsheet />
+		</sheetdata>
+	</windowclass>
+</root>

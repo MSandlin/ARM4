@@ -1,0 +1,4542 @@
+<root>
+	<windowclass name="charsheet_magic">
+		<frame name="generic_charsheet_magic" />
+		<!-- <datasource name="charsheet" /> -->
+		<placement>
+			<size>
+				<width>739</width>
+				<height>762</height>
+			</size>
+		</placement>
+		<sheetdata>
+		
+		<genericcontrol name="FormFrame">
+				<bounds>19,54,697,115</bounds>
+				<icon>formframe</icon>
+				
+		</genericcontrol>
+		
+		
+		
+				<stringcontrol name="creotag">
+					<bounds rect="22,85,60,20" />
+					
+					<static>Creo</static>
+					<tooltip>
+					<text>Creo: To create and strengthen. </text>
+				</tooltip>
+				</stringcontrol>
+
+				<stringcontrol name="intelligotag">
+					<bounds rect="22,101,60,20" />
+					
+					<static>Intelligo</static>
+					<tooltip>
+					<text>Intelligo: To percieve and sense </text>
+				</tooltip>
+				</stringcontrol>
+				
+				<stringcontrol name="mutotag">
+					<bounds rect="22,117,60,20" />
+					
+					<static>Muto</static>
+					<tooltip>
+					<text>Muto: To alter shape and form and traits </text>
+				</tooltip>
+				</stringcontrol>
+
+				<stringcontrol name="perdotag">
+					<bounds rect="22,133,60,20" />
+					
+					<static>Perdo</static>
+					<tooltip>
+					<text>Perdo: To destroy or weaken </text>
+				</tooltip>
+				</stringcontrol>
+
+				<stringcontrol name="regotag">
+					<bounds rect="22,149,60,20" />
+					
+					<static>Rego</static>
+					<tooltip>
+					<text>Rego: To control and move </text>
+				</tooltip>
+				</stringcontrol>
+				
+				<!-- Forms -->
+				
+				<stringcontrol name="animaltag">
+					
+					<bounds rect="126,55,58,20" />
+					<center />
+					<static>Animal</static>
+					<tooltip>
+					<text>Animal: Living and dead animal matter and minds. </text>
+				</tooltip>
+				</stringcontrol>
+
+				<stringcontrol name="aquamtag">
+				
+					<bounds rect="185,55,58,20" />
+					<center />
+
+					<static>Aquam</static>
+					<tooltip>
+					<text>Aquam: Water and other fluids, also ice and cold. </text>
+				</tooltip>
+				</stringcontrol>
+				
+				<stringcontrol name="auramtag">
+				
+					<bounds rect="244,55,58,20" />
+					<center />
+					<static>Auram</static>
+					<tooltip>
+					<text>Auram: Air, Gasses and weather </text>
+				</tooltip>
+				</stringcontrol>
+
+				<stringcontrol name="corpustag">
+				
+					<bounds rect="303,55,58,20" />
+					<center />
+					<static>Corpus</static>
+					<tooltip>
+					<text>Corpus: The human body, dead or alive. </text>
+				</tooltip>
+				</stringcontrol>
+				
+				<stringcontrol name="herbamtag">
+					<bounds rect="362,55,58,20" />
+					
+					<center />
+					<static>Herbam</static>
+					<tooltip>
+					<text>Herbam: Living or dead plant matter. </text>
+				</tooltip>
+				</stringcontrol>
+		
+				<stringcontrol name="ignemtag">
+					<bounds rect="421,55,58,20" />
+					<center />
+					
+					<static>Ignem</static>
+					<tooltip>
+					<text>Ignem: Fire, light and heat. </text>
+				</tooltip>
+				</stringcontrol>
+		
+				<stringcontrol name="imagonemtag">
+					<bounds rect="480,55,58,20" />
+					<center />
+					
+					<static>Imagonem</static>
+					<tooltip>
+					<text>Imagonem: All you can sense and percieve. Illusions. </text>
+				</tooltip>
+				</stringcontrol>
+		
+				<stringcontrol name="mentemtag">
+					<bounds rect="539,55,58,20" />
+					<center />
+					
+					<static>Mentem</static>
+					<tooltip>
+					<text>Mentem: The mind of man. </text>
+				</tooltip>
+				</stringcontrol>
+				
+				<stringcontrol name="terramtag">
+					<bounds rect="598,55,58,20" />
+					
+					<center />
+					<static>Terram</static>
+					<tooltip>
+					<text>Terram: Dirt, Stone, Gems and Metals. Hardness. </text>
+				</tooltip>
+				</stringcontrol>
+				
+				<stringcontrol name="vimtag">
+					<bounds rect="657,55,58,20" />
+					<center />
+					
+					<static>Vim</static>
+					<tooltip>
+					<text>Vim: The raw art of magic </text>
+				</tooltip>
+				</stringcontrol>
+		
+		<!-- Techs -->
+		
+			<stringcontrol name="ARTCOST">
+			<bounds rect="23,64,60,20" />
+			<static>Cost X</static>
+			
+			</stringcontrol>
+		
+		    <numberfield name="artcosts">
+				<bounds rect="55,67,20,10" />
+				<nodrag />
+						
+				<default>1</default>
+				<script>
+				function onValueChanged()
+					local x,y,a,b,c,d,e,f,g,h,i,j
+					y = window.getDatabaseNode().getChild("artcosts").getValue();
+					
+						x = window.getDatabaseNode().getChild("Creo").getValue();
+							window.getDatabaseNode().getChild("creoxp").setValue( ((x^2)/2 +(x/2)) * y );		
+
+						x = window.getDatabaseNode().getChild("Intelligo").getValue();
+							window.getDatabaseNode().getChild("intelligoxp").setValue( ((x^2)/2 +(x/2)) * y );		
+						
+						x = window.getDatabaseNode().getChild("Rego").getValue();
+							window.getDatabaseNode().getChild("regoxp").setValue( ((x^2)/2 +(x/2)) * y );
+							
+						x = window.getDatabaseNode().getChild("Muto").getValue();
+							window.getDatabaseNode().getChild("mutoxp").setValue( ((x^2)/2 +(x/2)) * y );
+						
+						x = window.getDatabaseNode().getChild("Perdo").getValue();
+							window.getDatabaseNode().getChild("perdoxp").setValue( ((x^2)/2 +(x/2)) * y );
+							
+							a = window.getDatabaseNode().getChild("creoxp").getValue();
+							b = window.getDatabaseNode().getChild("intelligoxp").getValue();
+							c = window.getDatabaseNode().getChild("regoxp").getValue();
+							d = window.getDatabaseNode().getChild("mutoxp").getValue();
+							e = window.getDatabaseNode().getChild("perdoxp").getValue();
+							x = a+b+c+d+e;
+							window.getDatabaseNode().getChild("techxp").setValue( x )
+							
+						y = window.getDatabaseNode().getChild("artcosts").getValue();
+						
+						
+						
+						x = window.getDatabaseNode().getChild("Animal").getValue()
+							window.getDatabaseNode().getChild("animalxp").setValue( ((x^2)/2 +(x/2)) * y );
+						x = window.getDatabaseNode().getChild("Aquam").getValue()
+							window.getDatabaseNode().getChild("aquamxp").setValue( ((x^2)/2 +(x/2)) * y );
+						x = window.getDatabaseNode().getChild("Auram").getValue()
+							window.getDatabaseNode().getChild("auramxp").setValue( ((x^2)/2 +(x/2)) * y );
+						
+						
+						x = window.getDatabaseNode().getChild("Corpus").getValue()
+							window.getDatabaseNode().getChild("corpusxp").setValue( ((x^2)/2 +(x/2)) * y );
+						x = window.getDatabaseNode().getChild("Herbam").getValue()
+							window.getDatabaseNode().getChild("herbamxp").setValue( ((x^2)/2 +(x/2)) * y );
+						x = window.getDatabaseNode().getChild("Ignem").getValue()
+							window.getDatabaseNode().getChild("ignemxp").setValue( ((x^2)/2 +(x/2)) * y );
+						
+						
+						
+						
+						
+						x = window.getDatabaseNode().getChild("Imagonem").getValue()
+							window.getDatabaseNode().getChild("imagonemxp").setValue( ((x^2)/2 +(x/2)) * y );
+						x = window.getDatabaseNode().getChild("Mentem").getValue()
+							window.getDatabaseNode().getChild("mentemxp").setValue( ((x^2)/2 +(x/2)) * y );
+						x = window.getDatabaseNode().getChild("Terram").getValue()
+							window.getDatabaseNode().getChild("terramxp").setValue( ((x^2)/2 +(x/2)) * y );
+						x = window.getDatabaseNode().getChild("Vim").getValue()
+							window.getDatabaseNode().getChild("vimxp").setValue( ((x^2)/2 +(x/2)) * y );
+					
+						
+						
+					
+					a = window.getDatabaseNode().getChild("creoxp").getValue()
+					b = window.getDatabaseNode().getChild("intelligoxp").getValue()
+					c = window.getDatabaseNode().getChild("regoxp").getValue()
+					d = window.getDatabaseNode().getChild("mutoxp").getValue()
+					e = window.getDatabaseNode().getChild("perdoxp").getValue()
+					x = a+b+c+d+e
+					window.getDatabaseNode().getChild("techxp").setValue( x )
+					
+					
+					   
+					a = window.getDatabaseNode().getChild("animalxp").getValue()
+					b = window.getDatabaseNode().getChild("aquamxp").getValue()
+					c = window.getDatabaseNode().getChild("auramxp").getValue()
+					d = window.getDatabaseNode().getChild("corpusxp").getValue()
+					e = window.getDatabaseNode().getChild("herbamxp").getValue()
+					f = window.getDatabaseNode().getChild("ignemxp").getValue()
+					g = window.getDatabaseNode().getChild("imagonemxp").getValue()
+					h = window.getDatabaseNode().getChild("mentemxp").getValue()
+					i = window.getDatabaseNode().getChild("terramxp").getValue()
+					j = window.getDatabaseNode().getChild("vimxp").getValue()
+					x = a+b+c+d+e+f+g+h+i+j
+					window.getDatabaseNode().getChild("formxp").setValue( x )
+					
+					
+					
+				end
+				</script>
+				
+				
+			<default>0</default></numberfield>
+			
+			
+			<numberfield name="Creo" >
+				<bounds rect="73,91,15,10" />
+				<default>0</default>
+				<tooltip>
+					<text>Creo: To create and strengthen. </text>
+				</tooltip>
+				<script>
+				function onValueChanged()
+					local x,y,a,b,c,d,e,f,g,h,i,j
+					y = window.getDatabaseNode().getChild("artcosts").getValue();
+					x = getValue() 
+						window.getDatabaseNode().getChild("creoxp").setValue( y *  ((x^2)/2 +(x/2)) );						
+					a = window.getDatabaseNode().getChild("creoxp").getValue()
+					b = window.getDatabaseNode().getChild("intelligoxp").getValue()
+					c = window.getDatabaseNode().getChild("regoxp").getValue()
+					d = window.getDatabaseNode().getChild("mutoxp").getValue()
+					e = window.getDatabaseNode().getChild("perdoxp").getValue()
+					x = a+b+c+d+e
+					window.getDatabaseNode().getChild("techxp").setValue( x )
+					
+					x = window.getDatabaseNode().getChild("Creo").getValue()
+					a = window.getDatabaseNode().getChild("Animal").getValue()
+					b = window.getDatabaseNode().getChild("Aquam").getValue()
+					c = window.getDatabaseNode().getChild("Auram").getValue()
+					d = window.getDatabaseNode().getChild("Corpus").getValue()
+					e = window.getDatabaseNode().getChild("Herbam").getValue()
+					f = window.getDatabaseNode().getChild("Ignem").getValue()
+					g = window.getDatabaseNode().getChild("Imagonem").getValue()
+					h = window.getDatabaseNode().getChild("Mentem").getValue()
+					i = window.getDatabaseNode().getChild("Terram").getValue()
+					j = window.getDatabaseNode().getChild("Vim").getValue()
+					
+					window.getDatabaseNode().getChild("CrAn").setValue( x+a );
+					window.getDatabaseNode().getChild("CrAq").setValue( x+b );
+					window.getDatabaseNode().getChild("CrAu").setValue( x+c );
+					window.getDatabaseNode().getChild("CrCo").setValue( x+d );
+					window.getDatabaseNode().getChild("CrHe").setValue( x+e );
+					window.getDatabaseNode().getChild("CrIg").setValue( x+f );
+					window.getDatabaseNode().getChild("CrIm").setValue( x+g );
+					window.getDatabaseNode().getChild("CrMe").setValue( x+h );
+					window.getDatabaseNode().getChild("CrTe").setValue( x+i );
+					window.getDatabaseNode().getChild("CrVi").setValue( x+j );
+				end
+				</script>
+			<default>0</default></numberfield>
+			<numberfield name="creoxp" >
+				<default>0</default>
+				<bounds rect="90,91,20,10" />
+				<readonly />
+				<nodrag />
+				<center />
+				
+			<default>0</default></numberfield>
+			<numberfield name="creoxpg" >
+				<default>0</default>
+				<bounds rect="113,91,10,10" />
+				<stateframe>
+						<hover name="fieldfocus" offset="7,5,7,5" />
+				</stateframe>
+				<nodrag />
+				<script>
+					function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+			
+			
+			function onDrop(x, y, draginfo)
+						local temp1
+						local temp2
+						if draginfo.getType() == "number" then
+							temp1 = draginfo.getNumberData();
+							temp2 = getValue() 
+							
+							setValue( temp1 + temp2 );
+						end
+						return true;
+					end
+			
+			
+			
+			function onValueChanged()
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Creo").getValue() ;
+				
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				cXpLeft = 0;
+				
+				cXpGained = getValue();
+				
+				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					else
+				
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+			
+			function onInit()
+			
+			
+					
+			
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Creo").getValue() ;
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				
+				
+				cXpGained = getValue();
+				cXpLeft = 0;				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					
+					else
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+		
+		
+		
+		
+
+		
+			
+			
+			
+			
+			function onDoubleClick()
+				if not Input.isAltPressed() then
+			
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Creo").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+					
+							setColor("FF00FF00")
+							window.getDatabaseNode().getChild("Creo").setValue(nSkill);
+					
+							eXp = window.getDatabaseNode().getChild("bonusxp").getValue();
+							window.getDatabaseNode().getChild("bonusxp").setValue(eXp+cost);
+							setValue(cXpGained-cost);
+					
+						else
+							setColor("FF000000")
+						end
+				
+				
+				cXpLeft = 0
+					
+					
+			
+				else
+					setValue(getValue()+3);
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Creo").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+						
+							setColor("FF00FF00")
+						else
+							setColor("FF000000")
+						end
+				
+				
+					cXpLeft = 0
+				
+				end
+					
+			end
+				
+				</script>
+				
+				
+				
+			<default>0</default></numberfield>	
+			
+				
+			<numberfield name="Intelligo" >
+				<default>0</default>
+				<bounds rect="73,107,15,10" />
+				<script>
+				function onValueChanged()
+					local x,a,b,c,d,e,f,g,h,i,j
+					local y = window.getDatabaseNode().getChild("artcosts").getValue();
+					x = getValue() 
+						window.getDatabaseNode().getChild("intelligoxp").setValue( y *  ((x^2)/2 +(x/2)) );						
+					a = window.getDatabaseNode().getChild("creoxp").getValue()
+					b = window.getDatabaseNode().getChild("intelligoxp").getValue()
+					c = window.getDatabaseNode().getChild("regoxp").getValue()
+					d = window.getDatabaseNode().getChild("mutoxp").getValue()
+					e = window.getDatabaseNode().getChild("perdoxp").getValue()
+					x = a+b+c+d+e
+					window.getDatabaseNode().getChild("techxp").setValue( x )
+					
+					x = window.getDatabaseNode().getChild("Intelligo").getValue()
+					a = window.getDatabaseNode().getChild("Animal").getValue()
+					b = window.getDatabaseNode().getChild("Aquam").getValue()
+					c = window.getDatabaseNode().getChild("Auram").getValue()
+					d = window.getDatabaseNode().getChild("Corpus").getValue()
+					e = window.getDatabaseNode().getChild("Herbam").getValue()
+					f = window.getDatabaseNode().getChild("Ignem").getValue()
+					g = window.getDatabaseNode().getChild("Imagonem").getValue()
+					h = window.getDatabaseNode().getChild("Mentem").getValue()
+					i = window.getDatabaseNode().getChild("Terram").getValue()
+					j = window.getDatabaseNode().getChild("Vim").getValue()
+					
+					window.getDatabaseNode().getChild("InAn").setValue( x+a );
+					window.getDatabaseNode().getChild("InAq").setValue( x+b );
+					window.getDatabaseNode().getChild("InAu").setValue( x+c );
+					window.getDatabaseNode().getChild("InCo").setValue( x+d );
+					window.getDatabaseNode().getChild("InHe").setValue( x+e );
+					window.getDatabaseNode().getChild("InIg").setValue( x+f );
+					window.getDatabaseNode().getChild("InIm").setValue( x+g );
+					window.getDatabaseNode().getChild("InMe").setValue( x+h );
+					window.getDatabaseNode().getChild("InTe").setValue( x+i );
+					window.getDatabaseNode().getChild("InVi").setValue( x+j );
+					
+				end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="intelligoxp" >
+				<bounds rect="90,107,20,10" />
+				<readonly />
+				<nodrag />
+				<center />
+			<default>0</default>	</numberfield>
+			<numberfield name="intelligoxpg" >
+				<bounds rect="113,107,10,10" />
+				<stateframe>
+						<hover name="fieldfocus" offset="7,5,7,5" />
+				</stateframe>
+				<nodrag />
+				<script>
+				function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+			
+			
+			function onDrop(x, y, draginfo)
+						local temp1
+						local temp2
+						if draginfo.getType() == "number" then
+							temp1 = draginfo.getNumberData();
+							temp2 = getValue() 
+							
+							setValue( temp1 + temp2 );
+						end
+						return true;
+					end
+			
+			
+			
+			function onValueChanged()
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Intelligo").getValue() ;
+				
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				cXpLeft = 0;
+				
+				cXpGained = getValue();
+				
+				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					else
+				
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+			
+			function onInit()
+			
+			
+					
+			
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Intelligo").getValue() ;
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				
+				
+				cXpGained = getValue();
+				cXpLeft = 0;				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					
+					else
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+		
+		
+		
+		
+
+		
+			
+			
+			
+			
+			function onDoubleClick()
+				if not Input.isAltPressed() then
+			
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Intelligo").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+					
+							setColor("FF00FF00")
+							window.getDatabaseNode().getChild("Intelligo").setValue(nSkill);
+					
+							eXp = window.getDatabaseNode().getChild("bonusxp").getValue();
+							window.getDatabaseNode().getChild("bonusxp").setValue(eXp+cost);
+							setValue(cXpGained-cost);
+					
+						else
+							setColor("FF000000")
+						end
+				
+				
+				cXpLeft = 0
+					
+					
+			
+				else
+					setValue(getValue()+3);
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Intelligo").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+						
+							setColor("FF00FF00")
+						else
+							setColor("FF000000")
+						end
+				
+				
+					cXpLeft = 0
+				
+				end
+					
+			end
+				</script>
+				<right />
+			<default>0</default>	</numberfield>
+			
+			<numberfield name="Muto" >
+				<bounds rect="73,123,15,10" />
+				<script>
+				function onValueChanged()
+					local x,a,b,c,d,e,f,g,h,i,j
+					local y = window.getDatabaseNode().getChild("artcosts").getValue();
+					x = getValue() 
+						window.getDatabaseNode().getChild("mutoxp").setValue( y *  ((x^2)/2 +(x/2)) );						
+					a = window.getDatabaseNode().getChild("creoxp").getValue()
+					b = window.getDatabaseNode().getChild("intelligoxp").getValue()
+					c = window.getDatabaseNode().getChild("regoxp").getValue()
+					d = window.getDatabaseNode().getChild("mutoxp").getValue()
+					e = window.getDatabaseNode().getChild("perdoxp").getValue()
+					x = a+b+c+d+e
+					window.getDatabaseNode().getChild("techxp").setValue( x )
+					
+					x = window.getDatabaseNode().getChild("Muto").getValue()
+					a = window.getDatabaseNode().getChild("Animal").getValue()
+					b = window.getDatabaseNode().getChild("Aquam").getValue()
+					c = window.getDatabaseNode().getChild("Auram").getValue()
+					d = window.getDatabaseNode().getChild("Corpus").getValue()
+					e = window.getDatabaseNode().getChild("Herbam").getValue()
+					f = window.getDatabaseNode().getChild("Ignem").getValue()
+					g = window.getDatabaseNode().getChild("Imagonem").getValue()
+					h = window.getDatabaseNode().getChild("Mentem").getValue()
+					i = window.getDatabaseNode().getChild("Terram").getValue()
+					j = window.getDatabaseNode().getChild("Vim").getValue()
+					
+					window.getDatabaseNode().getChild("MuAn").setValue( x+a );
+					window.getDatabaseNode().getChild("MuAq").setValue( x+b );
+					window.getDatabaseNode().getChild("MuAu").setValue( x+c );
+					window.getDatabaseNode().getChild("MuCo").setValue( x+d );
+					window.getDatabaseNode().getChild("MuHe").setValue( x+e );
+					window.getDatabaseNode().getChild("MuIg").setValue( x+f );
+					window.getDatabaseNode().getChild("MuIm").setValue( x+g );
+					window.getDatabaseNode().getChild("MuMe").setValue( x+h );
+					window.getDatabaseNode().getChild("MuTe").setValue( x+i );
+					window.getDatabaseNode().getChild("MuVi").setValue( x+j );
+					
+				end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="mutoxp" >
+				<bounds rect="90,123,20,10" />
+				<readonly />
+				<nodrag />
+				<center />
+			<default>0</default>	</numberfield>
+			<numberfield name="mutoxpg" >
+				<bounds rect="113,123,10,10" />
+				<stateframe>
+						<hover name="fieldfocus" offset="7,5,7,5" />
+				</stateframe>
+				<nodrag />
+				<script>
+						function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+			
+			
+			function onDrop(x, y, draginfo)
+						local temp1
+						local temp2
+						if draginfo.getType() == "number" then
+							temp1 = draginfo.getNumberData();
+							temp2 = getValue() 
+							
+							setValue( temp1 + temp2 );
+						end
+						return true;
+					end
+			
+			
+			
+			function onValueChanged()
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Muto").getValue() ;
+				
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				cXpLeft = 0;
+				
+				cXpGained = getValue();
+				
+				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					else
+				
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+			
+			function onInit()
+			
+			
+					
+			
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Muto").getValue() ;
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				
+				
+				cXpGained = getValue();
+				cXpLeft = 0;				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					
+					else
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+		
+		
+		
+		
+
+		
+			
+			
+			
+			
+			function onDoubleClick()
+				if not Input.isAltPressed() then
+			
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Muto").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+					
+							setColor("FF00FF00")
+							window.getDatabaseNode().getChild("Muto").setValue(nSkill);
+					
+							eXp = window.getDatabaseNode().getChild("bonusxp").getValue();
+							window.getDatabaseNode().getChild("bonusxp").setValue(eXp+cost);
+							setValue(cXpGained-cost);
+					
+						else
+							setColor("FF000000")
+						end
+				
+				
+				cXpLeft = 0
+					
+					
+			
+				else
+					setValue(getValue()+3);
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Muto").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+						
+							setColor("FF00FF00")
+						else
+							setColor("FF000000")
+						end
+				
+				
+					cXpLeft = 0
+				
+				end
+					
+			end
+			</script>
+			<default>0</default>	</numberfield>
+			
+			
+			<numberfield name="Perdo" >
+				<bounds rect="73,139,15,10" />
+				<script>
+				function onValueChanged()
+					local x,a,b,c,d,e,f,g,h,i,j
+					local y = window.getDatabaseNode().getChild("artcosts").getValue();
+					x = getValue() 
+						window.getDatabaseNode().getChild("perdoxp").setValue( y *  ((x^2)/2 +(x/2)) );						
+					a = window.getDatabaseNode().getChild("creoxp").getValue()
+					b = window.getDatabaseNode().getChild("intelligoxp").getValue()
+					c = window.getDatabaseNode().getChild("regoxp").getValue()
+					d = window.getDatabaseNode().getChild("mutoxp").getValue()
+					e = window.getDatabaseNode().getChild("perdoxp").getValue()
+					x = a+b+c+d+e
+					window.getDatabaseNode().getChild("techxp").setValue( x )
+					
+					x = window.getDatabaseNode().getChild("Perdo").getValue()
+					a = window.getDatabaseNode().getChild("Animal").getValue()
+					b = window.getDatabaseNode().getChild("Aquam").getValue()
+					c = window.getDatabaseNode().getChild("Auram").getValue()
+					d = window.getDatabaseNode().getChild("Corpus").getValue()
+					e = window.getDatabaseNode().getChild("Herbam").getValue()
+					f = window.getDatabaseNode().getChild("Ignem").getValue()
+					g = window.getDatabaseNode().getChild("Imagonem").getValue()
+					h = window.getDatabaseNode().getChild("Mentem").getValue()
+					i = window.getDatabaseNode().getChild("Terram").getValue()
+					j = window.getDatabaseNode().getChild("Vim").getValue()
+					
+					window.getDatabaseNode().getChild("PeAn").setValue( x+a );
+					window.getDatabaseNode().getChild("PeAq").setValue( x+b );
+					window.getDatabaseNode().getChild("PeAu").setValue( x+c );
+					window.getDatabaseNode().getChild("PeCo").setValue( x+d );
+					window.getDatabaseNode().getChild("PeHe").setValue( x+e );
+					window.getDatabaseNode().getChild("PeIg").setValue( x+f );
+					window.getDatabaseNode().getChild("PeIm").setValue( x+g );
+					window.getDatabaseNode().getChild("PeMe").setValue( x+h );
+					window.getDatabaseNode().getChild("PeTe").setValue( x+i );
+					window.getDatabaseNode().getChild("PeVi").setValue( x+j );
+					
+				end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="perdoxp" >
+				<bounds rect="90,139,20,10" />
+				<readonly />
+				<nodrag />
+				
+			<default>0</default>	</numberfield>
+			<numberfield name="perdoxpg" >
+				<bounds rect="113,139,10,10" />
+				<stateframe>
+						<hover name="fieldfocus" offset="7,5,7,5" />
+				</stateframe>
+				<nodrag />
+			<script>
+						function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+			
+			
+			function onDrop(x, y, draginfo)
+						local temp1
+						local temp2
+						if draginfo.getType() == "number" then
+							temp1 = draginfo.getNumberData();
+							temp2 = getValue() 
+							
+							setValue( temp1 + temp2 );
+						end
+						return true;
+					end
+			
+			
+			
+			function onValueChanged()
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Perdo").getValue() ;
+				
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				cXpLeft = 0;
+				
+				cXpGained = getValue();
+				
+				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					else
+				
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+			
+			function onInit()
+			
+			
+					
+			
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Perdo").getValue() ;
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				
+				
+				cXpGained = getValue();
+				cXpLeft = 0;				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					
+					else
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+		
+		
+		
+		
+
+		
+			
+			
+			
+			
+			function onDoubleClick()
+				if not Input.isAltPressed() then
+			
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Perdo").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+					
+							setColor("FF00FF00")
+							window.getDatabaseNode().getChild("Perdo").setValue(nSkill);
+					
+							eXp = window.getDatabaseNode().getChild("bonusxp").getValue();
+							window.getDatabaseNode().getChild("bonusxp").setValue(eXp+cost);
+							setValue(cXpGained-cost);
+					
+						else
+							setColor("FF000000")
+						end
+				
+				
+				cXpLeft = 0
+					
+					
+			
+				else
+					setValue(getValue()+3);
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Perdo").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+						
+							setColor("FF00FF00")
+						else
+							setColor("FF000000")
+						end
+				
+				
+					cXpLeft = 0
+				
+				end
+					
+			end
+			</script>	
+			<default>0</default>	</numberfield>
+			
+			
+			<numberfield name="Rego" >
+				<bounds rect="73,155,15,10" />
+				<script>
+				function onValueChanged()
+					local x,a,b,c,d,e,f,g,h,i,j
+					local y = window.getDatabaseNode().getChild("artcosts").getValue();
+					x = getValue() 
+						window.getDatabaseNode().getChild("regoxp").setValue( y *  ((x^2)/2 +(x/2)) );						
+					a = window.getDatabaseNode().getChild("creoxp").getValue()
+					b = window.getDatabaseNode().getChild("intelligoxp").getValue()
+					c = window.getDatabaseNode().getChild("regoxp").getValue()
+					d = window.getDatabaseNode().getChild("mutoxp").getValue()
+					e = window.getDatabaseNode().getChild("perdoxp").getValue()
+					x = a+b+c+d+e
+					window.getDatabaseNode().getChild("techxp").setValue( x )
+
+					x = window.getDatabaseNode().getChild("Rego").getValue()
+					a = window.getDatabaseNode().getChild("Animal").getValue()
+					b = window.getDatabaseNode().getChild("Aquam").getValue()
+					c = window.getDatabaseNode().getChild("Auram").getValue()
+					d = window.getDatabaseNode().getChild("Corpus").getValue()
+					e = window.getDatabaseNode().getChild("Herbam").getValue()
+					f = window.getDatabaseNode().getChild("Ignem").getValue()
+					g = window.getDatabaseNode().getChild("Imagonem").getValue()
+					h = window.getDatabaseNode().getChild("Mentem").getValue()
+					i = window.getDatabaseNode().getChild("Terram").getValue()
+					j = window.getDatabaseNode().getChild("Vim").getValue()
+					
+					window.getDatabaseNode().getChild("ReAn").setValue( x+a );
+					window.getDatabaseNode().getChild("ReAq").setValue( x+b );
+					window.getDatabaseNode().getChild("ReAu").setValue( x+c );
+					window.getDatabaseNode().getChild("ReCo").setValue( x+d );
+					window.getDatabaseNode().getChild("ReHe").setValue( x+e );
+					window.getDatabaseNode().getChild("ReIg").setValue( x+f );
+					window.getDatabaseNode().getChild("ReIm").setValue( x+g );
+					window.getDatabaseNode().getChild("ReMe").setValue( x+h );
+					window.getDatabaseNode().getChild("ReTe").setValue( x+i );
+					window.getDatabaseNode().getChild("ReVi").setValue( x+j );
+										
+					
+				end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="regoxp" >
+				<bounds rect="90,155,20,10" />
+				<readonly />
+				<nodrag />
+				<nodrop />
+			<default>0</default>	</numberfield>
+			<numberfield name="regoxpg" >
+				<bounds rect="113,155,10,10" />
+				<stateframe>
+						<hover name="fieldfocus" offset="7,5,7,5" />
+				</stateframe>
+				
+				<nodrag />
+				<script>
+						function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+			
+			
+			function onDrop(x, y, draginfo)
+						local temp1
+						local temp2
+						if draginfo.getType() == "number" then
+							temp1 = draginfo.getNumberData();
+							temp2 = getValue() 
+							
+							setValue( temp1 + temp2 );
+						end
+						return true;
+					end
+			
+			
+			
+			function onValueChanged()
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Rego").getValue() ;
+				
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				cXpLeft = 0;
+				
+				cXpGained = getValue();
+				
+				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					else
+				
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+			
+			function onInit()
+			
+			
+					
+			
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Rego").getValue() ;
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				
+				
+				cXpGained = getValue();
+				cXpLeft = 0;				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					
+					else
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+		
+		
+		
+		
+
+		
+			
+			
+			
+			
+			function onDoubleClick()
+				if not Input.isAltPressed() then
+			
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Rego").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+					
+							setColor("FF00FF00")
+							window.getDatabaseNode().getChild("Rego").setValue(nSkill);
+					
+							eXp = window.getDatabaseNode().getChild("bonusxp").getValue();
+							window.getDatabaseNode().getChild("bonusxp").setValue(eXp+cost);
+							setValue(cXpGained-cost);
+					
+						else
+							setColor("FF000000")
+						end
+				
+				
+				cXpLeft = 0
+					
+					
+			
+				else
+					setValue(getValue()+3);
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Rego").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+						
+							setColor("FF00FF00")
+						else
+							setColor("FF000000")
+						end
+				
+				
+					cXpLeft = 0
+				
+				end
+					
+			end
+			</script>
+			<default>0</default>	</numberfield>
+			
+			<numberfield name="techxp">
+			<bounds rect="106,180,20,10" />
+			  <nodrag /> 
+			  <readonly />
+			  <invisible />
+			  <script>
+			  function onValueChanged()
+				local temp1
+				local temp2
+				local temp3
+					temp1 = window.getDatabaseNode().getChild("formxp").getValue() 
+					temp2 = window.getDatabaseNode().getChild("techxp").getValue() 
+					temp3 = window.getDatabaseNode().getChild("spellsxp").getValue() 
+					window.getDatabaseNode().getChild("xparts").setValue(temp1+temp2+temp3);
+					
+					return true;
+				end    
+			  </script>
+			  
+			  
+			<default>0</default>	</numberfield>
+			<numberfield name="formxp">
+			<bounds rect="206,180,20,10" />
+			  <nodrag /> 
+			  <readonly />
+			  <invisible />
+			  <script>
+			  function onValueChanged()
+				local temp1
+				local temp2
+				local temp3
+					temp1 = window.getDatabaseNode().getChild("formxp").getValue() 
+					temp2 = window.getDatabaseNode().getChild("techxp").getValue() 
+					temp3 = window.getDatabaseNode().getChild("spellsxp").getValue() 
+					window.getDatabaseNode().getChild("xparts").setValue(temp1+temp2+temp3);
+					
+					return true;
+				end  
+			  </script>
+			<default>0</default>	</numberfield>
+			
+			<numberfield name="spellsxp">
+			<bounds rect="306,180,20,10" />
+			  <nodrag /> 
+			  <readonly />
+			  <invisible />
+			  <script>
+			  function onValueChanged()
+				local temp1
+				local temp2
+				local temp3
+					temp1 = window.getDatabaseNode().getChild("formxp").getValue() 
+					temp2 = window.getDatabaseNode().getChild("techxp").getValue() 
+					temp3 = window.getDatabaseNode().getChild("spellsxp").getValue() 
+					window.getDatabaseNode().getChild("xparts").setValue(temp1+temp2+temp3);
+					
+					return true;
+				end  
+			  </script>
+			<default>0</default>	</numberfield>
+		<!-- Forms -->
+			<numberfield name="animalxp" >
+				<bounds rect="145,75,20,10" />
+				<readonly />
+				<nodrag />
+				<nodrop />
+				<center />
+				
+			<default>0</default>	
+			</numberfield>
+			
+			<numberfield name="animalxpg" >
+				<bounds rect="171,75,10,10" />
+				<stateframe>
+						<hover name="fieldfocus" offset="7,5,7,5" />
+				</stateframe>
+				<nodrag />
+				<center />
+				<script>
+						function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+			
+			
+			function onDrop(x, y, draginfo)
+						local temp1
+						local temp2
+						if draginfo.getType() == "number" then
+							temp1 = draginfo.getNumberData();
+							temp2 = getValue() 
+							
+							setValue( temp1 + temp2 );
+						end
+						return true;
+					end
+			
+			
+			
+			function onValueChanged()
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Animal").getValue() ;
+				
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				cXpLeft = 0;
+				
+				cXpGained = getValue();
+				
+				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					else
+				
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+			
+			function onInit()
+			
+			
+					
+			
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Animal").getValue() ;
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				
+				
+				cXpGained = getValue();
+				cXpLeft = 0;				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					
+					else
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+		
+		
+		
+		
+
+		
+			
+			
+			
+			
+			function onDoubleClick()
+				if not Input.isAltPressed() then
+			
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Animal").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+					
+							setColor("FF00FF00")
+							window.getDatabaseNode().getChild("Animal").setValue(nSkill);
+					
+							eXp = window.getDatabaseNode().getChild("bonusxp").getValue();
+							window.getDatabaseNode().getChild("bonusxp").setValue(eXp+cost);
+							setValue(cXpGained-cost);
+					
+						else
+							setColor("FF000000")
+						end
+				
+				
+				cXpLeft = 0
+					
+					
+			
+				else
+					setValue(getValue()+3);
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Animal").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+						
+							setColor("FF00FF00")
+						else
+							setColor("FF000000")
+						end
+				
+				
+					cXpLeft = 0
+				
+				end
+					
+			end
+			</script>
+			<default>0</default>	
+			</numberfield>
+			
+			<numberfield name="Animal" >
+			
+				<bounds rect="125,75,15,10" />
+				<center />
+				<script>
+				function onValueChanged()
+					local x,a,b,c,d,e,f,g,h,i,j
+					local y = window.getDatabaseNode().getChild("artcosts").getValue();
+					x = getValue() 
+						window.getDatabaseNode().getChild("animalxp").setValue( y *  ((x^2)/2 +(x/2)) );						
+					a = window.getDatabaseNode().getChild("animalxp").getValue()
+					b = window.getDatabaseNode().getChild("aquamxp").getValue()
+					c = window.getDatabaseNode().getChild("auramxp").getValue()
+					d = window.getDatabaseNode().getChild("corpusxp").getValue()
+					e = window.getDatabaseNode().getChild("herbamxp").getValue()
+					f = window.getDatabaseNode().getChild("ignemxp").getValue()
+					g = window.getDatabaseNode().getChild("imagonemxp").getValue()
+					h = window.getDatabaseNode().getChild("mentemxp").getValue()
+					i = window.getDatabaseNode().getChild("terramxp").getValue()
+					j = window.getDatabaseNode().getChild("vimxp").getValue()
+					x = a+b+c+d+e+f+g+h+i+j
+					window.getDatabaseNode().getChild("formxp").setValue( x )
+					
+					x = window.getDatabaseNode().getChild("Animal").getValue()
+					a = window.getDatabaseNode().getChild("Creo").getValue()
+					b = window.getDatabaseNode().getChild("Intelligo").getValue()
+					c = window.getDatabaseNode().getChild("Muto").getValue()
+					d = window.getDatabaseNode().getChild("Perdo").getValue()
+					e = window.getDatabaseNode().getChild("Rego").getValue()
+					
+					window.getDatabaseNode().getChild("CrAn").setValue( x+a );
+					window.getDatabaseNode().getChild("InAn").setValue( x+b );
+					window.getDatabaseNode().getChild("MuAn").setValue( x+c );
+					window.getDatabaseNode().getChild("PeAn").setValue( x+d );
+					window.getDatabaseNode().getChild("ReAn").setValue( x+e );
+					
+				end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="aquamxp" >
+				<bounds rect="204,75,20,10" />
+				<readonly />
+				<nodrag />
+				<nodrop />
+				<center />
+				
+			<default>0</default>	</numberfield>
+			
+			<numberfield name="aquamxpg" >
+				<bounds rect="231,75,10,10" />
+				<stateframe>
+						<hover name="fieldfocus" offset="7,5,7,5" />
+				</stateframe>
+				<nodrag />
+				<center />
+				<script>
+						function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+			
+			
+			function onDrop(x, y, draginfo)
+						local temp1
+						local temp2
+						if draginfo.getType() == "number" then
+							temp1 = draginfo.getNumberData();
+							temp2 = getValue() 
+							
+							setValue( temp1 + temp2 );
+						end
+						return true;
+					end
+			
+			
+			
+			function onValueChanged()
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Aquam").getValue() ;
+				
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				cXpLeft = 0;
+				
+				cXpGained = getValue();
+				
+				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					else
+				
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+			
+			function onInit()
+			
+			
+					
+			
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Aquam").getValue() ;
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				
+				
+				cXpGained = getValue();
+				cXpLeft = 0;				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					
+					else
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+		
+		
+		
+		
+
+		
+			
+			
+			
+			
+			function onDoubleClick()
+				if not Input.isAltPressed() then
+			
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Aquam").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+					
+							setColor("FF00FF00")
+							window.getDatabaseNode().getChild("Aquam").setValue(nSkill);
+					
+							eXp = window.getDatabaseNode().getChild("bonusxp").getValue();
+							window.getDatabaseNode().getChild("bonusxp").setValue(eXp+cost);
+							setValue(cXpGained-cost);
+					
+						else
+							setColor("FF000000")
+						end
+				
+				
+				cXpLeft = 0
+					
+					
+			
+				else
+					setValue(getValue()+3);
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Aquam").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+						
+							setColor("FF00FF00")
+						else
+							setColor("FF000000")
+						end
+				
+				
+					cXpLeft = 0
+				
+				end
+					
+			end
+			</script>
+			<default>0</default>	
+			</numberfield>
+			
+			
+			
+			<numberfield name="Aquam" >
+			<center />
+			
+				<bounds rect="184,75,15,10" />
+				<script>
+				function onValueChanged()
+					local x,a,b,c,d,e,f,g,h,i,j
+					local y = window.getDatabaseNode().getChild("artcosts").getValue();
+					x = getValue() 
+						window.getDatabaseNode().getChild("aquamxp").setValue( y *  ((x^2)/2 +(x/2)) );						
+					a = window.getDatabaseNode().getChild("animalxp").getValue()
+					b = window.getDatabaseNode().getChild("aquamxp").getValue()
+					c = window.getDatabaseNode().getChild("auramxp").getValue()
+					d = window.getDatabaseNode().getChild("corpusxp").getValue()
+					e = window.getDatabaseNode().getChild("herbamxp").getValue()
+					f = window.getDatabaseNode().getChild("ignemxp").getValue()
+					g = window.getDatabaseNode().getChild("imagonemxp").getValue()
+					h = window.getDatabaseNode().getChild("mentemxp").getValue()
+					i = window.getDatabaseNode().getChild("terramxp").getValue()
+					j = window.getDatabaseNode().getChild("vimxp").getValue()
+					x = a+b+c+d+e+f+g+h+i+j
+					window.getDatabaseNode().getChild("formxp").setValue( x )
+					
+					x = window.getDatabaseNode().getChild("Aquam").getValue()
+					a = window.getDatabaseNode().getChild("Creo").getValue()
+					b = window.getDatabaseNode().getChild("Intelligo").getValue()
+					c = window.getDatabaseNode().getChild("Muto").getValue()
+					d = window.getDatabaseNode().getChild("Perdo").getValue()
+					e = window.getDatabaseNode().getChild("Rego").getValue()
+					
+					window.getDatabaseNode().getChild("CrAq").setValue( x+a );
+					window.getDatabaseNode().getChild("InAq").setValue( x+b );
+					window.getDatabaseNode().getChild("MuAq").setValue( x+c );
+					window.getDatabaseNode().getChild("PeAq").setValue( x+d );
+					window.getDatabaseNode().getChild("ReAq").setValue( x+e );
+					
+				end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="auramxp" >
+				<bounds rect="263,75,20,10" />
+				<readonly />
+				<nodrag />
+				
+			<default>0</default>	</numberfield>
+			
+			
+			<numberfield name="aurammxpg" >
+				<bounds rect="289,75,10,10" />
+				<stateframe>
+						<hover name="fieldfocus" offset="7,5,7,5" />
+				</stateframe>
+				<nodrag />
+				<center />
+				<script>
+						function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+			
+			
+			function onDrop(x, y, draginfo)
+						local temp1
+						local temp2
+						if draginfo.getType() == "number" then
+							temp1 = draginfo.getNumberData();
+							temp2 = getValue() 
+							
+							setValue( temp1 + temp2 );
+						end
+						return true;
+					end
+			
+			
+			
+			function onValueChanged()
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Auram").getValue() ;
+				
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				cXpLeft = 0;
+				
+				cXpGained = getValue();
+				
+				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					else
+				
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+			
+			function onInit()
+			
+			
+					
+			
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Auram").getValue() ;
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				
+				
+				cXpGained = getValue();
+				cXpLeft = 0;				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					
+					else
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+		
+		
+		
+		
+
+		
+			
+			
+			
+			
+			function onDoubleClick()
+				if not Input.isAltPressed() then
+			
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Auram").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+					
+							setColor("FF00FF00")
+							window.getDatabaseNode().getChild("Auram").setValue(nSkill);
+					
+							eXp = window.getDatabaseNode().getChild("bonusxp").getValue();
+							window.getDatabaseNode().getChild("bonusxp").setValue(eXp+cost);
+							setValue(cXpGained-cost);
+					
+						else
+							setColor("FF000000")
+						end
+				
+				
+				cXpLeft = 0
+					
+					
+			
+				else
+					setValue(getValue()+3);
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Auram").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+						
+							setColor("FF00FF00")
+						else
+							setColor("FF000000")
+						end
+				
+				
+					cXpLeft = 0
+				
+				end
+					
+			end
+			</script>
+			<default>0</default>	
+			</numberfield>
+			
+			
+			<numberfield name="Auram" >
+			
+				<bounds rect="243,75,20,10" />
+				<script>
+				function onValueChanged()
+					local x,a,b,c,d,e,f,g,h,i,j
+					local y = window.getDatabaseNode().getChild("artcosts").getValue();
+					x = getValue() 
+						window.getDatabaseNode().getChild("auramxp").setValue( y *  ((x^2)/2 +(x/2)) );						
+					a = window.getDatabaseNode().getChild("animalxp").getValue()
+					b = window.getDatabaseNode().getChild("aquamxp").getValue()
+					c = window.getDatabaseNode().getChild("auramxp").getValue()
+					d = window.getDatabaseNode().getChild("corpusxp").getValue()
+					e = window.getDatabaseNode().getChild("herbamxp").getValue()
+					f = window.getDatabaseNode().getChild("ignemxp").getValue()
+					g = window.getDatabaseNode().getChild("imagonemxp").getValue()
+					h = window.getDatabaseNode().getChild("mentemxp").getValue()
+					i = window.getDatabaseNode().getChild("terramxp").getValue()
+					j = window.getDatabaseNode().getChild("vimxp").getValue()
+					x = a+b+c+d+e+f+g+h+i+j
+					window.getDatabaseNode().getChild("formxp").setValue( x )
+					
+					x = window.getDatabaseNode().getChild("Auram").getValue()
+					a = window.getDatabaseNode().getChild("Creo").getValue()
+					b = window.getDatabaseNode().getChild("Intelligo").getValue()
+					c = window.getDatabaseNode().getChild("Muto").getValue()
+					d = window.getDatabaseNode().getChild("Perdo").getValue()
+					e = window.getDatabaseNode().getChild("Rego").getValue()
+					
+					window.getDatabaseNode().getChild("CrAu").setValue( x+a );
+					window.getDatabaseNode().getChild("InAu").setValue( x+b );
+					window.getDatabaseNode().getChild("MuAu").setValue( x+c );
+					window.getDatabaseNode().getChild("PeAu").setValue( x+d );
+					window.getDatabaseNode().getChild("ReAu").setValue( x+e );
+					
+				end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="corpusxp" >
+				<bounds rect="322,75,20,10" />
+				<readonly />
+				<nodrag />
+				
+			<default>0</default>	</numberfield>
+			
+						<numberfield name="corpusxpg" >
+				<bounds rect="348,75,10,10" />
+				<stateframe>
+						<hover name="fieldfocus" offset="7,5,7,5" />
+				</stateframe>
+				<nodrag />
+				<center />
+				<script>
+						function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+			
+			
+			function onDrop(x, y, draginfo)
+						local temp1
+						local temp2
+						if draginfo.getType() == "number" then
+							temp1 = draginfo.getNumberData();
+							temp2 = getValue() 
+							
+							setValue( temp1 + temp2 );
+						end
+						return true;
+					end
+			
+			
+			
+			function onValueChanged()
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Corpus").getValue() ;
+				
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				cXpLeft = 0;
+				
+				cXpGained = getValue();
+				
+				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					else
+				
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+			
+			function onInit()
+			
+			
+					
+			
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Corpus").getValue() ;
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				
+				
+				cXpGained = getValue();
+				cXpLeft = 0;				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					
+					else
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+		
+		
+		
+		
+
+		
+			
+			
+			
+			
+			function onDoubleClick()
+				if not Input.isAltPressed() then
+			
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Corpus").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+					
+							setColor("FF00FF00")
+							window.getDatabaseNode().getChild("Corpus").setValue(nSkill);
+					
+							eXp = window.getDatabaseNode().getChild("bonusxp").getValue();
+							window.getDatabaseNode().getChild("bonusxp").setValue(eXp+cost);
+							setValue(cXpGained-cost);
+					
+						else
+							setColor("FF000000")
+						end
+				
+				
+				cXpLeft = 0
+					
+					
+			
+				else
+					setValue(getValue()+3);
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Corpus").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+						
+							setColor("FF00FF00")
+						else
+							setColor("FF000000")
+						end
+				
+				
+					cXpLeft = 0
+				
+				end
+					
+			end
+			</script>
+			<default>0</default>	
+			</numberfield>
+			
+			<numberfield name="Corpus" >
+				<bounds rect="302,75,20,10" />
+				
+				<script>
+				function onValueChanged()
+					local x,a,b,c,d,e,f,g,h,i,j
+					local y = window.getDatabaseNode().getChild("artcosts").getValue();
+					x = getValue() 
+						window.getDatabaseNode().getChild("corpusxp").setValue( y *  ((x^2)/2 +(x/2)) );						
+					a = window.getDatabaseNode().getChild("animalxp").getValue()
+					b = window.getDatabaseNode().getChild("aquamxp").getValue()
+					c = window.getDatabaseNode().getChild("auramxp").getValue()
+					d = window.getDatabaseNode().getChild("corpusxp").getValue()
+					e = window.getDatabaseNode().getChild("herbamxp").getValue()
+					f = window.getDatabaseNode().getChild("ignemxp").getValue()
+					g = window.getDatabaseNode().getChild("imagonemxp").getValue()
+					h = window.getDatabaseNode().getChild("mentemxp").getValue()
+					i = window.getDatabaseNode().getChild("terramxp").getValue()
+					j = window.getDatabaseNode().getChild("vimxp").getValue()
+					x = a+b+c+d+e+f+g+h+i+j
+					window.getDatabaseNode().getChild("formxp").setValue( x )
+					
+					x = window.getDatabaseNode().getChild("Corpus").getValue()
+					a = window.getDatabaseNode().getChild("Creo").getValue()
+					b = window.getDatabaseNode().getChild("Intelligo").getValue()
+					c = window.getDatabaseNode().getChild("Muto").getValue()
+					d = window.getDatabaseNode().getChild("Perdo").getValue()
+					e = window.getDatabaseNode().getChild("Rego").getValue()
+					
+					window.getDatabaseNode().getChild("CrCo").setValue( x+a );
+					window.getDatabaseNode().getChild("InCo").setValue( x+b );
+					window.getDatabaseNode().getChild("MuCo").setValue( x+c );
+					window.getDatabaseNode().getChild("PeCo").setValue( x+d );
+					window.getDatabaseNode().getChild("ReCo").setValue( x+e );
+					
+				end
+				</script>
+				<default>0</default>	
+				</numberfield>
+			
+			
+			<numberfield name="herbamxp" >
+				<bounds rect="381,75,20,10" />
+				<readonly />
+				<nodrag />
+				
+			<default>0</default>	</numberfield>
+			
+			<numberfield name="herbamxpg" >
+				<bounds rect="407,75,10,10" />
+				<stateframe>
+						<hover name="fieldfocus" offset="7,5,7,5" />
+				</stateframe>
+				<nodrag />
+				<center />
+				<script>
+						function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+			
+			
+			function onDrop(x, y, draginfo)
+						local temp1
+						local temp2
+						if draginfo.getType() == "number" then
+							temp1 = draginfo.getNumberData();
+							temp2 = getValue() 
+							
+							setValue( temp1 + temp2 );
+						end
+						return true;
+					end
+			
+			
+			
+			function onValueChanged()
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Herbam").getValue() ;
+				
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				cXpLeft = 0;
+				
+				cXpGained = getValue();
+				
+				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					else
+				
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+			
+			function onInit()
+			
+			
+					
+			
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Herbam").getValue() ;
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				
+				
+				cXpGained = getValue();
+				cXpLeft = 0;				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					
+					else
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+		
+		
+		
+		
+
+		
+			
+			
+			
+			
+			function onDoubleClick()
+				if not Input.isAltPressed() then
+			
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Herbam").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+					
+							setColor("FF00FF00")
+							window.getDatabaseNode().getChild("Herbam").setValue(nSkill);
+					
+							eXp = window.getDatabaseNode().getChild("bonusxp").getValue();
+							window.getDatabaseNode().getChild("bonusxp").setValue(eXp+cost);
+							setValue(cXpGained-cost);
+					
+						else
+							setColor("FF000000")
+						end
+				
+				
+				cXpLeft = 0
+					
+					
+			
+				else
+					setValue(getValue()+3);
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Herbam").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+						
+							setColor("FF00FF00")
+						else
+							setColor("FF000000")
+						end
+				
+				
+					cXpLeft = 0
+				
+				end
+					
+			end
+			</script>
+			<default>0</default>	
+			</numberfield>
+			
+			<numberfield name="Herbam" >
+			
+				<bounds rect="361,75,20,10" />
+				<script>
+				function onValueChanged()
+					local x,a,b,c,d,e,f,g,h,i,j
+					local y = window.getDatabaseNode().getChild("artcosts").getValue();
+					x = getValue() 
+						window.getDatabaseNode().getChild("herbamxp").setValue( y *  ((x^2)/2 +(x/2)) );						
+					a = window.getDatabaseNode().getChild("animalxp").getValue()
+					b = window.getDatabaseNode().getChild("aquamxp").getValue()
+					c = window.getDatabaseNode().getChild("auramxp").getValue()
+					d = window.getDatabaseNode().getChild("corpusxp").getValue()
+					e = window.getDatabaseNode().getChild("herbamxp").getValue()
+					f = window.getDatabaseNode().getChild("ignemxp").getValue()
+					g = window.getDatabaseNode().getChild("imagonemxp").getValue()
+					h = window.getDatabaseNode().getChild("mentemxp").getValue()
+					i = window.getDatabaseNode().getChild("terramxp").getValue()
+					j = window.getDatabaseNode().getChild("vimxp").getValue()
+					x = a+b+c+d+e+f+g+h+i+j
+					window.getDatabaseNode().getChild("formxp").setValue( x )
+					
+					x = window.getDatabaseNode().getChild("Herbam").getValue()
+					a = window.getDatabaseNode().getChild("Creo").getValue()
+					b = window.getDatabaseNode().getChild("Intelligo").getValue()
+					c = window.getDatabaseNode().getChild("Muto").getValue()
+					d = window.getDatabaseNode().getChild("Perdo").getValue()
+					e = window.getDatabaseNode().getChild("Rego").getValue()
+					
+					window.getDatabaseNode().getChild("CrHe").setValue( x+a );
+					window.getDatabaseNode().getChild("InHe").setValue( x+b );
+					window.getDatabaseNode().getChild("MuHe").setValue( x+c );
+					window.getDatabaseNode().getChild("PeHe").setValue( x+d );
+					window.getDatabaseNode().getChild("ReHe").setValue( x+e );
+					
+					
+				end
+				</script>
+			<default>0</default>	</numberfield>
+			
+			
+			<numberfield name="ignemxp" >
+				<bounds rect="440,75,20,10" />
+				<readonly />
+				<nodrag />
+				
+			<default>0</default>	</numberfield>
+			
+						<numberfield name="ignemxpg" >
+				<bounds rect="466,75,10,10" />
+				<stateframe>
+						<hover name="fieldfocus" offset="7,5,7,5" />
+				</stateframe>
+				<nodrag />
+				<center />
+				<script>
+						function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+			
+			
+			function onDrop(x, y, draginfo)
+						local temp1
+						local temp2
+						if draginfo.getType() == "number" then
+							temp1 = draginfo.getNumberData();
+							temp2 = getValue() 
+							
+							setValue( temp1 + temp2 );
+						end
+						return true;
+					end
+			
+			
+			
+			function onValueChanged()
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Ignem").getValue() ;
+				
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				cXpLeft = 0;
+				
+				cXpGained = getValue();
+				
+				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					else
+				
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+			
+			function onInit()
+			
+			
+					
+			
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Ignem").getValue() ;
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				
+				
+				cXpGained = getValue();
+				cXpLeft = 0;				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					
+					else
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+		
+		
+		
+		
+
+		
+			
+			
+			
+			
+			function onDoubleClick()
+				if not Input.isAltPressed() then
+			
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Ignem").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+					
+							setColor("FF00FF00")
+							window.getDatabaseNode().getChild("Ignem").setValue(nSkill);
+					
+							eXp = window.getDatabaseNode().getChild("bonusxp").getValue();
+							window.getDatabaseNode().getChild("bonusxp").setValue(eXp+cost);
+							setValue(cXpGained-cost);
+					
+						else
+							setColor("FF000000")
+						end
+				
+				
+				cXpLeft = 0
+					
+					
+			
+				else
+					setValue(getValue()+3);
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Ignem").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+						
+							setColor("FF00FF00")
+						else
+							setColor("FF000000")
+						end
+				
+				
+					cXpLeft = 0
+				
+				end
+					
+			end
+			</script>
+			<default>0</default>	
+			</numberfield>
+			
+			<numberfield name="Ignem" >
+			
+				<bounds rect="420,75,20,10" />
+				<script>
+				function onValueChanged()
+					local x,a,b,c,d,e,f,g,h,i,j
+					local y = window.getDatabaseNode().getChild("artcosts").getValue();
+					x = getValue() 
+						window.getDatabaseNode().getChild("ignemxp").setValue( y *  ((x^2)/2 +(x/2)) );						
+					a = window.getDatabaseNode().getChild("animalxp").getValue()
+					b = window.getDatabaseNode().getChild("aquamxp").getValue()
+					c = window.getDatabaseNode().getChild("auramxp").getValue()
+					d = window.getDatabaseNode().getChild("corpusxp").getValue()
+					e = window.getDatabaseNode().getChild("herbamxp").getValue()
+					f = window.getDatabaseNode().getChild("ignemxp").getValue()
+					g = window.getDatabaseNode().getChild("imagonemxp").getValue()
+					h = window.getDatabaseNode().getChild("mentemxp").getValue()
+					i = window.getDatabaseNode().getChild("terramxp").getValue()
+					j = window.getDatabaseNode().getChild("vimxp").getValue()
+					x = a+b+c+d+e+f+g+h+i+j
+					window.getDatabaseNode().getChild("formxp").setValue( x )
+					
+					x = window.getDatabaseNode().getChild("Ignem").getValue()
+					a = window.getDatabaseNode().getChild("Creo").getValue()
+					b = window.getDatabaseNode().getChild("Intelligo").getValue()
+					c = window.getDatabaseNode().getChild("Muto").getValue()
+					d = window.getDatabaseNode().getChild("Perdo").getValue()
+					e = window.getDatabaseNode().getChild("Rego").getValue()
+					
+					window.getDatabaseNode().getChild("CrIg").setValue( x+a );
+					window.getDatabaseNode().getChild("InIg").setValue( x+b );
+					window.getDatabaseNode().getChild("MuIg").setValue( x+c );
+					window.getDatabaseNode().getChild("PeIg").setValue( x+d );
+					window.getDatabaseNode().getChild("ReIg").setValue( x+e );
+					
+				end
+				</script>
+			<default>0</default>	</numberfield>
+			
+			<numberfield name="imagonemxp" >
+				<bounds rect="499,75,20,10" />
+				<readonly />
+				<nodrag />
+				
+			<default>0</default>	</numberfield>
+			
+						<numberfield name="imagonemxpg" >
+				<bounds rect="525,75,10,10" />
+				<stateframe>
+						<hover name="fieldfocus" offset="7,5,7,5" />
+				</stateframe>
+				<nodrag />
+				<center />
+				<script>
+						function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+			
+			
+			function onDrop(x, y, draginfo)
+						local temp1
+						local temp2
+						if draginfo.getType() == "number" then
+							temp1 = draginfo.getNumberData();
+							temp2 = getValue() 
+							
+							setValue( temp1 + temp2 );
+						end
+						return true;
+					end
+			
+			
+			
+			function onValueChanged()
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Imagonem").getValue() ;
+				
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				cXpLeft = 0;
+				
+				cXpGained = getValue();
+				
+				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					else
+				
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+			
+			function onInit()
+			
+			
+					
+			
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Imagonem").getValue() ;
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				
+				
+				cXpGained = getValue();
+				cXpLeft = 0;				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					
+					else
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+		
+		
+		
+		
+
+		
+			
+			
+			
+			
+			function onDoubleClick()
+				if not Input.isAltPressed() then
+			
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Imagonem").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+					
+							setColor("FF00FF00")
+							window.getDatabaseNode().getChild("Imagonem").setValue(nSkill);
+					
+							eXp = window.getDatabaseNode().getChild("bonusxp").getValue();
+							window.getDatabaseNode().getChild("bonusxp").setValue(eXp+cost);
+							setValue(cXpGained-cost);
+					
+						else
+							setColor("FF000000")
+						end
+				
+				
+				cXpLeft = 0
+					
+					
+			
+				else
+					setValue(getValue()+3);
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Imagonem").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+						
+							setColor("FF00FF00")
+						else
+							setColor("FF000000")
+						end
+				
+				
+					cXpLeft = 0
+				
+				end
+					
+			end
+			</script>
+			<default>0</default>	
+			</numberfield>
+			
+			<numberfield name="Imagonem" >
+			
+				<bounds rect="479,75,20,10" />
+				<script>
+				function onValueChanged()
+					local x,a,b,c,d,e,f,g,h,i,j
+					local y = window.getDatabaseNode().getChild("artcosts").getValue();
+					
+					x = getValue() 
+						window.getDatabaseNode().getChild("imagonemxp").setValue( y *  ((x^2)/2 +(x/2)) );						
+					a = window.getDatabaseNode().getChild("animalxp").getValue()
+					b = window.getDatabaseNode().getChild("aquamxp").getValue()
+					c = window.getDatabaseNode().getChild("auramxp").getValue()
+					d = window.getDatabaseNode().getChild("corpusxp").getValue()
+					e = window.getDatabaseNode().getChild("herbamxp").getValue()
+					f = window.getDatabaseNode().getChild("ignemxp").getValue()
+					g = window.getDatabaseNode().getChild("imagonemxp").getValue()
+					h = window.getDatabaseNode().getChild("mentemxp").getValue()
+					i = window.getDatabaseNode().getChild("terramxp").getValue()
+					j = window.getDatabaseNode().getChild("vimxp").getValue()
+					x = a+b+c+d+e+f+g+h+i+j
+					window.getDatabaseNode().getChild("formxp").setValue( x )
+					
+					x = window.getDatabaseNode().getChild("Imagonem").getValue()
+					a = window.getDatabaseNode().getChild("Creo").getValue()
+					b = window.getDatabaseNode().getChild("Intelligo").getValue()
+					c = window.getDatabaseNode().getChild("Muto").getValue()
+					d = window.getDatabaseNode().getChild("Perdo").getValue()
+					e = window.getDatabaseNode().getChild("Rego").getValue()
+					
+					window.getDatabaseNode().getChild("CrIm").setValue( x+a );
+					window.getDatabaseNode().getChild("InIm").setValue( x+b );
+					window.getDatabaseNode().getChild("MuIm").setValue( x+c );
+					window.getDatabaseNode().getChild("PeIm").setValue( x+d );
+					window.getDatabaseNode().getChild("ReIm").setValue( x+e );
+					
+				end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="mentemxp" >
+				<bounds rect="558,75,20,10" />
+				<readonly />
+				<nodrag />
+				
+			<default>0</default>	</numberfield>
+			
+			<numberfield name="mentemxpg" >
+				<bounds rect="584,75,10,10" />
+				<stateframe>
+						<hover name="fieldfocus" offset="7,5,7,5" />
+				</stateframe>
+				<nodrag />
+				<center />
+				<script>
+						function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+			
+			
+			function onDrop(x, y, draginfo)
+						local temp1
+						local temp2
+						if draginfo.getType() == "number" then
+							temp1 = draginfo.getNumberData();
+							temp2 = getValue() 
+							
+							setValue( temp1 + temp2 );
+						end
+						return true;
+					end
+			
+			
+			
+			function onValueChanged()
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Mentem").getValue() ;
+				
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				cXpLeft = 0;
+				
+				cXpGained = getValue();
+				
+				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					else
+				
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+			
+			function onInit()
+			
+			
+					
+			
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Mentem").getValue() ;
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				
+				
+				cXpGained = getValue();
+				cXpLeft = 0;				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					
+					else
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+		
+		
+		
+		
+
+		
+			
+			
+			
+			
+			function onDoubleClick()
+				if not Input.isAltPressed() then
+			
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Mentem").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+					
+							setColor("FF00FF00")
+							window.getDatabaseNode().getChild("Mentem").setValue(nSkill);
+					
+							eXp = window.getDatabaseNode().getChild("bonusxp").getValue();
+							window.getDatabaseNode().getChild("bonusxp").setValue(eXp+cost);
+							setValue(cXpGained-cost);
+					
+						else
+							setColor("FF000000")
+						end
+				
+				
+				cXpLeft = 0
+					
+					
+			
+				else
+					setValue(getValue()+3);
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Mentem").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+						
+							setColor("FF00FF00")
+						else
+							setColor("FF000000")
+						end
+				
+				
+					cXpLeft = 0
+				
+				end
+					
+			end
+			</script>
+			<default>0</default>	
+			</numberfield>
+			
+			<numberfield name="Mentem" >
+				
+				<bounds rect="538,75,20,10" />
+				<script>
+				function onValueChanged()
+					local x,a,b,c,d,e,f,g,h,i,j
+					local y = window.getDatabaseNode().getChild("artcosts").getValue();
+					
+					x = getValue() 
+						window.getDatabaseNode().getChild("mentemxp").setValue( y *  ((x^2)/2 +(x/2)) );						
+					a = window.getDatabaseNode().getChild("animalxp").getValue()
+					b = window.getDatabaseNode().getChild("aquamxp").getValue()
+					c = window.getDatabaseNode().getChild("auramxp").getValue()
+					d = window.getDatabaseNode().getChild("corpusxp").getValue()
+					e = window.getDatabaseNode().getChild("herbamxp").getValue()
+					f = window.getDatabaseNode().getChild("ignemxp").getValue()
+					g = window.getDatabaseNode().getChild("imagonemxp").getValue()
+					h = window.getDatabaseNode().getChild("mentemxp").getValue()
+					i = window.getDatabaseNode().getChild("terramxp").getValue()
+					j = window.getDatabaseNode().getChild("vimxp").getValue()
+					x = a+b+c+d+e+f+g+h+i+j
+					window.getDatabaseNode().getChild("formxp").setValue( x )
+					
+					x = window.getDatabaseNode().getChild("Mentem").getValue()
+					a = window.getDatabaseNode().getChild("Creo").getValue()
+					b = window.getDatabaseNode().getChild("Intelligo").getValue()
+					c = window.getDatabaseNode().getChild("Muto").getValue()
+					d = window.getDatabaseNode().getChild("Perdo").getValue()
+					e = window.getDatabaseNode().getChild("Rego").getValue()
+					
+					window.getDatabaseNode().getChild("CrMe").setValue( x+a );
+					window.getDatabaseNode().getChild("InMe").setValue( x+b );
+					window.getDatabaseNode().getChild("MuMe").setValue( x+c );
+					window.getDatabaseNode().getChild("PeMe").setValue( x+d );
+					window.getDatabaseNode().getChild("ReMe").setValue( x+e );
+				end
+				</script>
+			<default>0</default>	</numberfield>
+
+
+
+		<numberfield name="terramxp" >
+				<bounds rect="617,75,20,10" />
+				<readonly />
+				<nodrag />
+				
+		<default>0</default>	</numberfield>
+		
+					<numberfield name="terramxpg" >
+				<bounds rect="643,75,10,10" />
+				<stateframe>
+						<hover name="fieldfocus" offset="7,5,7,5" />
+				</stateframe>
+				<nodrag />
+				<center />
+				<script>
+						function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+			
+			
+			function onDrop(x, y, draginfo)
+						local temp1
+						local temp2
+						if draginfo.getType() == "number" then
+							temp1 = draginfo.getNumberData();
+							temp2 = getValue() 
+							
+							setValue( temp1 + temp2 );
+						end
+						return true;
+					end
+			
+			
+			
+			function onValueChanged()
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Terram").getValue() ;
+				
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				cXpLeft = 0;
+				
+				cXpGained = getValue();
+				
+				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					else
+				
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+			
+			function onInit()
+			
+			
+					
+			
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Terram").getValue() ;
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				
+				
+				cXpGained = getValue();
+				cXpLeft = 0;				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					
+					else
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+		
+		
+		
+		
+
+		
+			
+			
+			
+			
+			function onDoubleClick()
+				if not Input.isAltPressed() then
+			
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Terram").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+					
+							setColor("FF00FF00")
+							window.getDatabaseNode().getChild("Terram").setValue(nSkill);
+					
+							eXp = window.getDatabaseNode().getChild("bonusxp").getValue();
+							window.getDatabaseNode().getChild("bonusxp").setValue(eXp+cost);
+							setValue(cXpGained-cost);
+					
+						else
+							setColor("FF000000")
+						end
+				
+				
+				cXpLeft = 0
+					
+					
+			
+				else
+					setValue(getValue()+3);
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Terram").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+						
+							setColor("FF00FF00")
+						else
+							setColor("FF000000")
+						end
+				
+				
+					cXpLeft = 0
+				
+				end
+					
+			end
+			</script>
+			<default>0</default>	
+			</numberfield>
+
+		<numberfield name="Terram" >
+				
+				<bounds rect="597,75,20,10" />
+				<script>
+				function onValueChanged()
+					local x,a,b,c,d,e,f,g,h,i,j
+					local y = window.getDatabaseNode().getChild("artcosts").getValue();
+					
+					x = getValue() 
+						window.getDatabaseNode().getChild("terramxp").setValue( y *  ((x^2)/2 +(x/2)) );						
+					a = window.getDatabaseNode().getChild("animalxp").getValue()
+					b = window.getDatabaseNode().getChild("aquamxp").getValue()
+					c = window.getDatabaseNode().getChild("auramxp").getValue()
+					d = window.getDatabaseNode().getChild("corpusxp").getValue()
+					e = window.getDatabaseNode().getChild("herbamxp").getValue()
+					f = window.getDatabaseNode().getChild("ignemxp").getValue()
+					g = window.getDatabaseNode().getChild("imagonemxp").getValue()
+					h = window.getDatabaseNode().getChild("mentemxp").getValue()
+					i = window.getDatabaseNode().getChild("terramxp").getValue()
+					j = window.getDatabaseNode().getChild("vimxp").getValue()
+					x = a+b+c+d+e+f+g+h+i+j
+					window.getDatabaseNode().getChild("formxp").setValue( x )
+					
+					x = window.getDatabaseNode().getChild("Terram").getValue()
+					a = window.getDatabaseNode().getChild("Creo").getValue()
+					b = window.getDatabaseNode().getChild("Intelligo").getValue()
+					c = window.getDatabaseNode().getChild("Muto").getValue()
+					d = window.getDatabaseNode().getChild("Perdo").getValue()
+					e = window.getDatabaseNode().getChild("Rego").getValue()
+					
+					window.getDatabaseNode().getChild("CrTe").setValue( x+a );
+					window.getDatabaseNode().getChild("InTe").setValue( x+b );
+					window.getDatabaseNode().getChild("MuTe").setValue( x+c );
+					window.getDatabaseNode().getChild("PeTe").setValue( x+d );
+					window.getDatabaseNode().getChild("ReTe").setValue( x+e );
+					
+				end
+				</script>
+			<default>0</default>	</numberfield>
+			
+			
+			<numberfield name="vimxp" >
+				<bounds rect="676,75,20,10" />
+				<readonly />
+				<nodrag />
+				
+			<default>0</default>	</numberfield>
+			
+						<numberfield name="vimxpg" >
+				<bounds rect="702,75,10,10" />
+				<stateframe>
+						<hover name="fieldfocus" offset="7,5,7,5" />
+				</stateframe>
+				<nodrag />
+				<center />
+				<script>
+						function onWheel(notches)
+							
+							if not Input.isAltPressed() then
+								return true;
+							end
+						end
+			
+			
+			function onDrop(x, y, draginfo)
+						local temp1
+						local temp2
+						if draginfo.getType() == "number" then
+							temp1 = draginfo.getNumberData();
+							temp2 = getValue() 
+							
+							setValue( temp1 + temp2 );
+						end
+						return true;
+					end
+			
+			
+			
+			function onValueChanged()
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Vim").getValue() ;
+				
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				cXpLeft = 0;
+				
+				cXpGained = getValue();
+				
+				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					else
+				
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+			
+			function onInit()
+			
+			
+					
+			
+				local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+				cSkill = window.getDatabaseNode().getChild("Vim").getValue() ;
+				cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				nSkill = cSkill +1;
+				cost = nSkill * cCost
+				
+				
+				cXpGained = getValue();
+				cXpLeft = 0;				
+				
+				cXpAvailable = cXpGained + cXpLeft;
+				
+					if cXpGained >= cost then
+					
+						setColor("FF00FF00")
+					
+					else
+						setColor("FF000000")
+					end
+				
+				
+				cXpLeft = 0
+				
+			
+			end
+			
+		
+		
+		
+		
+
+		
+			
+			
+			
+			
+			function onDoubleClick()
+				if not Input.isAltPressed() then
+			
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Vim").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+				
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+					
+							setColor("FF00FF00")
+							window.getDatabaseNode().getChild("Vim").setValue(nSkill);
+					
+							eXp = window.getDatabaseNode().getChild("bonusxp").getValue();
+							window.getDatabaseNode().getChild("bonusxp").setValue(eXp+cost);
+							setValue(cXpGained-cost);
+					
+						else
+							setColor("FF000000")
+						end
+				
+				
+				cXpLeft = 0
+					
+					
+			
+				else
+					setValue(getValue()+3);
+					local cSkill, cXpGained, cXpLeft, cXpAvailable, nSkill, cCost, Cost , sSkill
+					cSkill = window.getDatabaseNode().getChild("Vim").getValue() ;
+					cCost = window.getDatabaseNode().getChild("artcosts").getValue();
+					nSkill = cSkill +1;
+					cost = nSkill * cCost
+				
+				
+					cXpGained = getValue();
+					cXpLeft = 0;			
+				
+					cXpAvailable = cXpGained + cXpLeft;
+				
+						if cXpGained >= cost then
+						
+							setColor("FF00FF00")
+						else
+							setColor("FF000000")
+						end
+				
+				
+					cXpLeft = 0
+				
+				end
+					
+			end
+			</script>
+			<default>0</default>	
+			</numberfield>
+			
+			<numberfield name="Vim" >
+			
+				<bounds rect="656,75,20,10" />
+				<script>
+				function onValueChanged()
+					local x,a,b,c,d,e,f,g,h,i,j
+					local y = window.getDatabaseNode().getChild("artcosts").getValue();
+					x = getValue() 
+						window.getDatabaseNode().getChild("vimxp").setValue( y *  ((x^2)/2 +(x/2)) );						
+					a = window.getDatabaseNode().getChild("animalxp").getValue()
+					b = window.getDatabaseNode().getChild("aquamxp").getValue()
+					c = window.getDatabaseNode().getChild("auramxp").getValue()
+					d = window.getDatabaseNode().getChild("corpusxp").getValue()
+					e = window.getDatabaseNode().getChild("herbamxp").getValue()
+					f = window.getDatabaseNode().getChild("ignemxp").getValue()
+					g = window.getDatabaseNode().getChild("imagonemxp").getValue()
+					h = window.getDatabaseNode().getChild("mentemxp").getValue()
+					i = window.getDatabaseNode().getChild("terramxp").getValue()
+					j = window.getDatabaseNode().getChild("vimxp").getValue()
+					x = a+b+c+d+e+f+g+h+i+j
+					window.getDatabaseNode().getChild("formxp").setValue( x )
+					
+					x = window.getDatabaseNode().getChild("Vim").getValue()
+					a = window.getDatabaseNode().getChild("Creo").getValue()
+					b = window.getDatabaseNode().getChild("Intelligo").getValue()
+					c = window.getDatabaseNode().getChild("Muto").getValue()
+					d = window.getDatabaseNode().getChild("Perdo").getValue()
+					e = window.getDatabaseNode().getChild("Rego").getValue()
+					
+					window.getDatabaseNode().getChild("CrVi").setValue( x+a );
+					window.getDatabaseNode().getChild("InVi").setValue( x+b );
+					window.getDatabaseNode().getChild("MuVi").setValue( x+c );
+					window.getDatabaseNode().getChild("PeVi").setValue( x+d );
+					window.getDatabaseNode().getChild("ReVi").setValue( x+e );
+					
+				end
+				</script>
+			<default>0</default>	</numberfield>
+			
+			<!-- Art Matrix	-->
+		
+			<numberfield name="CrAn" >
+				<bounds rect="136,91,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Creo Animal</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="CrAq" >
+				<bounds rect="195,91,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Creo Aquam"</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="CrAu" >
+				<bounds rect="254,91,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+				<description>Creo Auram</description>
+			<default>0</default>	</numberfield>
+			<numberfield name="CrCo" >
+				<bounds rect="313,91,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+				<description>Creo Corpus</description>
+			<default>0</default>	</numberfield>
+			<numberfield name="CrHe" >
+				<bounds rect="372,91,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Creo Herbam</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="CrIg" >
+				<bounds rect="431,91,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Creo Ignem</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="CrIm" >
+				<bounds rect="490,91,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Creo Imagonem</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="CrMe" >
+				<bounds rect="549,91,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Creo Mentem</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="CrTe" >
+				<bounds rect="608,91,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+				<description>Creo Terram</description>
+			<default>0</default>	</numberfield>
+			<numberfield name="CrVi" >
+				<bounds rect="667,91,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Creo Vim</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			
+			<numberfield name="InAn" >
+				<bounds rect="136,107,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Intelligo Animal"</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="InAq" >
+				<bounds rect="195,107,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Intelligo Aquam</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="InAu" >
+				<bounds rect="254,107,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Intelligo Auram</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="InCo" >
+				<bounds rect="313,107,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Intelligo Corpus</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="InHe" >
+				<bounds rect="372,107,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Intelligo Herbam</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="InIg" >
+				<bounds rect="431,107,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Intelligo Ignem</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="InIm" >
+				<bounds rect="490,107,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Intelligo Imagonem</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="InMe" >
+				<bounds rect="549,107,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Intelligo Mentem</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="InTe" >
+				<bounds rect="608,107,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Intelligo Terram</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="InVi" >
+				<bounds rect="667,107,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Intelligo Vim</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			
+			<numberfield name="MuAn" >
+				<bounds rect="136,123,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Muto Animal</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="MuAq" >
+				<bounds rect="195,123,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Muto Aquam</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="MuAu" >
+				<bounds rect="254,123,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Muto Auram</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="MuCo" >
+				<bounds rect="313,123,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Muto Corpus</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="MuHe" >
+				<bounds rect="372,123,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Muto Herbam</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="MuIg" >
+				<bounds rect="431,123,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Muto Ignem</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="MuIm" >
+				<bounds rect="490,123,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Muto Imagonem</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="MuMe" >
+				<bounds rect="549,123,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Muto Mentem</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="MuTe" >
+				<bounds rect="608,123,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Muto Terram</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="MuVi" >
+				<bounds rect="667,123,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Muto Vim</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+
+			<numberfield name="PeAn" >
+				<bounds rect="136,139,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Perdo Animal</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="PeAq" >
+				<bounds rect="195,139,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Perdo Aquam</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="PeAu" >
+				<bounds rect="254,139,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Perdo Auram</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="PeCo" >
+				<bounds rect="313,139,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Perdo Corpus</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="PeHe" >
+				<bounds rect="372,139,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Perdo Herbam</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="PeIg" >
+				<bounds rect="431,139,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Perdo Ignem</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="PeIm" >
+				<bounds rect="490,139,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Perdo Imagonem</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="PeMe" >
+				<bounds rect="549,139,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Perdo Mentem</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="PeTe" >
+				<bounds rect="608,139,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Perdo Terram</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="PeVi" >
+				<bounds rect="667,139,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Perdo Vim</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+
+			<numberfield name="ReAn" >
+				<bounds rect="136,155,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Rego Animal</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="ReAq" >
+				<bounds rect="195,155,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Rego Aquam</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="ReAu" >
+				<bounds rect="254,155,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Rego Auram</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="ReCo" >
+				<bounds rect="313,155,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Rego Corpus</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="ReHe" >
+				<bounds rect="372,155,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Rego Herbam</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="ReIg" >
+				<bounds rect="431,155,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Rego Ignem</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="ReIm" >
+				<bounds rect="490,155,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Rego Imagonem</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="ReMe" >
+				<bounds rect="549,155,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Rego Mentem</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="ReTe" >
+				<bounds rect="608,155,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Rego Terram</description>
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			<default>0</default>	</numberfield>
+			<numberfield name="ReVi" >
+				<bounds rect="667,155,40,10" />
+				<center />
+				<readonly />
+				<nodrop />
+				
+				<description>Rego Vim"</description>
+			
+				<script>
+				    function onDoubleClick()
+						local a,b
+							a = getValue();
+							b = description[1];
+							
+							ModifierStack.addSlot(b, a);
+							return true;
+					end
+				</script>
+			
+				<default>0</default></numberfield>
+			<!-- Spells -->
+			 
+			<windowlist name="spelllist">
+				<bounds rect="16,200,705,-70" />
+				<datasource>.spelllist</datasource>
+				<class>charsheet_spelllistitem</class>
+				<allowcreate />
+				<allowdelete /> 
+				<skipempty />
+				<columns>
+					<fillwidth />
+					<width>704</width>
+				</columns>
+				<script>
+				
+				function onListRearranged(listchanged)
+					local points = 0;
+					local experience =0;
+					for k, w in pairs(getWindows()) do
+						local entry = {};
+						experience = w.spellxp.getValue();
+						points = points + experience;
+					end
+					window.getDatabaseNode().getChild("spellsxp").setValue(points);		
+				return true
+				end
+
+				function onSortCompare(w1, w2)
+					return w1.name.getValue() > w2.name.getValue();
+				end
+				
+					
+				function onFilter(w)
+						local f
+						
+						if window.filter ~= Null then
+						f=window.filter.getValue();
+						f=string.lower(f);
+						 else
+						f = ""
+						end
+						
+						if string.find(string.lower(w.name.getValue()), f, 0, true) then
+							return true;
+						end
+						
+						return false;
+				end
+				</script>
+				
+				
+				
+				
+			</windowlist> 
+			
+			
+			<scrollbar name="magicscroll">
+				<bounds>-25,200,20,-70</bounds>
+					<target name="spelllist" />
+			</scrollbar>
+			
+           
+			
+			<filter2 name="filter">
+				<bounds>41,-60,-50,20</bounds>
+				<target>spelllist</target>
+				<trigger>filtertrigger</trigger>
+			</filter2>
+			<filtertrigger2 name="filtertrigger">
+				<bounds>15,-60,21,41</bounds>
+				<target>filter</target>
+			</filtertrigger2>		
+
+
+
+			
+		</sheetdata>
+		
+	</windowclass>
+</root>

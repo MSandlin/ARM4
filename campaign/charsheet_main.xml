@@ -1,0 +1,3784 @@
+<root>
+
+	<template name="frame_charlang">
+		<genericcontrol>
+			<frame name="groupbox2" />
+		</genericcontrol>
+	</template>
+
+	
+<windowclass name="char_language">
+		<margins control="0,0,0,2" />
+		<script>
+			function onDragStart(button, x, y, draginfo)
+				local sLang = name.getValue()
+				if sLang ~= "" then
+					draginfo.setType("language")
+					draginfo.setIcon("button_speak")
+					draginfo.setStringData(sLang)
+					return true
+				end
+			end
+		</script>
+		<sheetdata>
+			<genericcontrol name="rightanchor">
+				<anchored height="0" width="0">
+					<top />
+					<right />
+				</anchored>
+			</genericcontrol>
+			<button_idelete name="idelete">
+				<anchored>
+					<top />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+			</button_idelete>
+			<string_textlistitem name="name">
+				<anchored height="20">
+					<top />
+					<left />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<columns>
+					<fillwidth />
+					<width>75</width>
+				</columns>
+				<script>
+					function onDragStart(...)
+						return window.onDragStart(...)
+					end
+				</script>
+			</string_textlistitem>
+		</sheetdata>
+	</windowclass>
+
+
+<windowclass name="charsheet_main">
+		<frame name="generic_charsheet_main" />
+		<datasource name="charsheet" />
+		<placement>
+			<size>
+				<width>739</width>
+				<height>762</height>
+			</size>
+			<position>
+				<x>415</x>
+				<y>50</y>
+			</position>
+		</placement>
+		<sheetdata>
+		
+		
+		
+		
+		
+			<stringfield name="nlabel" >
+				<bounds rect="17,46,50,20" />
+				<static>Name</static>
+			</stringfield>
+		
+			<stringfield name="name" >
+				<bounds rect="68,46,170,20" />
+				<tabtarget> <next>hair</next> <prev>pers7_value</prev></tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<button_charactivate name="speak">
+				<bounds>250,30,23,22</bounds>
+			</button_charactivate>
+			
+			<tokenfield name="token">
+				<bounds>283,163,40,40</bounds>
+				<empty>token_empty</empty>
+				<tooltip textres="char_tooltip_token" />
+				<script>
+					function onDoubleClick(x, y)
+						CombatManager.openMap(window.getDatabaseNode());
+					end
+				</script>
+			</tokenfield>
+		
+			<genericcontrol>
+				<bounds>280,101,45,45</bounds>
+				<icon>charlist_base</icon>
+				<disabled />
+			</genericcontrol>
+			<portrait_charlocal name="localportrait">
+				<bounds>280,101,45,45</bounds>
+				<invisible />
+			</portrait_charlocal>
+			<portrait_char name="portrait">
+				<bounds>280,101,45,45</bounds>
+			</portrait_char>
+			
+			
+			
+			<stringfield name="hairlabel" >
+				<bounds rect="240,46,50,20" />
+				<static>Hair</static>
+			</stringfield>
+			
+			<stringfield name="hair" >
+				<bounds rect="295,46,50,20" />
+				<tabtarget> <next>age</next> <prev>name</prev></tabtarget>
+				<center />
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			
+			<stringfield name="agelabel" >
+				<bounds rect="345,46,50,20" />
+				<static>Age</static>
+			</stringfield>
+			
+			<stringfield name="apagelabel" >
+				<bounds rect="345,66,50,20" />
+				<static>A. Age</static>
+			</stringfield>
+			
+			<numberfield name="Apage">
+			<bounds rect="410,66,35,20" />
+			<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					<hover name="fieldfocus" offset="7,5,7,5" />
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+			</numberfield>
+			
+			
+			<numberfield name="age" >
+				
+				<bounds rect="410,46,35,20" />
+				<tabtarget> <next>eyes</next> <prev>hair</prev>	</tabtarget>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				<script>
+					function onValueChanged()
+						local flag;
+						local mult1;
+						local mult2;
+						
+						flag = window.getDatabaseNode().getChild("bonusxp").getValue()
+						
+							if flag ~= 0 then
+								return true;
+							else
+								mult1 = window.getDatabaseNode().getChild("age").getValue() 
+								mult2 = window.getDatabaseNode().getChild("xpperar").getValue() 
+									window.getDatabaseNode().getChild("xpbase").setValue( mult1*mult2 );
+							end
+							
+							
+					end
+				</script>
+			</numberfield>
+			
+						
+			<stringfield name="eyelabel" >
+				<bounds rect="448,46,50,20" />
+				<static>Eyes</static>
+			</stringfield>
+			
+			<stringfield name="eyes" >
+				<bounds rect="486,46,53,20" />
+				<tabtarget> <next>House</next> <prev>age</prev></tabtarget>
+				<center />
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+
+			<stringfield name="house" >
+				<bounds rect="17,66,50,20" />
+				<tabtarget> <next>gender</next> <prev>eyes</prev>
+				</tabtarget>
+				<static>House</static>
+			</stringfield>
+			
+			<stringfield name="House" >
+				<bounds rect="68,66,170,20" />
+				<tabtarget> <next>gender</next> <prev>eyes</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			
+			<stringfield name="genderlabel" >
+				<bounds rect="240,66,55,20" />
+				
+				<static>Gender</static>
+			</stringfield>
+			
+			<stringfield name="gender" >
+				<bounds rect="295,66,50,20" />
+				<tabtarget> <next>height</next> <prev>race</prev>
+				</tabtarget>
+				<center />
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				
+			</stringfield>
+			
+			<numberfield name="xpperar" >
+				<bounds rect="410,86,35,20" />
+				<tabtarget> <next>conf</next> <prev>race</prev>
+				</tabtarget>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<center />
+				<script>
+					function onValueChanged()
+						local flag;
+						local mult1;
+						local mult2;
+						flag = window.getDatabaseNode().getChild("bonusxp").getValue()
+						
+							if flag ~= 0 then
+								return true;
+							else
+								mult1 = window.getDatabaseNode().getChild("age").getValue() 
+								mult2 = window.getDatabaseNode().getChild("xpperar").getValue() 
+									window.getDatabaseNode().getChild("xpbase").setValue( mult1*mult2 );
+							end
+							
+							
+					end
+						
+						function onDrop()
+						end
+				</script>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+			</numberfield>
+			
+			<stringfield name="XPyeartag">
+				<bounds rect="345,86,70,21" />
+				<static >Xp/year :</static>
+				
+			</stringfield>
+			
+			<stringfield name="XPbasetagtag">
+				<bounds rect="560,46,70,21" />
+				<static >  Base Xp:</static>
+			</stringfield>
+			
+			<numberfield name="xpbase">
+			 <bounds rect="640,46,50,20" />
+			 <readonly />
+			 <noreset />
+			 <frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+			</frame>
+			 <script>
+					function onValueChanged()
+					    local temp1
+						local temp2
+						local temp3
+						local temp4
+						    temp1 = window.getDatabaseNode().getChild("bonusxp").getValue() 
+						    temp2 = window.getDatabaseNode().getChild("xpbase").getValue() 
+							temp3 = window.getDatabaseNode().getChild("earnedxp").getValue()
+								window.getDatabaseNode().getChild("xptotal").setValue( temp1 + temp2 + temp3 );
+						
+							temp1 = window.getDatabaseNode().getChild("xptotal").getValue() 
+							temp2 = window.getDatabaseNode().getChild("xpskills").getValue()
+							temp3 = window.getDatabaseNode().getChild("xparts").getValue()
+							temp4 = window.getDatabaseNode().getChild("xpjedi").getValue()
+								window.getDatabaseNode().getChild("xpleft").setValue( temp1 - (temp2+temp3+temp4) );
+					
+						return true;
+					end
+			 </script>
+			</numberfield>
+			
+			<numberfield name="earnedxp">
+			 <invisible />
+			 <bounds rect="640,46,50,20" />
+			 <readonly />
+			 <noreset />
+			 <frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+			</frame>
+			 <script>
+					function onValueChanged()
+					    local temp1
+						local temp2
+						local temp3
+						local temp4
+						    temp1 = window.getDatabaseNode().getChild("bonusxp").getValue() 
+						    temp2 = window.getDatabaseNode().getChild("xpbase").getValue() 
+							temp3 = window.getDatabaseNode().getChild("earnedxp").getValue()
+								window.getDatabaseNode().getChild("xptotal").setValue( temp1 + temp2 + temp3 );
+						
+							temp1 = window.getDatabaseNode().getChild("xptotal").getValue() 
+							temp2 = window.getDatabaseNode().getChild("xpskills").getValue()
+							temp3 = window.getDatabaseNode().getChild("xparts").getValue()
+							temp4 = window.getDatabaseNode().getChild("xpjedi").getValue()
+								window.getDatabaseNode().getChild("xpleft").setValue( temp1 - (temp2+temp3+temp4) );
+					
+						return true;
+					end
+			 </script>
+			</numberfield>
+			
+			
+			<stringfield name="XPearntag">
+				<bounds rect="560,66,70,21" />
+				<static >Earned Xp:</static>
+			</stringfield>
+					
+			
+			<numberfield name="bonusxp">
+			<bounds rect="640,66,50,20" />
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+			<script>
+					function onDrop(x, y, draginfo)
+						local temp1
+						local temp2
+						if draginfo.getType() == "number" then
+							temp1 = draginfo.getNumberData();
+							temp2 = window.getDatabaseNode().getChild("bonusxp").getValue() 
+							
+							window.getDatabaseNode().getChild("bonusxp").setValue( temp1 + temp2 );
+						end
+						return true;
+					end
+															
+					function onValueChanged()
+					   
+					    local temp1
+						local temp2
+						local temp3
+						local temp4
+						    temp1 = window.getDatabaseNode().getChild("bonusxp").getValue() 
+						    temp2 = window.getDatabaseNode().getChild("xpbase").getValue() 
+							temp3 = window.getDatabaseNode().getChild("earnedxp").getValue()
+								window.getDatabaseNode().getChild("xptotal").setValue( temp1 + temp2 + temp3 );
+						    
+						
+							temp1 = window.getDatabaseNode().getChild("xptotal").getValue() 
+							temp2 = window.getDatabaseNode().getChild("xpskills").getValue()
+							temp3 = window.getDatabaseNode().getChild("xpjedi").getValue()
+							temp4 = window.getDatabaseNode().getChild("xparts").getValue()
+								window.getDatabaseNode().getChild("xpleft").setValue( temp1 - (temp2+temp3+temp4) );
+							
+							
+					
+						return true;
+					end
+					
+					
+					
+				</script>
+			</numberfield>
+			
+			<stringfield name="XPtottag">
+				<bounds rect="560,86,70,21" />
+				<static > Total Xp:</static>
+			</stringfield>
+			
+			
+			<numberfield name="xptotal" >
+				<bounds rect="640,86,50,20" />
+				<readonly />
+			    <noreset />
+				<script>
+										
+					function onValueChanged()
+					    local temp1
+						local temp2
+						local temp3
+						local temp4
+						
+							temp1 = window.getDatabaseNode().getChild("xpskills").getValue() 
+							temp2 = window.getDatabaseNode().getChild("xparts").getValue() 
+							temp3 = window.getDatabaseNode().getChild("xpjedi").getValue() 
+							temp4 = window.getDatabaseNode().getChild("xptotal").getValue() 
+							
+							window.getDatabaseNode().getChild("xpleft").setValue(temp4-(temp1+temp2+temp3)) 
+						
+					return true;
+					end
+					
+				</script>
+				<center />
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				
+			</numberfield>
+			
+						
+			<stringfield name="ArtUtag">
+				<bounds rect="560,680,80,21" />
+				<static >Xp Magic=></static>
+			</stringfield>
+
+            <numberfield name="xparts" >
+				<bounds rect="660,680,55,20" />
+				<center />
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<readonly />
+				<script>
+				function onValueChanged()
+					    local temp1
+						local temp2
+						local temp3
+						local temp4
+						
+							temp1 = window.getDatabaseNode().getChild("xpskills").getValue() 
+							temp2 = window.getDatabaseNode().getChild("xparts").getValue() 
+							temp3 = window.getDatabaseNode().getChild("xpjedi").getValue()
+							temp4 = window.getDatabaseNode().getChild("xptotal").getValue() 
+							
+						window.getDatabaseNode().getChild("xpleft").setValue(temp4-(temp1+temp2+temp3)) 
+					return true;
+					end
+				</script>
+			</numberfield>
+
+			<stringfield name="XPUtag">
+				<bounds rect="445,710,70,21" />
+				<static >Xp skills=></static>
+			</stringfield>
+						
+			<numberfield name="xpskills" >
+				<bounds rect="520,710,55,20" />
+				<center />
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<readonly />
+				<script>
+				function onValueChanged()
+					    local temp1
+						local temp2
+						local temp3
+						local temp4
+						
+							temp1 = window.getDatabaseNode().getChild("xpskills").getValue() 
+							temp2 = window.getDatabaseNode().getChild("xparts").getValue() 
+							temp3 = window.getDatabaseNode().getChild("xpjedi").getValue()
+							temp4 = window.getDatabaseNode().getChild("xptotal").getValue() 
+							
+						window.getDatabaseNode().getChild("xpleft").setValue(temp4-(temp1+temp2+temp3)) 
+					return true;
+					end
+				</script>
+			</numberfield>
+			
+			<stringfield name="Jeditag">
+				<bounds rect="440,680,80,21" />
+				<static >Xp Forces=></static>
+			</stringfield>
+						
+			<numberfield name="xpjedi" >
+				<bounds rect="520,680,55,20" />
+				<center />
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<readonly />
+				<script>
+				function onValueChanged()
+					    local temp1
+						local temp2
+						local temp3
+						local temp4
+						
+							temp1 = window.getDatabaseNode().getChild("xpskills").getValue() 
+							temp2 = window.getDatabaseNode().getChild("xparts").getValue() 
+							temp3 = window.getDatabaseNode().getChild("xpjedi").getValue()
+							temp4 = window.getDatabaseNode().getChild("xptotal").getValue() 
+							
+						window.getDatabaseNode().getChild("xpleft").setValue(temp4-(temp1+temp2+temp3)) 
+					return true;
+					end
+				</script>
+			</numberfield>
+			
+			
+			<stringfield name="Xplefttag">
+				<bounds rect="560,710,80,21" />
+				<static >Xp Left =></static>
+			</stringfield>
+			
+			<numberfield name="xpleft" >
+				<bounds rect="660,710,55,20" />
+				<center />
+				<readonly />
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				
+			</numberfield>
+			
+			<stringfield name="SPtag">
+				<bounds rect="25,710,70,21" />
+				<static >SP left =></static>
+			</stringfield>
+			
+			<numberfield name="SPleft" >
+				<bounds rect="89,710,55,20" />
+				<description text="Style Points" />
+				<center />
+				<nodrag />
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				<script>
+					function onDoubleClick()
+						local a
+						local msg = {}
+							a = getValue() 
+						if 0 >= a then 
+							return true;
+						end
+						
+							ModifierStack.addSlot("+1 Stylepoint", 1);
+							
+							msg.icon = "stylepoint"
+							msg.text = "Uses a Stylepoint"
+							
+								if User.isHost() then
+									msg.sender = GmIdentityManager.getCurrent();
+								else
+									msg.sender = User.getIdentityLabel();
+								end
+							Comm.deliverChatMessage(msg);
+							
+						    setValue(a-1);
+						
+							return true;
+					
+					end
+				
+				</script>
+				
+			</numberfield>
+			
+			<stringfield name="Conftag" >
+				<bounds rect="448,66,39,20" />
+				
+				<static>Conf</static>
+				
+				<tabtarget> <next>appearance</next> <prev>height</prev>
+				</tabtarget>
+				
+			</stringfield>
+			
+			<stringfield name="CConftag" >
+				<bounds rect="448,86,39,20" />
+				
+				<static>C.Conf</static>
+				
+				<tabtarget> <next>appearance</next> <prev>height</prev>
+				</tabtarget>
+				
+			</stringfield>
+			
+			
+			
+			<numberfield name="conf" >
+				<bounds rect="499,66,55,21" />
+				<description text="Confidence" />
+				<tabtarget> <next>appearance</next> <prev>height</prev>
+				</tabtarget>
+				<center />
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				<script>
+					function onDoubleClick()
+						local a
+							a = getValue() 
+							ModifierStack.addSlot("Confidence", a);
+							return true;
+					end
+				</script>
+			</numberfield>
+
+			<numberfield name="cconf" >
+				<bounds rect="499,86,55,21" />
+				<description text="Confidence" />
+				<tabtarget> <next>appearance</next> <prev>height</prev>
+				</tabtarget>
+				<center />
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				<script>
+					function onDoubleClick()
+						local a
+							a = getValue() 
+							ModifierStack.addSlot("Current Confidence", a);
+							return true;
+					end
+				</script>
+				
+				
+			</numberfield>
+			
+
+			<!-- Attributes, Skills and Modifiers - first block -->
+			<stringfield name="Strength" >
+				<bounds rect="20,100,50,20" />
+				<static >STR</static>
+				<tooltip>
+					<text>STRength limits how much damage you can do, how much you can carry and such things.</text>
+				</tooltip>
+				
+				
+			</stringfield>
+			<numberfield name="strength">
+				
+				<default>0</default>
+				<bounds rect="50,101,24,16" />
+				<description text="Strength" />
+				 <displaysign /> 
+				 <frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					<hover name="fieldfocus" offset="7,5,7,5" />
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				<tabtarget> <next>stamina</next> <prev>size</prev></tabtarget>
+				<script>
+				
+				function onValueChanged()
+					local a,b,c,d,e;
+							a = window.getDatabaseNode().getChild("strength").getValue() 
+							b = 40
+							
+							e = math.ceil(b * 1.5^a)
+							window.getDatabaseNode().getChild("lift").setValue(e) 
+				end
+				
+				
+				function onDoubleClick()
+					local a
+						a = window.getDatabaseNode().getChild("strength").getValue() 
+						ModifierStack.addSlot("Strength", a);
+						return true;
+					end
+					
+				function onWheel(notches)
+							
+					if not Input.isAltPressed() then
+						return true;
+					end
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+						local name = getName():gsub("^%l", string.upper);
+						draginfo.setType("dice");
+						draginfo.setNumberData(window.getDatabaseNode().getChild("strength").getValue())
+						draginfo.setDescription(name);
+						
+						local dice = {};
+						if not Input.isAltPressed() then
+						table.insert(dice, "d10");
+						else 
+						table.insert(dice, "dF");
+						end
+						
+          
+						draginfo.setDieList(dice);
+						return true;
+					end
+				
+				</script>
+			</numberfield>
+			
+			<stringfield name="Stamina" >
+				<bounds rect="100,100,50,21" />
+				<static >STA</static>
+				<tooltip>
+					<text>STAmina determines your resilence.</text>
+				</tooltip>
+				
+				
+				
+			</stringfield>
+			<numberfield name="stamina">
+			<default>0</default>
+				<bounds rect="130,101,24,16" />
+				
+				<description text="Stamina" />
+				 <displaysign /> 
+				 <frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					<hover name="fieldfocus" offset="7,5,7,5" />
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+				
+				<tabtarget> <next>dexterity</next> <prev>strength</prev>
+				</tabtarget>
+				<script>
+				function onDoubleClick()
+					local a
+						a = window.getDatabaseNode().getChild("stamina").getValue() 
+						ModifierStack.addSlot("Stamina", a);
+						return true;
+					end
+				
+				function onDragStart(button, x, y, draginfo)
+						local name = getName():gsub("^%l", string.upper);
+						draginfo.setType("dice");
+
+						draginfo.setDescription(name);
+						draginfo.setNumberData(window.getDatabaseNode().getChild("stamina").getValue())
+						local dice = {};
+						if not Input.isAltPressed() then
+						table.insert(dice, "d10");
+						else 
+						table.insert(dice, "dF");
+						end
+          
+						draginfo.setDieList(dice);
+						return true;
+					end
+					
+				function onWheel(notches)
+							
+					if not Input.isAltPressed() then
+						return true;
+					end
+				end
+				</script>
+			</numberfield>
+						
+			<stringfield name="Dexterity" >
+				<bounds rect="20,120,50,21" />
+				<static >DEX</static>
+				
+				<tooltip>
+					<text>DEXterity determines agility and flexibility./rIt is used for attacks in close combat.</text>
+				</tooltip>
+				
+			</stringfield>
+			<numberfield name="dexterity">
+				<bounds rect="50,121,24,16" />
+				<default>0</default>
+				
+				<description text="Dexterity" />
+				 <displaysign /> 
+				 <frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					<hover name="fieldfocus" offset="7,5,7,5" />
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+				
+				<tabtarget> <next>quickness</next> <prev>stamina</prev>
+				</tabtarget>
+				<script>
+					function onValueChanged()
+					local a,b,c,d,e;
+							a = window.getDatabaseNode().getChild("dexterity").getValue() 
+							b = 10
+							c = (b * 1.33^a)/10
+							e = math.floor( ( (c) * 10^2) + 0.5) / (10^2);
+							window.getDatabaseNode().getChild("movement").setValue(e) 
+					end
+				
+				
+					function onDoubleClick()
+						local a
+							a = window.getDatabaseNode().getChild("dexterity").getValue() 
+							ModifierStack.addSlot("Dexterity", a);
+							return true;
+					end
+					
+					
+					
+					function onDragStart(button, x, y, draginfo)
+						local name = getName():gsub("^%l", string.upper);
+						draginfo.setType("dice");
+
+						draginfo.setDescription(name);
+						draginfo.setNumberData(window.getDatabaseNode().getChild("dexterity").getValue())
+						local dice = {};
+						if not Input.isAltPressed() then
+						table.insert(dice, "d10");
+						else 
+						table.insert(dice, "dF");
+						end
+          
+						draginfo.setDieList(dice);
+						return true;
+					end
+					
+					
+					
+					function onWheel(notches)
+							
+						if not Input.isAltPressed() then
+							return true;
+						end
+					end
+					
+				</script>
+			</numberfield>
+			<stringfield name="Quickness" >
+				<bounds rect="100,120,139,21" />
+				<static >QUI</static>
+				<tooltip>
+					<text>QUIckness determines your reflexes./rIs used for defence in combat and other situations.</text>
+				</tooltip>
+			</stringfield>
+			<numberfield name="quickness">
+				<bounds rect="130,121,24,16" />
+				
+				<default>0</default>
+				<description text="Quickness" />
+				 <displaysign /> 
+				 <frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					<hover name="fieldfocus" offset="7,5,7,5" />
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+				<tabtarget> <next>intelligence</next> <prev>dexterity</prev>
+				</tabtarget>
+				<script>
+					function onDoubleClick()
+						local a
+							a = window.getDatabaseNode().getChild("quickness").getValue() 
+							ModifierStack.addSlot("Quickness", a);
+							return true;
+					end
+					
+					
+					function onDragStart(button, x, y, draginfo)
+						local name = getName():gsub("^%l", string.upper);
+						draginfo.setType("dice");
+
+						draginfo.setDescription(name);
+						draginfo.setNumberData(window.getDatabaseNode().getChild("quickness").getValue())
+						
+						local dice = {};
+						if not Input.isAltPressed() then
+						table.insert(dice, "d10");
+						else 
+						table.insert(dice, "dF");
+						end
+          
+						draginfo.setDieList(dice);
+						return true;
+					end
+					
+					function onWheel(notches)
+							
+						if not Input.isAltPressed() then
+							return true;
+						end
+					end
+				</script>
+			</numberfield>
+			<stringfield name="Intelligence" >
+				<bounds rect="20,140,50,21" />
+				<static >INT</static>
+				
+				<tooltip>
+					<text>INTelligence is ability to learn and remember.</text>
+				</tooltip>
+				
+			</stringfield>
+			<numberfield name="intelligence">
+			<default>0</default>
+				<bounds rect="50,141,24,16" />
+				
+				<description text="Intelligence" />
+				 <displaysign /> 
+				 <frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					<hover name="fieldfocus" offset="7,5,7,5" />
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+				<tabtarget> <next>perception</next> <prev>quickness</prev>
+				</tabtarget>
+				<script>
+					function onDoubleClick()
+						local a
+							a = window.getDatabaseNode().getChild("intelligence").getValue() 
+							ModifierStack.addSlot("Intelligence", a);
+							return true;
+					end
+					
+					function onDragStart(button, x, y, draginfo)
+						local name = getName():gsub("^%l", string.upper);
+						draginfo.setType("dice");
+
+						draginfo.setDescription(name);
+						draginfo.setNumberData(window.getDatabaseNode().getChild("intelligence").getValue())
+						
+						local dice = {};
+						if not Input.isAltPressed() then
+						table.insert(dice, "d10");
+						else 
+						table.insert(dice, "dF");
+						end
+          
+						draginfo.setDieList(dice);
+						return true;
+					end
+					
+					function onWheel(notches)
+							
+						if not Input.isAltPressed() then
+							return true;
+						end
+					end
+				</script>
+				
+			</numberfield>
+			<stringfield name="Perception" >
+				<bounds rect="100,140,50,21" />
+				<static >PER</static>
+				<tooltip>
+					<text>PERception is how well you are aware of your surroundings/rIt is used for any ranged attacks.</text>
+				</tooltip>
+				
+				
+			</stringfield>
+			<numberfield name="perception">
+			<default>0</default>
+				<bounds rect="130,141,24,16" />
+				
+				<description text="Perception" />
+				 <displaysign /> 
+				 <frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					<hover name="fieldfocus" offset="7,5,7,5" />
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+				<tabtarget> <next>presence</next> <prev>intelligence</prev>
+				</tabtarget>
+				<script>
+					function onDoubleClick()
+						local a
+							a = window.getDatabaseNode().getChild("perception").getValue() 
+							ModifierStack.addSlot("Perception", a);
+							return true;
+					end
+					
+					function onDragStart(button, x, y, draginfo)
+						local name = getName():gsub("^%l", string.upper);
+						draginfo.setType("dice");
+
+						draginfo.setDescription(name);
+						draginfo.setNumberData(window.getDatabaseNode().getChild("perception").getValue())
+						local dice = {};
+						if not Input.isAltPressed() then
+						table.insert(dice, "d10");
+						else 
+						table.insert(dice, "dF");
+						end
+          
+						draginfo.setDieList(dice);
+						return true;
+					end
+					
+					
+					function onWheel(notches)
+						if not Input.isAltPressed() then
+							return true;
+						end
+					end
+				</script>
+			</numberfield>
+			
+			
+			<stringfield name="Presence" >
+				<bounds rect="20,160,50,21" />
+				<static >PRE</static>
+				<tooltip>
+					<text>Presence describes your sheer physical room presence. Do you fade or stand out in a crowd?</text>
+				</tooltip>
+				<script>
+				function onInit()
+				  setVisible( OptionsManager.isOption("CLSAM", "on") )
+				  			  
+				
+				end
+				</script>
+				
+			</stringfield>
+			<numberfield name="presence">
+			<default>0</default>
+				<bounds rect="50,161,24,16" />
+				
+				<description text="Presence" />
+				 <displaysign /> 
+				 <frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					<hover name="fieldfocus" offset="7,5,7,5" />
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+				<tabtarget> <next>presence</next> <prev>intelligence</prev>
+				</tabtarget>
+				<script>
+					function onDoubleClick()
+						local a
+							a = window.getDatabaseNode().getChild("presence").getValue() 
+							ModifierStack.addSlot("Presence", a);
+							return true;
+					end
+					
+					function onDragStart(button, x, y, draginfo)
+						local name = getName():gsub("^%l", string.upper);
+						draginfo.setType("dice");
+
+						draginfo.setDescription(name);
+						draginfo.setNumberData(window.getDatabaseNode().getChild("presence").getValue())
+						local dice = {};
+						if not Input.isAltPressed() then
+						table.insert(dice, "d10");
+						else 
+						table.insert(dice, "dF");
+						end
+          
+						draginfo.setDieList(dice);
+						return true;
+					end
+					
+					
+					function onWheel(notches)
+						if not Input.isAltPressed() then
+							return true;
+						end
+					end
+					
+				function onInit()
+				  setVisible( OptionsManager.isOption("CLSAM", "on") )
+				  			  
+				
+				end
+					
+				</script>
+			</numberfield>
+			
+			
+			
+			
+			<stringfield name="Communication" >
+				<bounds rect="100,160,50,21" />
+				<static >COM</static>
+				<tooltip>
+					<text>COMmunication describes your ability to talk well and impress people/rAs well as your ability to manipulate others by your words.</text>
+				</tooltip>
+				
+				
+			</stringfield>
+			<numberfield name="communication">
+				<default>0</default>
+				<bounds rect="130,161,24,16" />
+				
+				<description text="Communication" />
+				 <displaysign /> 
+				 <frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					<hover name="fieldfocus" offset="7,5,7,5" />
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+				<tabtarget> <next>willpower</next> <prev>presence</prev>
+				</tabtarget>
+				<script>
+					function onDoubleClick()
+						local a
+							a = window.getDatabaseNode().getChild("communication").getValue() 
+							ModifierStack.addSlot("Communication", a);
+							return true;
+					end
+					
+					function onDragStart(button, x, y, draginfo)
+						local name = getName():gsub("^%l", string.upper);
+						draginfo.setType("dice");
+
+						draginfo.setDescription(name);
+						draginfo.setNumberData(window.getDatabaseNode().getChild("communication").getValue())
+						local dice = {};
+						if not Input.isAltPressed() then
+						table.insert(dice, "d10");
+						else 
+						table.insert(dice, "dF");
+						end
+          
+						draginfo.setDieList(dice);
+						return true;
+					end
+					
+					
+					function onWheel(notches)
+						if not Input.isAltPressed() then
+							return true;
+						end
+					end
+	
+				</script>
+			</numberfield>
+			<stringfield name="Willpower" >
+				<bounds rect="180,140,50,21" />
+				<static >Will</static>
+				<tooltip>
+					<text>WILLpower describes your mental resilence and stamina./rIt is used by magi casting spontaneous spells.</text>
+				</tooltip>
+				<script>
+				function onInit()
+				  setVisible( OptionsManager.isOption("CLSAM", "off") )
+				  			  
+				
+				end
+								
+				</script>
+				
+			</stringfield>
+			<numberfield name="willpower">
+				<default>0</default>
+				<bounds rect="210,141,24,16" />
+				
+				<description field="Willpower" />
+				 <displaysign /> 
+				 <frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					<hover name="fieldfocus" offset="7,5,7,5" />
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+				<tabtarget> <next>size</next> <prev>communication</prev>
+				</tabtarget>
+				<script>
+					function onDoubleClick()
+						local a
+							a = getValue() 
+							ModifierStack.addSlot("Willpower", a);
+							return true;
+					end
+					
+					function onDragStart(button, x, y, draginfo)
+						local name = getName():gsub("^%l", string.upper);
+						draginfo.setType("dice");
+
+						draginfo.setDescription(name);
+						draginfo.setNumberData(window.getDatabaseNode().getChild("willpower").getValue())
+						local dice = {};
+						if not Input.isAltPressed() then
+						table.insert(dice, "d10");
+						else 
+						table.insert(dice, "dF");
+						end
+          
+						draginfo.setDieList(dice);
+						return true;
+					end
+
+					function onWheel(notches)
+						if not Input.isAltPressed() then
+							return true;
+						end
+					end
+					
+				function onInit()
+				  setVisible( OptionsManager.isOption("CLSAM", "off") )
+				  			  
+				
+				end					
+					
+				</script>
+			</numberfield>
+			
+			<stringfield name="Size">
+				<bounds rect="180,100,50,21" />
+				<static >Size</static>
+			</stringfield>
+			
+			<numberfield name="size">
+			<default>0</default>
+				<bounds rect="210,101,24,16" />
+				
+				<description field="Size" />
+				 <displaysign /> 
+				 <frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<stateframe>
+					<keyedit name="fieldfocus" offset="7,5,7,5" />
+					<hover name="fieldfocus" offset="7,5,7,5" />
+					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
+				</stateframe>
+				<tabtarget> <next>strength</next> <prev>willpower</prev>
+				</tabtarget>
+				<script>
+					function onWheel(notches)
+						if not Input.isAltPressed() then
+							return true;
+						end
+					end
+				
+				</script>
+				
+				
+			</numberfield>
+			
+			<stringfield name="Movement">
+				<bounds rect="20,190,50,21" />
+				<static >Move :</static>
+				
+			</stringfield>
+
+			<numberfield name="movement">
+				
+				<bounds rect="70,191,24,16" />
+				<description text="Move" />
+				 <displaysign /> 
+				<readonly /> 
+				<tabtarget> <next>stamina</next> <prev>size</prev></tabtarget>				
+			</numberfield>			
+			
+			<stringfield name="Lift">
+				<bounds rect="100,190,50,21" />
+				<static >Lift :</static>
+				
+			</stringfield>
+
+			<numberfield name="lift">
+				
+				<bounds rect="150,191,34,16" />
+				<description text="Lift" />
+				 
+				<readonly /> 
+				<tabtarget> <next>stamina</next> <prev>size</prev></tabtarget>				
+			</numberfield>		
+			
+			<stringfield name="LiftUnit">
+				<bounds rect="190,190,50,21" />
+				<static >Kg</static>
+				
+			</stringfield>
+			
+			<!--  Skills Begin Here   -->
+			
+			
+            <windowlist name="skilllist">
+				<bounds rect="373,130,400,400" />
+				<datasource>.skilllist</datasource>
+				<class>charsheet_skilllistitem</class>
+				<allowcreate />
+				<allowdelete /> 
+				<skipempty />
+				<columns>
+					<fillwidth />
+					<width>350</width>
+				</columns>
+				
+				
+				
+				<script>
+				
+				function onSortCompare(w1, w2)
+					if w1.skillname.getValue() == "" then
+						return true;
+					elseif w2.skillname.getValue() == "" then
+						return false;
+					end
+
+					return w1.skillname.getValue() > w2.skillname.getValue();
+				end
+				
+									
+				function onListRearranged(listchanged)
+						local points = 0;
+						local experience =0;
+							for k, w in pairs(getWindows()) do
+								local entry = {};
+								experience = w.skillXP.getValue();
+								points = points + experience;
+		
+							end
+						window.getDatabaseNode().getChild("xpskills").setValue(points);		
+	
+						return true
+				end
+
+				function onFilter(w)
+						local f
+						
+						if window.filter ~= Null then
+						f=window.filter.getValue();
+						f=string.lower(f);
+						 else
+						f = ""
+						end
+						
+						
+						if f == "" then
+							return true;
+						end
+						
+						if string.find(string.lower(w.skillname.getValue()), f, 0, true) then
+							return true;
+						end
+						
+						return false;
+					end
+				
+					
+				</script>
+				
+				
+			</windowlist>
+			
+			<scrollbar name="skillscroll">
+				<bounds>-30,137,20,-233</bounds>
+					<target>skilllist</target>
+			</scrollbar>
+			
+			<!-- <scrollercontrol>
+				<bounds>680,-110,30,30</bounds>
+				<target>skilllist</target>
+				<button normal="button_scroller" pressed="button_scroller_down" zoom="button_zoomer" zoompressed="button_zoomer_down" />
+			</scrollercontrol> -->
+			
+			<frame_charlang name="languageframe">
+				
+				<bounds>373,-170,-20,85</bounds>
+			</frame_charlang>
+			<label_frametop>
+				<anchored to="languageframe" />
+				<static textres="char_label_languages" />
+			</label_frametop>
+			<list_language name="languages">
+				<anchored to="languageframe">
+					<top offset="25" />
+					<left offset="15" />
+					<right offset="-15" />
+					<bottom offset="-5" />
+				</anchored>
+				<columns>
+					<fillwidth />
+					<width>75</width>
+				</columns>
+			</list_language>
+			<scrollbar_list>
+				<anchored to="languages" />
+				<target>languages</target>
+			</scrollbar_list>
+			<button_iedit name="languages_iedit">
+				<anchored to="languages" position="aboveright" offset="5,5" />
+				<target>languages</target>
+			</button_iedit>
+			<button_iadd name="languages_iadd">
+				<anchored to="languages" position="aboveleft" offset="10,5" />
+				<target>languages</target>
+			</button_iadd>
+			
+			
+			
+			<stringfield name="Warping" >
+			
+				<bounds>490,535,50,25</bounds>
+				<static>Warping</static>
+			
+			</stringfield>
+			
+			<numberfield name="Twillight" >
+			
+				<bounds>565,535,25,25</bounds>
+				<frame>
+					<name>textline</name>
+					<offset>1,-2,1,1</offset>
+				</frame>
+			
+				
+			
+			
+			
+			
+			</numberfield>
+			
+			<numberfield name="warptotalXp" >
+			<bounds>595,535,25,25</bounds>
+			
+			<script>
+			
+				function onValueChanged()
+						local a,b,c,d,e,f
+				 
+						a = window.getDatabaseNode().getChild("warptotalXp").getValue();
+						
+						b = 0.5* math.sqrt(8*a/5+1)-0.5
+						c = math.floor(b)
+						d = 5 * ((c^2)*.5+c*.5)
+						e = a - d
+						
+						
+						
+						
+						
+						window.getDatabaseNode().getChild("Twillight").setValue(c);
+						window.getDatabaseNode().getChild("warpXp").setValue(e);
+						
+						
+						
+				 end
+			
+			</script>
+			
+			
+			</numberfield>
+						
+			
+			<numberfield name="warpXp" >
+			
+				<bounds>625,535,25,25</bounds>
+				
+				<frame>
+					<name>textline</name>
+					<offset>1,-2,1,1</offset>
+				</frame>
+				
+				<script>
+				function onDrop(x, y, draginfo)
+						local temp1
+						local temp2
+						if draginfo.getType() == "number" then
+							temp1 = draginfo.getNumberData();
+							temp2 = window.getDatabaseNode().getChild("warptotalXp").getValue();
+							
+							window.getDatabaseNode().getChild("warptotalXp").setValue( temp1 + temp2 );
+						end
+						return true;
+				end
+				 
+				 
+				
+				</script>
+			
+			</numberfield>
+			
+			
+			
+			
+			<stringfield name="NoSkillButton">
+				<bounds>350,535,100,25</bounds>
+				<static>No Skill</static>
+				<color>#ffff0000</color>
+				<center />
+				<script>
+				function onDoubleClick()
+					local a, b, c, d,e, f , g, sb
+				
+						a = -5;
+						c = window.getDatabaseNode().getChild("wfpen").getValue();
+																	  
+						
+						b = "No Skill";
+						
+						
+						d = a + c;
+						f = ModifierStack.getSum()
+						g = ModifierStack.getDescription()
+						
+						
+						
+						local rActor;
+						if User.isHost() then
+							rActor = GmIdentityManager.getCurrent();
+						else
+							rActor = User.getIdentityLabel();
+						end
+						
+						d = a + c;
+						if c == 0 then
+							b = b .. " " .. a  ;
+							
+						if f == 0 and g == "" then
+								
+								
+								end
+						else
+							
+							if f == 0 and g == "" then
+								b =  b .. " "  .. a .. " Wounds/Fatigue " .. c .. " =  " .. d  ;
+							
+							else
+								b =  b .. " "  .. a  .. " Wounds/Fatigue " .. c;
+							
+							end
+						end
+						
+						
+						
+            
+						local rRoll = {};
+						rRoll.sType = "dice";
+						rRoll.sDesc = b;
+						rRoll.aDice = {"d10"};
+						rRoll.nMod = d; 
+            
+						ActionsManager.performAction(draginfo, rActor, rRoll);
+						
+						
+					
+						
+						return true;
+					end
+					
+
+					
+					
+					
+					
+					function onDragStart(button, x, y, draginfo)
+						
+						local b = -5;
+						local c = b;
+						local e = "No Skill";
+						local d = e .. " " ..  b;
+						draginfo.setType("dice");
+						
+						draginfo.setDescription(d );
+						draginfo.setNumberData(c);
+						draginfo.setStringData(d );
+						local dice = {};
+						if not Input.isAltPressed() then
+						table.insert(dice, "d10");
+						else 
+						table.insert(dice, "dF");
+						end
+						
+          
+						draginfo.setDieList(dice);
+						return true;
+					end
+				</script>
+				
+			</stringfield>
+			
+			
+			
+			<filter2 name="filter">
+				<bounds>393,560,-50,20</bounds>
+				<target>skilllist</target>
+				<trigger>filtertrigger</trigger>
+			</filter2>
+			
+			<filtertrigger2 name="filtertrigger">
+				<bounds>373,560,21,41</bounds>
+				<target>filter</target>
+			</filtertrigger2>	
+			
+
+			<!-- Weapons and Key Equipment - first block -->
+			
+			<stringfield name="virtuetag">
+				<bounds rect="22,230,165,20" />
+				<static>VIRTUES</static>
+				<center />
+			</stringfield>
+			
+			<stringfield name="virtue0_name" >
+				<bounds rect="23,253,144,20" />
+				<tabtarget> <next>equipment1_value</next> <prev>attribute51_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="virtue0_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="169,253,24,20" />
+				<description field="virtue0_name" />
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				<tabtarget> <next>equipment2_name</next> <prev>equipment1_name</prev>
+				</tabtarget>
+			</numberfield>
+			
+			<stringfield name="virtue1_name" >
+				<bounds rect="23,273,144,20" />
+				<tabtarget> <next>equipment1_value</next> <prev>attribute51_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="virtue1_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="169,273,24,20" />
+				<description field="virtue1_name" />
+				<tabtarget> <next>equipment2_name</next> <prev>equipment1_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+			</numberfield>
+			<stringfield name="virtue2_name" >
+				<bounds rect="23,293,144,20" />
+				<tabtarget> <next>equipment2_value</next> <prev>equipment1_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="virtue2_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="169,293,24,20" />
+				<description field="virtue2_name" />
+				<tabtarget> <next>equipment3_name</next> <prev>equipment2_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+			</numberfield>
+			<stringfield name="virtue3_name" >
+				<bounds rect="23,313,144,20" />
+				<tabtarget> <next>equipment3_value</next> <prev>equipment2_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="virtue3_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="169,313,24,20" />
+				<description field="virtue3_name" />
+				<tabtarget> <next>equipment4_name</next> <prev>equipment3_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+			</numberfield>
+			<stringfield name="virtue4_name" >
+				<bounds rect="23,333,144,20" />
+				<tabtarget> <next>equipment4_value</next> <prev>equipment3_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="virtue4_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="169,333,24,20" />
+				<description field="virtue4_name" />
+				<tabtarget> <next>equipment5_name</next> <prev>equipment4_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+			</numberfield>
+			<stringfield name="virtue5_name" >
+				<bounds rect="23,353,144,20" />
+				<tabtarget> <next>virtue5_value</next> <prev>virtue4_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="virtue5_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="169,353,24,20" />
+				<description field="virtue5_name" />
+				<tabtarget> <next>virtue6_name</next> <prev>virtue5_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+			</numberfield>
+			
+			<stringfield name="virtue6_name" >
+				<bounds rect="23,373,144,20" />
+				<tabtarget> <next>virtue6_value</next> <prev>virtue5_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="virtue6_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="169,373,24,20" />
+				<description field="virtue6_name" />
+				<tabtarget> <next>virtue6_name</next> <prev>virtue6_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+			</numberfield>
+
+
+			<!-- Weapons and Key Equipment - second block -->
+			<stringfield name="flawtag">
+				<bounds rect="201,230,165,20" />
+				<static>FLAWS</static>
+				<center />
+			</stringfield>
+			
+			<stringfield name="flaw1_name" >
+				<bounds rect="201,253,144,20" />
+				<tabtarget> <next>flaw1_value</next> <prev>virtue6_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="flaw1_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="347,253,24,20" />
+				<description field="flaw1_name" />
+				<tabtarget> <next>flaw2_name</next> <prev>flaw1_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+			</numberfield>
+						
+			<stringfield name="flaw2_name" >
+				<bounds rect="201,273,144,20" />
+				<tabtarget> <next>equipment6_value</next> <prev>equipment5_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="flaw2_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="347,273,24,20" />
+				<description field="flaw2_name" />
+				<tabtarget> <next>equipment7_name</next> <prev>equipment6_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+			</numberfield>
+			<stringfield name="flaw3_name" >
+				<bounds rect="201,293,144,20" />
+				<tabtarget> <next>equipment7_value</next> <prev>equipment6_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="flaw3_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="347,293,24,20" />
+				<description field="flaw3_name" />
+				<tabtarget> <next>equipment8_name</next> <prev>equipment7_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+			</numberfield>
+			<stringfield name="flaw4_name" >
+				<bounds rect="201,313,144,20" />
+				<tabtarget> <next>equipment8_value</next> <prev>equipment7_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="flaw4_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="347,313,24,20" />
+				<description field="flaw4_name" />
+				<tabtarget> <next>equipment9_name</next> <prev>equipment8_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+			</numberfield>
+			<stringfield name="flaw5_name" >
+				<bounds rect="201,333,144,20" />
+				<tabtarget> <next>equipment9_value</next> <prev>equipment8_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="flaw5_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="347,333,24,20" />
+				<description field="flaw5_name" />
+				<tabtarget> <next>equipment10_name</next> <prev>equipment9_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+			</numberfield>
+			<stringfield name="flaw6_name" >
+				<bounds rect="201,353,144,20" />
+				<tabtarget> <next>equipment10_value</next> <prev>equipment9_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="flaw6_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="347,353,24,20" />
+				<description field="flaw6_name" />
+				<tabtarget> <next>equipment11_name</next> <prev>equipment10_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+			</numberfield>
+
+			<stringfield name="flaw7_name" >
+				<bounds rect="201,373,144,20" />
+				<tabtarget> <next>equipment10_value</next> <prev>equipment9_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="flaw7_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="347,373,24,20" />
+				<description field="flaw7_name" />
+				<tabtarget> <next>equipment11_name</next> <prev>equipment10_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+			</numberfield>
+			
+
+			<!-- Weapons and Key Equipment - third block -->
+			<stringfield name="perstag">
+				<bounds rect="23,400,165,20" />
+				<static>PERSONALITY</static>
+				<center />
+			</stringfield>
+			
+			<stringfield name="pers1_name" >
+				<bounds rect="23,423,144,20" />
+				<tabtarget> <next>equipment11_value</next> <prev>equipment10_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="pers1_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="169,423,24,20" />
+				<description field="pers1_name" />
+				<tabtarget> <next>equipment12_name</next> <prev>equipment11_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				<script>
+				function onDoubleClick()
+					local a, b
+					
+						a = window.getDatabaseNode().getChild("pers1_value").getValue() 
+						b = window.getDatabaseNode().getChild("pers1_name").getValue() 
+						ModifierStack.addSlot(b, a);
+						return true;
+					end
+				</script>
+			</numberfield>
+			
+			
+			<stringfield name="pers2_name" >
+				<bounds rect="23,444,144,20" />
+				<tabtarget> <next>equipment11_value</next> <prev>equipment10_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="pers2_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="169,444,24,20" />
+				<description field="pers2_name" />
+				<tabtarget> <next>equipment12_name</next> <prev>equipment11_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				<script>
+				function onDoubleClick()
+					local a, b
+				
+						a = window.getDatabaseNode().getChild("pers2_value").getValue() 
+						b = window.getDatabaseNode().getChild("pers2_name").getValue()
+						
+						ModifierStack.addSlot(b, a);
+						return true;
+					end
+				</script>
+			</numberfield>
+			<stringfield name="pers3_name" >
+				<bounds rect="23,465,144,20" />
+				<tabtarget> <next>equipment12_value</next> <prev>equipment11_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="pers3_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="169,465,24,20" />
+				<description field="pers3_name" />
+				<tabtarget> <next>equipment13_name</next> <prev>equipment12_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				<script>
+				function onDoubleClick()
+					local a, b
+				
+						a = window.getDatabaseNode().getChild("pers3_value").getValue() 
+						b = window.getDatabaseNode().getChild("pers3_name").getValue()
+						
+						ModifierStack.addSlot(b, a);
+						return true;
+					end
+				</script>
+			</numberfield>
+			<stringfield name="pers4_name" >
+				<bounds rect="23,486,144,20" />
+				<tabtarget> <next>equipment13_value</next> <prev>equipment12_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				
+			</stringfield>
+			<numberfield name="pers4_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="169,486,24,20" />
+				<description field="pers4_name" />
+				<tabtarget> <next>equipment14_name</next> <prev>equipment13_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				<script>
+				function onDoubleClick()
+					local a, b
+				
+						a = window.getDatabaseNode().getChild("pers4_value").getValue() 
+						b = window.getDatabaseNode().getChild("pers4_name").getValue()
+						
+						ModifierStack.addSlot(b, a);
+						return true;
+					end
+				</script>
+			</numberfield>
+			<stringfield name="pers5_name" >
+				<bounds rect="23,507,144,20" />
+				<tabtarget> <next>equipment14_value</next> <prev>equipment13_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="pers5_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="169,507,24,20" />
+				<description field="pers5_name" />
+				<tabtarget> <next>equipment15_name</next> <prev>equipment14_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				<script>
+				function onDoubleClick()
+					local a, b
+				
+						a = window.getDatabaseNode().getChild("pers5_value").getValue() 
+						b = window.getDatabaseNode().getChild("pers5_name").getValue()
+						
+						ModifierStack.addSlot(b, a);
+						return true;
+					end
+				</script>
+			</numberfield>
+			
+			<stringfield name="BPstag">
+				<bounds rect="23,535,165,20" />
+				<static>Bonus/Penalty</static>
+				<center />
+			</stringfield>			
+			
+			
+			<stringfield name="pers6_name" >
+				<bounds rect="23,556,144,20" />
+				<tabtarget> <next>equipment15_value</next> <prev>equipment14_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="pers6_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="169,556,24,20" />
+				<description field="pers6_name" />
+				<tabtarget> <next>name</next> <prev>equipment15_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				<script>
+				function onDoubleClick()
+					local a, b
+				
+						a = window.getDatabaseNode().getChild("pers6_value").getValue() 
+						b = window.getDatabaseNode().getChild("pers6_name").getValue()
+						
+						ModifierStack.addSlot(b, a);
+						return true;
+					end
+				</script>
+			</numberfield>
+			<stringfield name="pers7_name" >
+				<bounds rect="23,577,144,20" />
+				<tabtarget> <next>equipment15_value</next> <prev>equipment14_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="pers7_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="169,577,24,20" />
+				<description field="pers7_name" />
+				<tabtarget> <next>name</next> <prev>equipment15_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				<script>
+				function onDoubleClick()
+					local a, b
+				
+						a = window.getDatabaseNode().getChild("pers7_value").getValue() 
+						b = window.getDatabaseNode().getChild("pers7_name").getValue()
+						
+						ModifierStack.addSlot(b, a);
+						return true;
+					end
+				</script>
+			</numberfield>
+			
+			<stringfield name="pers8_name" >
+				<bounds rect="23,598,144,20" />
+				<tabtarget> <next>equipment15_value</next> <prev>equipment14_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="pers8_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="169,598,24,20" />
+				<description field="pers8_name" />
+				<tabtarget> <next>name</next> <prev>equipment15_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				<script>
+				function onDoubleClick()
+					local a, b
+				
+						a = window.getDatabaseNode().getChild("pers8_value").getValue() 
+						b = window.getDatabaseNode().getChild("pers8_name").getValue()
+						
+						ModifierStack.addSlot(b, a);
+						return true;
+					end
+				</script>
+			</numberfield>
+			
+			<stringfield name="pers9_name" >
+				<bounds rect="23,619,144,20" />
+				<tabtarget> <next>equipment15_value</next> <prev>equipment14_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="pers9_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="169,619,24,20" />
+				<description field="pers9_name" />
+				<tabtarget> <next>name</next> <prev>equipment15_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				<script>
+				function onDoubleClick()
+					local a, b
+				
+						a = window.getDatabaseNode().getChild("pers9_value").getValue() 
+						b = window.getDatabaseNode().getChild("pers9_name").getValue()
+						
+						ModifierStack.addSlot(b, a);		
+						return true;
+					end
+				</script>
+			</numberfield>
+			
+			<stringfield name="pers10_name" >
+				<bounds rect="23,640,144,20" />
+				<tabtarget> <next>equipment15_value</next> <prev>equipment14_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="pers10_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="169,640,24,20" />
+				<description field="pers10_name" />
+				<tabtarget> <next>name</next> <prev>equipment15_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				<script>
+				function onDoubleClick()
+					local a, b
+				
+						a = window.getDatabaseNode().getChild("pers10_value").getValue() 
+						b = window.getDatabaseNode().getChild("pers10_name").getValue()
+						
+						ModifierStack.addSlot(b, a);		
+						return true;
+					end
+				</script>
+			</numberfield>
+			
+			<stringfield name="pers11_name" >
+				<bounds rect="23,661,144,20" />
+				<tabtarget> <next>equipment15_value</next> <prev>equipment14_value</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+			</stringfield>
+			<numberfield name="pers11_value">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="169,661,24,20" />
+				<description field="pers11_name" />
+				<tabtarget> <next>name</next> <prev>equipment15_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				<script>
+				function onDoubleClick()
+					local a, b
+				
+						a = window.getDatabaseNode().getChild("pers11_value").getValue() 
+						b = window.getDatabaseNode().getChild("pers11_name").getValue()
+						
+						ModifierStack.addSlot(b, a);		
+						return true;
+					end
+				</script>
+			</numberfield>
+			
+			<stringfield name="pers12_name" >
+				<bounds rect="23,682,144,20" />
+				<tabtarget> <next>equipment15_value</next> <prev>equipment14_value</prev>
+				</tabtarget>
+				<static>Wounds/Fatigue</static>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				
+			</stringfield>
+			<numberfield name="wfpen">
+				
+				<hideonvalue value="0" />
+				<displaysign /> 
+				<bounds rect="169,682,24,20" />
+				<description field="pers12_name" />
+				<tabtarget> <next>name</next> <prev>equipment15_name</prev>
+				</tabtarget>
+				<frame>
+					<name>textline</name>
+					<offset>2,-1,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,5,5,5</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+						<offset>6,7,7,5</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				<script>
+				function onDoubleClick()
+					local a, b
+				
+						a = window.getDatabaseNode().getChild("wfpen").getValue() 
+						b = window.getDatabaseNode().getChild("pers12_name").getValue()
+						
+						ModifierStack.addSlot(b, a);		
+						return true;
+					end
+				</script>
+			</numberfield>
+			
+			
+			
+
+			
+			<genericcontrol name="Shade">
+				<bounds>220,380,100,238</bounds>
+				<icon>female</icon>
+				
+				<script>
+					datanode = nil;
+				
+					function update()
+						if datanode.getValue() == 0 then
+							setIcon("female");
+						end
+						
+						if datanode.getValue() == 1 then
+							setIcon("male");
+						end
+						
+						if datanode.getValue() == 2 then
+							setIcon("female2");
+						end
+						
+						if datanode.getValue() == 3 then
+							setIcon("male2");
+						end
+						
+						if datanode.getValue() == 4 then
+							setIcon("female3");
+						end
+						
+						if datanode.getValue() == 5 then
+							setIcon("male3");
+						end
+						
+						if datanode.getValue() == 6 then
+							setIcon("female4");
+						end
+						
+						if datanode.getValue() == 7 then
+							setIcon("male4");
+						end
+						
+						if datanode.getValue() == 8 then
+							setIcon("fchild");
+						end
+						
+						if datanode.getValue() == 9 then
+							setIcon("mchild");
+						end
+						
+					end
+				
+					function onClickDown(button, x, y)
+						if not Input.isAltPressed() then
+											
+							if datanode.getValue() == 9 then
+								datanode.setValue(0);
+							else
+								local a = datanode.getValue()
+								datanode.setValue(a+1);
+							end
+						else
+							if datanode.getValue() == 0 then
+								datanode.setValue(9);
+							else
+								local a = datanode.getValue()
+								datanode.setValue(a-1);
+							end
+						
+						
+						end
+					end
+					
+					function onInit()
+						datanode = window.getDatabaseNode().createChild(getName(), "number");
+						datanode.onUpdate = update;
+						update();
+					end
+				</script>
+				
+				
+			</genericcontrol>
+			
+			
+			
+			<!-- Head -->
+			<!--393 -->
+			
+			<stringfield name="LimbnameH">
+				<bounds rect="310,393,50,16" />
+				<static>Head</static>
+				
+			</stringfield>			
+			
+			<!-- + 20py -->
+			<stringfield name="LimbArmourH">
+				<bounds rect="300,413,65,21" />
+				
+				<frame>
+					<name>textline</name>
+					<offset>2,2,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,2,5,2</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+					<offset>5,2,5,2</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				
+			</stringfield>		
+			
+			<!-- + 24py -->
+			<stringfield name="SoakH">
+				<bounds rect="305,437,20,16" />
+				<static>S</static>
+			
+			</stringfield>			
+			<numberfield name="hsoak">
+			<bounds rect="313,437,20,16" />
+			
+			<center />
+			</numberfield>
+			<stringfield name="ToughH">
+				<bounds rect="340,437,10,16" />
+				<static>T</static>
+				
+			</stringfield>
+			<numberfield name="htough">
+			<bounds rect="348,437,20,16" />
+			
+			<center />
+			</numberfield>			
+			<!-- 13 Py -->
+			<stringfield name="LMHwh">
+				<bounds rect="310,450,65,16" />
+				<static>L / M / H</static>
+				
+			</stringfield>			
+			<!-- 13Py-->
+			<numberfield name="Hlw">
+			<limits minimum="0"  /> 
+			<bounds rect="304,463,20,16" />
+			
+			<center />			
+			<script>
+						function onValueChanged()
+							local a = getValue()
+							
+							if 0 > a then
+								setValue(0);
+							
+							end
+						
+							local a,b,c,d,e;
+							a = window.getDatabaseNode().getChild("Hlw").getValue() 
+							b = window.getDatabaseNode().getChild("Alw").getValue() 
+							c = window.getDatabaseNode().getChild("Tlw").getValue() 
+							d = window.getDatabaseNode().getChild("Llw").getValue() 
+							e = a + b + c + d;
+							
+							
+								window.getDatabaseNode().getChild("WLlw").setValue( e );
+						end
+			</script>
+			</numberfield>			
+			<numberfield name="Hmw">
+			<bounds rect="322,463,20,16" />
+			<limits minimum="0"  /> 
+			<center />			
+			<script>
+						function onValueChanged()
+							local a = getValue()
+							
+							if 0 > a then
+								setValue(0);
+							
+							end
+						
+							local a,b,c,d,e;
+							a = window.getDatabaseNode().getChild("Hmw").getValue() 
+							b = window.getDatabaseNode().getChild("Amw").getValue() 
+							c = window.getDatabaseNode().getChild("Tmw").getValue() 
+							d = window.getDatabaseNode().getChild("Lmw").getValue() 
+							e = a + b + c + d;
+							
+							
+								window.getDatabaseNode().getChild("WLmw").setValue( e );
+						end
+			</script>
+			</numberfield>			
+			<numberfield name="Hhw">
+			<bounds rect="345,463,20,16" />
+			<limits minimum="0"  /> 
+			<center />			
+			<script>
+						function onValueChanged()
+							
+							local a = getValue()
+							
+							if 0 > a then
+								setValue(0);
+							
+							end
+							local a,b,c,d,e;
+							a = window.getDatabaseNode().getChild("Hhw").getValue() 
+							b = window.getDatabaseNode().getChild("Ahw").getValue() 
+							c = window.getDatabaseNode().getChild("Thw").getValue() 
+							d = window.getDatabaseNode().getChild("Lhw").getValue() 
+							e = a + b + c + d;
+							
+							
+								window.getDatabaseNode().getChild("WLhw").setValue( e );
+						end
+			</script>
+			</numberfield>	
+			
+			<!-- LeftArm -->
+			<!--393 -->
+			
+			<stringfield name="LimbnameLA">
+				<bounds rect="210,423,165,16" />
+				<static>Arms</static>
+				
+			</stringfield>			
+			
+			<!-- + 20py -->
+			<stringfield name="LimbArmourLA">
+				<bounds rect="200,443,65,21" />
+				
+				<frame>
+					<name>textline</name>
+					<offset>2,2,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,2,5,2</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+					<offset>5,2,5,2</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				
+			</stringfield>		
+			
+			<!-- + 24py -->
+			<stringfield name="SoakLA">
+				<bounds rect="210,467,20,16" />
+				<static>S</static>
+			
+			</stringfield>			
+			<numberfield name="LAsoak">
+			<bounds rect="218,467,20,16" />
+			
+			<center />
+			</numberfield>
+			<stringfield name="ToughH">
+				<bounds rect="250,467,40,16" />
+				<static>T</static>
+				
+			</stringfield>
+			<numberfield name="LAtough">
+			<bounds rect="258,467,20,16" />
+			
+			<center />
+			</numberfield>			
+			<!-- 13 Py -->
+			<stringfield name="LMHwh">
+				<bounds rect="210,480,165,16" />
+				<static>L / M / H</static>
+				
+			</stringfield>			
+			<!-- 13Py-->
+			<numberfield name="Alw">
+			<bounds rect="204,493,20,16" />
+			<limits minimum="0"  /> 
+			<center />			
+			<script>
+						function onValueChanged()
+							local a = getValue()
+							
+							if 0 > a then
+								setValue(0);
+							
+							end
+						
+							local a,b,c,d,e;
+							a = window.getDatabaseNode().getChild("Hlw").getValue() 
+							b = window.getDatabaseNode().getChild("Alw").getValue() 
+							c = window.getDatabaseNode().getChild("Tlw").getValue() 
+							d = window.getDatabaseNode().getChild("Llw").getValue() 
+							e = a + b + c + d;
+							
+							
+								window.getDatabaseNode().getChild("WLlw").setValue( e );
+						end
+			</script>
+			</numberfield>			
+			<numberfield name="Amw">
+			<bounds rect="222,493,20,16" />
+			<limits minimum="0"  /> 
+			<center />			
+			<script>
+						function onValueChanged()
+						
+							local a = getValue()
+							
+							if 0 > a then
+								setValue(0);
+							
+							end
+						
+							local a,b,c,d,e;
+							a = window.getDatabaseNode().getChild("Hmw").getValue() 
+							b = window.getDatabaseNode().getChild("Amw").getValue() 
+							c = window.getDatabaseNode().getChild("Tmw").getValue() 
+							d = window.getDatabaseNode().getChild("Lmw").getValue() 
+							e = a + b + c + d;
+							
+							
+								window.getDatabaseNode().getChild("WLmw").setValue( e );
+						end
+			</script>
+			</numberfield>			
+			<numberfield name="Ahw">
+			<bounds rect="245,493,20,16" />
+			<limits minimum="0"  /> 
+			<center />			
+			<script>
+						function onValueChanged()
+							local a = getValue()
+							
+							if 0 > a then
+								setValue(0);
+							
+							end
+						
+							local a,b,c,d,e;
+							a = window.getDatabaseNode().getChild("Hhw").getValue() 
+							b = window.getDatabaseNode().getChild("Ahw").getValue() 
+							c = window.getDatabaseNode().getChild("Thw").getValue() 
+							d = window.getDatabaseNode().getChild("Lhw").getValue() 
+							e = a + b + c + d;
+							
+							
+								window.getDatabaseNode().getChild("WLhw").setValue( e );
+						end
+			</script>
+			</numberfield>	
+			
+			
+			
+			
+			
+			
+			
+			<!-- Torso -->
+			<stringfield name="LimbnameRL">
+				<bounds rect="310,515,50,16" />
+				<static>Torso</static>
+				
+			</stringfield>			
+			
+			<stringfield name="LimbArmourRL">
+				<bounds rect="300,539,65,21" />
+				
+				<frame>
+					<name>textline</name>
+					<offset>2,2,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,2,5,2</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+					<offset>5,2,5,2</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				
+			</stringfield>		
+			
+			
+			<stringfield name="SoakRL">
+				<bounds rect="305,559,20,16" />
+				<static>S</static>
+			
+			</stringfield>			
+			<numberfield name="rlsoak">
+			<bounds rect="313,559,20,16" />
+			
+			<center />
+			</numberfield>
+			<stringfield name="ToughRL">
+				<bounds rect="340,559,20,16" />
+				<static>T</static>
+				
+			</stringfield>
+			<numberfield name="rltough">
+			<bounds rect="348,559,20,16" />
+			
+			<center />
+			</numberfield>			
+			<stringfield name="LMHwRL">
+				<bounds rect="310,572,65,16" />
+				<static>L / M / H</static>
+				
+			</stringfield>			
+			<numberfield name="Tlw">
+			<bounds rect="304,585,20,16" />
+			<limits minimum="0"  /> 
+			<center />			
+			<script>
+						function onValueChanged()
+						
+							local a = getValue()
+							
+							if 0 > a then
+								setValue(0);
+							
+							end
+							
+							local a,b,c,d,e;
+							a = window.getDatabaseNode().getChild("Hlw").getValue() 
+							b = window.getDatabaseNode().getChild("Alw").getValue() 
+							c = window.getDatabaseNode().getChild("Tlw").getValue() 
+							d = window.getDatabaseNode().getChild("Llw").getValue() 
+							e = a + b + c + d;
+							
+							
+								window.getDatabaseNode().getChild("WLlw").setValue( e );
+						end
+			</script>
+			</numberfield>			
+			<numberfield name="Tmw">
+			<bounds rect="322,585,20,16" />
+			<limits minimum="0"  /> 
+			<center />			
+			<script>
+						function onValueChanged()
+						
+							local a = getValue()
+							
+							if 0 > a then
+								setValue(0);
+							
+							end
+						
+							local a,b,c,d,e;
+							a = window.getDatabaseNode().getChild("Hmw").getValue() 
+							b = window.getDatabaseNode().getChild("Amw").getValue() 
+							c = window.getDatabaseNode().getChild("Tmw").getValue() 
+							d = window.getDatabaseNode().getChild("Lmw").getValue() 
+							e = a + b + c + d;
+							
+							
+								window.getDatabaseNode().getChild("WLmw").setValue( e );
+						end
+			</script>
+			</numberfield>			
+			<numberfield name="Thw">
+			<bounds rect="342,585,20,16" />
+			<limits minimum="0"  /> 
+			<center />			
+			<script>
+						function onValueChanged()
+							local a = getValue()
+							
+							if 0 > a then
+								setValue(0);
+							
+							end
+							
+							local a,b,c,d,e;
+							a = window.getDatabaseNode().getChild("Hhw").getValue() 
+							b = window.getDatabaseNode().getChild("Ahw").getValue() 
+							c = window.getDatabaseNode().getChild("Thw").getValue() 
+							d = window.getDatabaseNode().getChild("Lhw").getValue() 
+							e = a + b + c + d;
+							
+							
+								window.getDatabaseNode().getChild("WLhw").setValue( e );
+						end
+			</script>
+			</numberfield>			
+			
+			
+			
+			<!-- Legs -->
+			
+			<stringfield name="LimbnameLL">
+				<bounds rect="210,515,165,16" />
+				<static>Legs</static>
+				
+			</stringfield>			
+			
+			<stringfield name="LimbArmourLL">
+				<bounds rect="200,535,65,21" />
+				
+				<frame>
+					<name>textline</name>
+					<offset>2,2,0,0</offset>
+				</frame>
+				<keyeditframe>
+					<name>sheetfocus</name>
+					<offset>5,2,5,2</offset>
+				</keyeditframe>
+				<stateframe>
+					<hover>
+						<name>sheetfocus</name>
+					<offset>5,2,5,2</offset>
+					</hover>
+					<drophilight>
+						<name>rowshade</name>
+						<offset>1,1,1,1</offset>
+					</drophilight>
+				</stateframe>
+				
+			</stringfield>		
+			
+			
+			
+			
+			<stringfield name="SoakLL">
+				<bounds rect="210,559,20,16" />
+				<static>S</static>
+			
+			</stringfield>			
+			<numberfield name="llsoak">
+			<bounds rect="218,559,20,16" />
+			
+			<center />
+			</numberfield>
+			<stringfield name="ToughLL">
+				<bounds rect="250,559,40,16" />
+				<static>T</static>
+				
+			</stringfield>
+			<numberfield name="lltough">
+			<bounds rect="258,559,20,16" />
+			
+			<center />
+			</numberfield>			
+			<stringfield name="LMHwLL">
+				<bounds rect="210,572,165,16" />
+				<static>L / M / H</static>
+				
+			</stringfield>			
+			<numberfield name="Llw">
+			<bounds rect="204,585,20,16" />
+			<limits minimum="0"  /> 
+			<center />			
+			<script>
+			
+					
+
+			
+						function onValueChanged()
+							local a = getValue()
+							
+							if 0 > a then
+								setValue(0);
+							
+							end
+						
+							local a,b,c,d,e;
+							a = window.getDatabaseNode().getChild("Hlw").getValue() 
+							b = window.getDatabaseNode().getChild("Alw").getValue() 
+							c = window.getDatabaseNode().getChild("Tlw").getValue() 
+							d = window.getDatabaseNode().getChild("Llw").getValue() 
+							e = a + b + c + d;
+							
+							
+								window.getDatabaseNode().getChild("WLlw").setValue( e );
+						end
+			</script>
+			</numberfield>			
+			<numberfield name="Lmw">
+			<bounds rect="222,585,20,16" />
+			<limits minimum="0"  /> 
+			<center />			
+			<script>
+			
+					
+			
+			
+						function onValueChanged()
+							local a = getValue()
+							
+							if 0 > a then
+								setValue(0);
+							
+							end
+						
+							local a,b,c,d,e;
+							a = window.getDatabaseNode().getChild("Hmw").getValue() 
+							b = window.getDatabaseNode().getChild("Amw").getValue() 
+							c = window.getDatabaseNode().getChild("Tmw").getValue() 
+							d = window.getDatabaseNode().getChild("Lmw").getValue() 
+							e = a + b + c + d;
+							
+							
+								window.getDatabaseNode().getChild("WLmw").setValue( e );
+						end
+			</script>
+			</numberfield>			
+			<numberfield name="Lhw">
+			<bounds rect="245,585,20,16" />
+			<limits minimum="0"  /> 
+			<center />			
+			<script>
+						
+					
+						
+						
+						function onValueChanged()
+							local a = getValue()
+							
+							if 0 > a then
+								setValue(0);
+							
+							end
+						
+							local a,b,c,d,e;
+							a = window.getDatabaseNode().getChild("Hhw").getValue() 
+							b = window.getDatabaseNode().getChild("Ahw").getValue() 
+							c = window.getDatabaseNode().getChild("Thw").getValue() 
+							d = window.getDatabaseNode().getChild("Lhw").getValue() 
+							e = a + b + c + d;
+							
+							
+								window.getDatabaseNode().getChild("WLhw").setValue( e );
+						end
+			</script>
+			</numberfield>	
+
+		<!-- Fatigue  -->
+		<stringfield name="Ftotals">
+				<bounds rect="200,610,150,18" />
+				
+				<static>Fatigue</static>
+				<center />
+					
+				
+		</stringfield>
+		
+		
+		<numberfield name="WLlf">
+			<bounds rect="228,635,20,20" />
+		
+			<center />
+						<limits minimum="0"  /> 
+			<script>
+
+					
+
+
+
+						function onValueChanged()
+							local a = getValue()
+							
+							if 0 > a then
+								setValue(0);
+							
+							end
+							local a,b,c,d,e,f;
+							a = -1 * window.getDatabaseNode().getChild("WLlw").getValue() 
+							b = -3 * window.getDatabaseNode().getChild("WLmw").getValue() 
+							c = -5 * window.getDatabaseNode().getChild("WLhw").getValue() 
+							d = -1 * window.getDatabaseNode().getChild("WLlf").getValue() 
+							e = -3 * window.getDatabaseNode().getChild("WLmf").getValue() 
+							f = -5 * window.getDatabaseNode().getChild("WLhf").getValue() 
+							
+							e = a + b + c + d + e + f;
+							
+								window.getDatabaseNode().getChild("wfpen").setValue( e );
+						end
+			</script>
+		</numberfield>			
+		
+		<numberfield name="WLmf">
+			<bounds rect="265,635,20,20" />
+		
+			<center />
+						<limits minimum="0"  /> 
+			<script>
+					
+					
+
+						function onValueChanged()
+							local a = getValue()
+							
+							if 0 > a then
+								setValue(0);
+							
+							end
+						
+							local a,b,c,d,e,f;
+							
+							
+							a = -1 * window.getDatabaseNode().getChild("WLlw").getValue() 
+							b = -3 * window.getDatabaseNode().getChild("WLmw").getValue() 
+							c = -5 * window.getDatabaseNode().getChild("WLhw").getValue() 
+							d = -1 * window.getDatabaseNode().getChild("WLlf").getValue() 
+							e = -3 * window.getDatabaseNode().getChild("WLmf").getValue() 
+							f = -5 * window.getDatabaseNode().getChild("WLhf").getValue() 
+							
+							e = a + b + c + d + e + f;
+							
+								window.getDatabaseNode().getChild("wfpen").setValue( e );
+						end
+			</script>
+		</numberfield>			
+		
+		<numberfield name="WLhf">
+			<bounds rect="301,635,20,20" />
+			<limits minimum="0"  /> 
+			<center />
+			
+			<script>
+						
+					
+						
+						function onValueChanged()
+							local a = getValue()
+							
+							if 0 > a then
+								setValue(0);
+							
+							end
+							
+							local a,b,c,d,e,f;
+							a = -1 * window.getDatabaseNode().getChild("WLlw").getValue() 
+							b = -3 * window.getDatabaseNode().getChild("WLmw").getValue() 
+							c = -5 * window.getDatabaseNode().getChild("WLhw").getValue() 
+							d = -1 * window.getDatabaseNode().getChild("WLlf").getValue() 
+							e = -3 * window.getDatabaseNode().getChild("WLmf").getValue() 
+							f = -5 * window.getDatabaseNode().getChild("WLhf").getValue() 
+							
+							e = a + b + c + d + e + f;
+							
+								window.getDatabaseNode().getChild("wfpen").setValue( e );
+						end
+			</script>
+		</numberfield>		
+
+
+		
+		<stringfield name="Wtotals">
+				<bounds rect="200,655,150,18" />
+				<static>Wounds Total</static>
+					
+				<center />
+		</stringfield>
+		
+		<stringfield name="WLtotals">
+				<bounds rect="200,670,150,18" />
+				<static>Light Medium Heavy</static>
+					
+				<center />
+		</stringfield>
+		
+		<stringfield name="FWLtotals">
+				<bounds rect="200,620,150,18" />
+				<static>Light Medium Heavy</static>
+					
+				<center />
+		</stringfield>
+
+		
+		<numberfield name="WLlw">
+			<bounds rect="228,690,20,20" />
+			<limits minimum="0"  /> 
+			<center />
+						
+			<script>
+						
+					
+						
+						function onValueChanged()
+						
+							local a = getValue()
+							
+							if 0 > a then
+								setValue(0);
+							
+							end
+						
+							local a,b,c,d,e,f;
+							a = -1 * window.getDatabaseNode().getChild("WLlw").getValue() 
+							b = -3 * window.getDatabaseNode().getChild("WLmw").getValue() 
+							c = -5 * window.getDatabaseNode().getChild("WLhw").getValue() 
+							d = -1 * window.getDatabaseNode().getChild("WLlf").getValue() 
+							e = -3 * window.getDatabaseNode().getChild("WLmf").getValue() 
+							f = -5 * window.getDatabaseNode().getChild("WLhf").getValue() 
+							
+							e = a + b + c + d + e + f;
+							
+								window.getDatabaseNode().getChild("wfpen").setValue( e );
+						end
+			</script>
+		</numberfield>			
+		
+		<numberfield name="WLmw">
+			<bounds rect="265,690,20,20" />
+			<limits minimum="0"  /> 
+			<center />
+						
+			<script>	
+				
+					
+			
+						function onValueChanged()
+							local a = getValue()
+							
+							if 0 > a then
+								setValue(0);
+							
+							end
+						
+							local a,b,c,d,e,f;
+							a = -1 * window.getDatabaseNode().getChild("WLlw").getValue() 
+							b = -3 * window.getDatabaseNode().getChild("WLmw").getValue() 
+							c = -5 * window.getDatabaseNode().getChild("WLhw").getValue() 
+							d = -1 * window.getDatabaseNode().getChild("WLlf").getValue() 
+							e = -3 * window.getDatabaseNode().getChild("WLmf").getValue() 
+							f = -5 * window.getDatabaseNode().getChild("WLhf").getValue() 
+							
+							e = a + b + c + d + e + f;
+							
+								window.getDatabaseNode().getChild("wfpen").setValue( e );
+						end
+			</script>
+		</numberfield>			
+		
+		<numberfield name="WLhw">
+			<bounds rect="301,690,20,20" />
+			<limits minimum="0"  /> 
+			<center />
+			
+			<script>
+					
+			
+						function onValueChanged()
+							local a = getValue()
+							
+							if 0 > a then
+								setValue(0);
+							
+							end
+						
+							local a,b,c,d,e,f;
+							a = -1 * window.getDatabaseNode().getChild("WLlw").getValue() 
+							b = -3 * window.getDatabaseNode().getChild("WLmw").getValue() 
+							c = -5 * window.getDatabaseNode().getChild("WLhw").getValue() 
+							d = -1 * window.getDatabaseNode().getChild("WLlf").getValue() 
+							e = -3 * window.getDatabaseNode().getChild("WLmf").getValue() 
+							f = -5 * window.getDatabaseNode().getChild("WLhf").getValue() 
+							
+							e = a + b + c + d + e + f;
+							
+								window.getDatabaseNode().getChild("wfpen").setValue( e );
+						end
+			</script>
+		</numberfield>			
+		
+		
+		<!-- Wounds -->
+			
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="charsheet_other">
+		<frame name="generic_charsheet_other" />
+		<!-- <datasource name="charsheet" /> -->
+		<placement>
+			<size>
+				<width>739</width>
+				<height>762</height>
+			</size>
+		</placement>
+		<sheetdata>
+
+			<stringfield name="othernotes" >
+				<bounds rect="25,50,675,621" />
+				<multiline spacing="20" />
+				<tabtarget> <next>other2</next> <prev>other2</prev>
+				</tabtarget>
+			</stringfield>
+
+
+			
+
+		</sheetdata>
+	</windowclass>
+	
+	</root>
