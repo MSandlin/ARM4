@@ -159,6 +159,8 @@ end
 
 function onDoubleClick()
 
+	window.getDatabaseNode().getChild("size").setValue(RollSize());
+	
 	window.getDatabaseNode().getChild("str").setValue(RollCharacteristic());
 	window.getDatabaseNode().getChild("sta").setValue(RollCharacteristic());
 	window.getDatabaseNode().getChild("pre").setValue(RollCharacteristic());
@@ -168,8 +170,6 @@ function onDoubleClick()
 	window.getDatabaseNode().getChild("dex").setValue(RollCharacteristic());
 	window.getDatabaseNode().getChild("qik").setValue(RollCharacteristic());
 	
-	window.getDatabaseNode().getChild("size").setValue(RollSize());
-
-	window.getDatabaseNode().getChild("skills").setValue(RollAbilities());
+	window.getDatabaseNode().getChild("abilities").setValue(RollAbilities());
     	
 end
