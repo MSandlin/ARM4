@@ -158,22 +158,21 @@
 
 				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
 				
-				local bSection2 = false;
-				if size.setReadOnly(bReadOnly) then bSection2 = true; end;
-				if might.setReadOnly(bReadOnly) then bSection2 = true; end;
-				if str.setReadOnly(bReadOnly) then bSection2 = true; end;
-				if sta.setReadOnly(bReadOnly) then bSection2 = true; end;
-				if pre.setReadOnly(bReadOnly) then bSection2 = true; end;
-				if com.setReadOnly(bReadOnly) then bSection2 = true; end;
-				if int.setReadOnly(bReadOnly) then bSection2 = true; end;
-				if per.setReadOnly(bReadOnly) then bSection2 = true; end;
-				if dex.setReadOnly(bReadOnly) then bSection2 = true; end;
-				if qik.setReadOnly(bReadOnly) then bSection2 = true; end;
-				if skills.setReadOnly(bReadOnly) then bSection2 = true; end;
-				if items.setReadOnly(bReadOnly) then bSection2 = true; end;
-				if languages.setReadOnly(bReadOnly) then bSection2 = true; end;
+				size.setReadOnly  (bReadOnly);
+				might.setReadOnly (bReadOnly);
+				str.setReadOnly   (bReadOnly);
+				sta.setReadOnly   (bReadOnly);
+				pre.setReadOnly   (bReadOnly);
+				com.setReadOnly   (bReadOnly);
+				int.setReadOnly   (bReadOnly);
+				per.setReadOnly   (bReadOnly);
+				dex.setReadOnly   (bReadOnly);
+				qik.setReadOnly   (bReadOnly);
 				
-				--[[divider.setVisible(bSection2);]]
+                abilities.setReadOnly(bReadOnly);
+				items.setReadOnly    (bReadOnly);
+				
+		        btn_chargen.setEnabled(not bReadOnly);
 				
 			end
 			
@@ -182,7 +181,7 @@
         
 		<sheetdata>
 
-            <genericcontrol name="npc_chargen">
+            <genericcontrol name="btn_chargen">
                 <bounds>140,3,40,20</bounds>
                 <script name="npc_chargen_lua" file="campaign/scripts/npc_chargen.lua"></script>
                 <icon>button_ctnextround</icon>
@@ -273,10 +272,10 @@
 			
 			<line_column name="divider" />
 			
-			<label_column name="skills_label">
-				<static textres="npc_label_skills" />
+			<label_column name="abilities_label">
+				<static text="Abilities" />
 			</label_column>
-			<string_column name="skills">
+			<string_column name="abilities">
 				<nodragselect />
 				<script file="campaign/scripts/npc_roll.lua" />
 			</string_column>
@@ -286,10 +285,6 @@
 			</label_column>
 			<string_column name="items" />
 
-			<label_column name="languages_label">
-				<static textres="npc_label_languages" />
-			</label_column>
-			<string_column name="languages" />
 		</sheetdata>
 	</windowclass>
 </root>
