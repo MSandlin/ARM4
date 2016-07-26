@@ -155,6 +155,16 @@
 				might.setReadOnly(bReadOnly);
 				
 				local bSection2 = false;
+				if size.update(bReadOnly) then bSection2 = true; end;
+				if might.update(bReadOnly) then bSection2 = true; end;
+				if str.update(bReadOnly) then bSection2 = true; end;
+				if sta.update(bReadOnly) then bSection2 = true; end;
+				if pre.update(bReadOnly) then bSection2 = true; end;
+				if com.update(bReadOnly) then bSection2 = true; end;
+				if int.update(bReadOnly) then bSection2 = true; end;
+				if per.update(bReadOnly) then bSection2 = true; end;
+				if dex.update(bReadOnly) then bSection2 = true; end;
+				if qik.update(bReadOnly) then bSection2 = true; end;
 				if skills.update(bReadOnly) then bSection2 = true; end;
 				if items.update(bReadOnly) then bSection2 = true; end;
 				if languages.update(bReadOnly) then bSection2 = true; end;
