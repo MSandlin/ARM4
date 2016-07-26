@@ -140,6 +140,12 @@
 		</sheetdata>
 	</windowclass>
 
+
+    <template name="number_columnh_right">
+        <number_column_right>
+			<script file="common/scripts/column_number.lua" />
+		</number_column_right>
+    </template>
 	
 	<windowclass name="npc_main">
 		<margins control="0,0,0,2" />
@@ -149,29 +155,31 @@
 			end
 			
 			function update()
-				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
 
-				size.setReadOnly(bReadOnly);
-				might.setReadOnly(bReadOnly);
+				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
 				
 				local bSection2 = false;
-				if size.update(bReadOnly) then bSection2 = true; end;
-				if might.update(bReadOnly) then bSection2 = true; end;
-				if str.update(bReadOnly) then bSection2 = true; end;
-				if sta.update(bReadOnly) then bSection2 = true; end;
-				if pre.update(bReadOnly) then bSection2 = true; end;
-				if com.update(bReadOnly) then bSection2 = true; end;
-				if int.update(bReadOnly) then bSection2 = true; end;
-				if per.update(bReadOnly) then bSection2 = true; end;
-				if dex.update(bReadOnly) then bSection2 = true; end;
-				if qik.update(bReadOnly) then bSection2 = true; end;
-				if skills.update(bReadOnly) then bSection2 = true; end;
-				if items.update(bReadOnly) then bSection2 = true; end;
-				if languages.update(bReadOnly) then bSection2 = true; end;
+				if size.setReadOnly(bReadOnly) then bSection2 = true; end;
+				if might.setReadOnly(bReadOnly) then bSection2 = true; end;
+				if str.setReadOnly(bReadOnly) then bSection2 = true; end;
+				if sta.setReadOnly(bReadOnly) then bSection2 = true; end;
+				if pre.setReadOnly(bReadOnly) then bSection2 = true; end;
+				if com.setReadOnly(bReadOnly) then bSection2 = true; end;
+				if int.setReadOnly(bReadOnly) then bSection2 = true; end;
+				if per.setReadOnly(bReadOnly) then bSection2 = true; end;
+				if dex.setReadOnly(bReadOnly) then bSection2 = true; end;
+				if qik.setReadOnly(bReadOnly) then bSection2 = true; end;
+				if skills.setReadOnly(bReadOnly) then bSection2 = true; end;
+				if items.setReadOnly(bReadOnly) then bSection2 = true; end;
+				if languages.setReadOnly(bReadOnly) then bSection2 = true; end;
+				
 				--[[divider.setVisible(bSection2);]]
+				
 			end
+			
 		</script>
 
+        
 		<sheetdata>
 
             <genericcontrol name="npc_chargen">
@@ -268,20 +276,20 @@
 			<label_column name="skills_label">
 				<static textres="npc_label_skills" />
 			</label_column>
-			<string_columnh name="skills">
+			<string_column name="skills">
 				<nodragselect />
 				<script file="campaign/scripts/npc_roll.lua" />
-			</string_columnh>
+			</string_column>
 
 			<label_column name="items_label">
 				<static textres="npc_label_items" />
 			</label_column>
-			<string_columnh name="items" />
+			<string_column name="items" />
 
 			<label_column name="languages_label">
 				<static textres="npc_label_languages" />
 			</label_column>
-			<string_columnh name="languages" />
+			<string_column name="languages" />
 		</sheetdata>
 	</windowclass>
 </root>
